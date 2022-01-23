@@ -70,6 +70,6 @@ interface ChatChannel {
 
 data class ChatSender(
     val name: String,
-//    val profileBase64: String,
-//    val profileHash: Int
-) // TODO(ImageDB)
+    val profileBase64: String,
+    val profileHash: Int
+)

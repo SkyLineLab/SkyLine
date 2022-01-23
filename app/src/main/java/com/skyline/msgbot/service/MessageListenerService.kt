@@ -11,6 +11,7 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.widget.Toast
 import com.skyline.msgbot.bot.Bot
+import com.skyline.msgbot.bot.api.ProfileImage
 import com.skyline.msgbot.bot.event.BotChannel
 import com.skyline.msgbot.bot.event.ChatSender
 import com.skyline.msgbot.bot.event.MessageEvent
@@ -43,8 +44,11 @@ class MessageListenerService : NotificationListenerService() {
                     val data = sbn.notification.extras
                     val message = data.get("android.text").toString()
                     val channel = BotChannel(data, applicationContext, action, sbn)
+                    val profileImage = ProfileImage(applicationContext, sbn)
                     val sender = ChatSender(
-                        data.get("android.title").toString()
+                        data.get("android.title").toString(),
+                        profileImage.hashCode,
+                        profileImage.getProfileHash()
                     )
                     val eventData = MessageEvent(
                         message,

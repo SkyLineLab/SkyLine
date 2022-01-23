@@ -25,27 +25,9 @@ internal object RuntimeManager {
 
     fun addRuntime(projectName: String): Boolean {
         val res = ProjectInitUtil.createProject(projectName)
-        if (!res) {
-            var result: Boolean = false
-            if (ProjectInitUtil.isExistsProject(projectName)) {
-                val size: Int = runtimes.count() + 1
-                val context: Context = Context.newBuilder("js")
-                    .allowHostAccess(HostAccess.ALL)
-                    .allowExperimentalOptions(true)
-                    .option("js.nashorn-compat", "true")
-                    .option("js.ecmascript-version", "2022")
-                    .allowHostClassLookup { true }.build()
-                ApiApplyUtil.applyBotApi(context.getBindings("js"), true, size)
-                runtimes[size] = context
-                powerMap[size] = true
-                clients[size] = BotClient()
-                projectNames[projectName] = size
-                runtimes[size]?.eval(
-                    Source.create("js", FileStream.read("$sdcardPath/${Constants.directoryName}/$projectName/script.js"))
-                )
-                result = true
-            }
-            return result
+        if (!res && !ProjectInitUtil.isExistsProject(projectName)) {
+            println("Create Project Error")
+            return false
         } else {
             val size: Int = runtimes.count() + 1
             val context: Context = Context.newBuilder("js")
