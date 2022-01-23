@@ -20,10 +20,12 @@ import java.util.*
 class MessageListenerService : NotificationListenerService() {
     override fun onCreate() {
         super.onCreate()
+        TODO("For some reasons")
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        TODO("For some reasons")
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {

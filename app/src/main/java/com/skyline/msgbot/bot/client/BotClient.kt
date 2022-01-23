@@ -24,8 +24,8 @@ class BotClient() {
     fun emit(event: String, vararg arguments: Array<out Any?>): Boolean {
         println("emit = $event")
         if (!eventMap.containsKey(event)) return false
-        val v8Func: Value = eventMap[event] ?: return false
-        v8Func.executeVoid(arguments)
+        val func: Value = eventMap[event] ?: return false
+        func.executeVoid(arguments)
         println("call!")
         return true
     }
