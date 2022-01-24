@@ -19,8 +19,11 @@ object ProjectInitUtil {
     fun createProject(projectName: String): Boolean {
         if (isExistsProject(projectName)) return false
         return try {
-            val appPath: String = "$sdcardPath/${Constants.directoryName}"
-            val dirPath: File = File("$appPath/$projectName")
+            val appPath = File("$sdcardPath/${Constants.directoryName}")
+            if (!appPath.exists()) {
+                appPath.mkdir()
+            }
+            val dirPath = File("${appPath.absolutePath}/$projectName")
             if (!dirPath.exists()) {
                 dirPath.mkdir()
             }

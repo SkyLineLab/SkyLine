@@ -16,7 +16,7 @@ object Bot {
             println("key = $key value = ${value.toString()} power = ${RuntimeManager.powerMap[key]}")
             if (RuntimeManager.powerMap[key] == true) {
                 println("call message!")
-                value.emit("message", arrayOf(data))
+                value.emit("message", data)
             }
         }
     }

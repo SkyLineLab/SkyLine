@@ -8,7 +8,7 @@ package com.skyline.msgbot.setting
 
 object Constants {
     val allowPackageNames: List<String> = listOf("com.kakao")
-    const val directoryName: String = "horizon"
+    const val directoryName: String = "skyline"
     const val initScript: String = "const client = BotProject.getClient();\n" +
             "\n" +
             "client.on('message', (data) => {\n" +

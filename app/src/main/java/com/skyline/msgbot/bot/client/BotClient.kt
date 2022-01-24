@@ -6,6 +6,7 @@
 
 package com.skyline.msgbot.bot.client
 
+import com.skyline.msgbot.bot.event.MessageEvent
 import org.graalvm.polyglot.Value
 
 class BotClient() {
@@ -21,7 +22,7 @@ class BotClient() {
         return this
     }
 
-    fun emit(event: String, vararg arguments: Array<out Any?>): Boolean {
+    fun emit(event: String, arguments: MessageEvent): Boolean { //vararg arguments: Any
         println("emit = $event")
         if (!eventMap.containsKey(event)) return false
         val func: Value = eventMap[event] ?: return false
