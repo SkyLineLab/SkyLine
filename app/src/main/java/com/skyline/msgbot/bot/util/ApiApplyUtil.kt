@@ -6,6 +6,7 @@
 
 package com.skyline.msgbot.bot.util
 
+import android.content.Context
 import com.skyline.msgbot.bot.api.Api
 import com.skyline.msgbot.bot.api.FileStream
 import com.skyline.msgbot.bot.project.BotProject

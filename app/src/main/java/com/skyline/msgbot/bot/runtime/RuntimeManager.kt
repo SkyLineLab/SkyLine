@@ -33,6 +33,9 @@ internal object RuntimeManager {
             val context: Context = Context.newBuilder("js")
                 .allowHostAccess(HostAccess.ALL)
                 .allowExperimentalOptions(true)
+                .allowIO(true)
+                .option("js.commonjs-require", "true")
+                .option("js.commonjs-require-cwd", "$sdcardPath/${Constants.directoryName}/modules")
                 .option("js.nashorn-compat", "true")
                 .option("js.ecmascript-version", "2022")
                 .allowHostClassLookup { true }.build()
@@ -46,6 +49,10 @@ internal object RuntimeManager {
             )
             return true
         }
+    }
+
+    fun hasRuntime(projectName: String): Boolean {
+        return runtimes[projectNames[projectName]] != null
     }
 
     fun getIsPowerOn(number: Number): Boolean {

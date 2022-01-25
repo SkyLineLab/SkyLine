@@ -7,7 +7,5 @@
 package com.skyline.msgbot.bot.api
 
 object Api {
-    fun getContext() {
-        return getContext();
-    }
+
 }
