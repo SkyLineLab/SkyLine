@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        if (!PermissionUtil.isAllowPermision(this)) {
+        if (!PermissionUtil.isStorageGranted(this)) {
             Toast.makeText(this, "파일 권한이 없습니다 :( 권한을 허용해주세요", Toast.LENGTH_LONG).show()
             PermissionUtil.requestStoragePermissions(this)
         }
