@@ -26,7 +26,11 @@ class BotClient() {
         println("emit = $event")
         if (!eventMap.containsKey(event)) return false
         val func: Value = eventMap[event] ?: return false
-        func.executeVoid(arguments)
+        object : Thread() {
+            override fun run() {
+                func.executeVoid(arguments)
+            }
+        }.start()
         println("call!")
         return true
     }
