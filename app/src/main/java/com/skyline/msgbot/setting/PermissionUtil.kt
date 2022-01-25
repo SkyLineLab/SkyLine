@@ -6,10 +6,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.os.Environment
 import android.os.PowerManager
 import android.provider.Settings
 import androidx.activity.ComponentActivity
-import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat.*
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
@@ -38,16 +41,31 @@ object PermissionUtil {
         context.startActivity(intent)
     }
 
-    fun isStorageGranted(context: Context): Boolean {
-        return (ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-    }
     fun requestStoragePermissions(context: Context): Boolean {
-        val permissions: Array<String> = arrayOf(
+        val permissions = arrayOf(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.READ_EXTERNAL_STORAGE)
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
 
-        requestPermissions(context as Activity, permissions, 0)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if(Environment.isExternalStorageManager()) {
+                return true
+            }
+            else {
+                context.startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
+            }
+        } else {
+            return if(ContextCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+                true
+            } else {
+                requestPermissions(
+                    context as Activity,
+                    permissions, 0
+                )
+                false
+            }
+        }
         return false
     }
 
