@@ -1,4 +1,4 @@
-package com.skyline.msgbot.setting
+package com.skyline.msgbot.utils
 
 import android.Manifest
 import android.app.Activity
@@ -11,7 +11,6 @@ import android.os.Environment
 import android.os.PowerManager
 import android.provider.Settings
 import androidx.activity.ComponentActivity
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat.*
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -70,7 +69,7 @@ object PermissionUtil {
     }
 
     fun isAllowPermision(context: Context): Boolean {
-        if(!this.getAccessNotification(context) || !this.getIgnoreBatteryOptimizations(context) ||
+        if(!getAccessNotification(context) || !getIgnoreBatteryOptimizations(context) ||
             (checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_DENIED || checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PermissionChecker.PERMISSION_DENIED)) {
             return false;
         }

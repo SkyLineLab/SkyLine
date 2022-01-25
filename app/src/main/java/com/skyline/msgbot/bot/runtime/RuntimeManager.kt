@@ -35,7 +35,7 @@ internal object RuntimeManager {
                 .allowExperimentalOptions(true)
                 .allowIO(true)
                 .option("js.commonjs-require", "true")
-                .option("js.commonjs-require-cwd", "$sdcardPath/${Constants.directoryName}/modules")
+                .option("js.commonjs-require-cwd", "$sdcardPath/${Constants.directoryName}/modules/")
                 .option("js.nashorn-compat", "true")
                 .option("js.ecmascript-version", "2022")
                 .allowHostClassLookup { true }.build()

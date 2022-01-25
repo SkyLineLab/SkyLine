@@ -12,8 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.skyline.msgbot.bot.runtime.RuntimeManager
-import com.skyline.msgbot.setting.PermissionUtil
+import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
+import com.skyline.msgbot.utils.ForegroundTask
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
         if (!RuntimeManager.hasRuntime("test")) {
             RuntimeManager.addRuntime("test")
         }
+        ForegroundTask.startForeground(this)
     }
 }
 
