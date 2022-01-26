@@ -19,7 +19,11 @@ import com.skyline.msgbot.utils.ForegroundTask
 class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
-        PermissionUtil.isAllowPermision(this)
+        if(PermissionUtil.isAllowPermision(this)) {
+            if (!RuntimeManager.hasRuntime("test")) {
+                RuntimeManager.addRuntime("test")
+            }
+        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,12 +38,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-        if(PermissionUtil.isAllowPermision(this)) {
-            if (!RuntimeManager.hasRuntime("test")) {
-                RuntimeManager.addRuntime("test")
-            }
-            ForegroundTask.startForeground(this)
-        }
+        ForegroundTask.startForeground(this)
     }
 }
 
