@@ -6,7 +6,6 @@
 
 package com.skyline.msgbot.bot.client
 
-import com.skyline.msgbot.bot.event.MessageEvent
 import org.graalvm.polyglot.Value
 
 class BotClient() {

@@ -6,20 +6,18 @@
 
 package com.skyline.msgbot.bot.project
 
-import android.os.Environment
 import com.skyline.msgbot.bot.api.FileStream
+import com.skyline.msgbot.bot.util.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
 object ProjectInitUtil {
-    private val sdcardPath = Environment.getExternalStorageDirectory().absolutePath
-
     fun createProject(projectName: String): Boolean {
         if (isExistsProject(projectName)) return false
         return try {
-            val appPath = File("$sdcardPath/${Constants.directoryName}")
+            val appPath = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}")
             if (!appPath.exists()) {
                 appPath.mkdir()
             }
@@ -28,7 +26,7 @@ object ProjectInitUtil {
                 dirPath.mkdir()
             }
             if(!isExistsModuleDir()) {
-                File("$sdcardPath/${Constants.directoryName}/modules").mkdir()
+                File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/modules").mkdir()
             }
             FileStream.write("${dirPath.absolutePath}/script.js", Constants.initScript)
             FileStream.write(
@@ -36,7 +34,7 @@ object ProjectInitUtil {
                 JSONObject().put("power", true)
                     .put("name", projectName).toString(4)
             )
-            val projectListPath = "$sdcardPath/${Constants.directoryName}/project.json"
+            val projectListPath = "${SDCardUtils.sdcardPath}/${Constants.directoryName}/project.json"
             val projectListDB: File = File(projectListPath)
             return if (!projectListDB.exists()) {
                 val jsonArray = JSONArray().put(
@@ -49,7 +47,7 @@ object ProjectInitUtil {
                     JSONObject().put("name", projectName)
                         .put("path", dirPath)
                 )
-                FileStream.write("${sdcardPath}/${Constants.directoryName}/project.json", jsonArray.toString(4))
+                FileStream.write("${SDCardUtils.sdcardPath}/${Constants.directoryName}/project.json", jsonArray.toString(4))
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -59,7 +57,7 @@ object ProjectInitUtil {
 
     fun isExistsProject(projectName: String): Boolean {
         return try {
-            val path: File = File("$sdcardPath/${Constants.directoryName}/$projectName/script.js")
+            val path: File = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/$projectName/script.js")
             path.exists()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -69,7 +67,7 @@ object ProjectInitUtil {
 
     fun isExistsModuleDir(): Boolean {
         return try {
-            val path = File("$sdcardPath/${Constants.directoryName}/modules")
+            val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/modules")
             path.exists()
         } catch (e: Exception) {
             e.printStackTrace()

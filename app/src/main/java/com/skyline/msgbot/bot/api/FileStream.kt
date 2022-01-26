@@ -6,17 +6,15 @@
 
 package com.skyline.msgbot.bot.api
 
-import android.os.Environment
+import com.skyline.msgbot.bot.util.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import java.io.*
 
 object FileStream {
-    private val sdcardPath = Environment.getExternalStorageDirectory().absolutePath
-
     fun read(name: String): String? {
         return try {
             val file: String = if (name.startsWith("/")) name
-            else "$sdcardPath/${Constants.directoryName}/$name"
+            else "${SDCardUtils.sdcardPath}/${Constants.directoryName}/$name"
             val str = loadString(file)
             str
         } catch (e: Exception) {
@@ -27,7 +25,7 @@ object FileStream {
     fun write(name: String, value: String): Boolean {
         return try {
             val file: String = if (name.startsWith("/")) name
-            else "$sdcardPath/${Constants.directoryName}/$name"
+            else "${SDCardUtils.sdcardPath}/${Constants.directoryName}/$name"
             saveString(value, file, false)
             true
         } catch (e: Exception) {
@@ -38,7 +36,7 @@ object FileStream {
     fun append(name: String, value: String): Boolean {
         return try {
             val file: String = if (name.startsWith("/")) name
-            else "$sdcardPath/${Constants.directoryName}/$name"
+            else "${SDCardUtils.sdcardPath}/${Constants.directoryName}/$name"
             saveString(value, file, true)
             true
         } catch (e: Exception) {
@@ -49,7 +47,7 @@ object FileStream {
     fun remove(name: String): Boolean {
         return try {
             val file: File = if (name.startsWith("/")) File(name)
-            else File("$sdcardPath/${Constants.directoryName}/$name")
+            else File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/$name")
             if (file.exists()) file.delete()
             true
         } catch (e: Exception) {
