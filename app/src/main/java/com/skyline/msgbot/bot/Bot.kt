@@ -9,15 +9,30 @@ package com.skyline.msgbot.bot
 import com.skyline.msgbot.bot.event.MessageEvent
 import com.skyline.msgbot.bot.runtime.RuntimeManager
 import org.graalvm.polyglot.Source
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 object Bot {
+    private var pool: ExecutorService = Executors.newCachedThreadPool()
+
     fun callOnMessage(data: MessageEvent) {
         RuntimeManager.clients.forEach { (key, value) ->
-            println("key = $key value = ${value.toString()} power = ${RuntimeManager.powerMap[key]}")
+            println("key = $key value = $value power = ${RuntimeManager.powerMap[key]}")
             if (RuntimeManager.powerMap[key] == true) {
                 println("call message!")
-                value.emit("message", data)
+                if (pool.isShutdown) {
+                    pool = Executors.newCachedThreadPool()
+                }
+                pool.execute {
+                    value.emit("message", data)
+                }
             }
+        }
+    }
+
+    fun destroyThread() {
+        if (!pool.isShutdown) {
+            pool.shutdown()
         }
     }
 

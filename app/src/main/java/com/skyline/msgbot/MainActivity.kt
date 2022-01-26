@@ -11,6 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
 import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
@@ -39,6 +40,12 @@ class MainActivity : ComponentActivity() {
             }
         }
         ForegroundTask.startForeground(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        ForegroundTask.release()
+        Bot.destroyThread()
     }
 }
 

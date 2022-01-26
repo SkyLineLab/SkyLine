@@ -13,11 +13,13 @@ import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Build
+import android.os.PowerManager
 import com.skyline.msgbot.MainActivity
 import com.skyline.msgbot.R
 
-
 object ForegroundTask {
+    private var wakeLock: PowerManager.WakeLock? = null
+
     fun startForeground(context: Context) {
         val intent = Intent(context, MainActivity::class.java)
         if (Build.VERSION.SDK_INT >= 26) context.startForegroundService(intent)
@@ -37,5 +39,16 @@ object ForegroundTask {
         noti.setContentText("executing bot");
         val notiMgmt = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notiMgmt.notify(1, noti.build())
+
+        wakeLock = (context.getSystemService(Context.POWER_SERVICE) as PowerManager).run {
+            newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MyApp::MyWakelockTag").apply {
+                acquire()
+            }
+        }
+        wakeLock?.acquire()
+    }
+
+    fun release() {
+        wakeLock?.release()
     }
 }
