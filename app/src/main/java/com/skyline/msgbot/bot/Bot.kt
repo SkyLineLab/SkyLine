@@ -16,6 +16,7 @@ object Bot {
     private var pool: ExecutorService = Executors.newCachedThreadPool()
 
     fun callOnMessage(data: MessageEvent) {
+        val messageEvent = arrayOf(data)
         RuntimeManager.clients.forEach { (key, value) ->
             println("key = $key value = $value power = ${RuntimeManager.powerMap[key]}")
             if (RuntimeManager.powerMap[key] == true) {
@@ -24,7 +25,7 @@ object Bot {
                     pool = Executors.newCachedThreadPool()
                 }
                 pool.execute {
-                    value.emit("message", data)
+                    value.emit("message", *messageEvent)
                 }
             }
         }

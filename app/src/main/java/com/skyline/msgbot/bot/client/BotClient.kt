@@ -22,11 +22,12 @@ class BotClient() {
         return this
     }
 
-    fun emit(event: String, arguments: MessageEvent): Boolean { //vararg arguments: Any
+    fun emit(event: String, vararg arguments: Any): Boolean { //vararg arguments: Any
         println("emit = $event")
         if (!eventMap.containsKey(event)) return false
         val func: Value? = eventMap[event]
-        func?.executeVoid(arguments)
+        println("debug = ${arguments.toString()}")
+        func?.executeVoid(*arguments)
         println("call!")
         return true
     }
