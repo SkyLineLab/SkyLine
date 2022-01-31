@@ -25,9 +25,6 @@ object ProjectInitUtil {
             if (!dirPath.exists()) {
                 dirPath.mkdir()
             }
-            if(!isExistsModuleDir()) {
-                File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/modules").mkdir()
-            }
             FileStream.write("${dirPath.absolutePath}/script.js", Constants.initScript)
             FileStream.write(
                 "${dirPath.absolutePath}/bot.json",
@@ -55,6 +52,18 @@ object ProjectInitUtil {
         }
     }
 
+    fun makeModuleDir(): Boolean {
+        return try {
+            if (!isExistsModuleDir()) {
+                File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("modules").mkdirs()
+                return true
+            } else true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
+    }
+
     fun isExistsProject(projectName: String): Boolean {
         return try {
             val path: File = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/$projectName/script.js")
@@ -65,7 +74,7 @@ object ProjectInitUtil {
         }
     }
 
-    fun isExistsModuleDir(): Boolean {
+    private fun isExistsModuleDir(): Boolean {
         return try {
             val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/modules")
             path.exists()

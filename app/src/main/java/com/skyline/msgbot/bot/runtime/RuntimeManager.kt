@@ -25,6 +25,7 @@ internal object RuntimeManager {
 
     fun addRuntime(projectName: String): Boolean {
         val res = ProjectInitUtil.createProject(projectName)
+        ProjectInitUtil.makeModuleDir()
         if (!res && !ProjectInitUtil.isExistsProject(projectName)) {
             println("Create Project Error")
             return false

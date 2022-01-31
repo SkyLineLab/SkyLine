@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.ui.PermissionPage
 import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
 import com.skyline.msgbot.utils.ForegroundTask
@@ -20,26 +21,27 @@ import com.skyline.msgbot.utils.ForegroundTask
 class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
-        if(PermissionUtil.isAllowPermision(this)) {
-            if (!RuntimeManager.hasRuntime("test")) {
-                RuntimeManager.addRuntime("test")
-            }
-        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SkyLineTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
-                }
+//                // A surface container using the 'background' color from the theme
+//                Surface(
+//                    modifier = Modifier.fillMaxSize(),
+//                    color = MaterialTheme.colorScheme.background
+//                ) {
+//                    Greeting("Android")
+//                }
+                PermissionPage()
             }
         }
         ForegroundTask.startForeground(this)
+        if(PermissionUtil.isAllowPermision(this)) {
+            if (!RuntimeManager.hasRuntime("test")) {
+                RuntimeManager.addRuntime("test")
+            }
+        }
     }
 
     override fun onDestroy() {
