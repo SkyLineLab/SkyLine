@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Checked exception thrown when a file system operation is denied, typically
  * due to a file permission or other access check.
@@ -36,7 +38,7 @@ package java.nio.file;
  *
  * @since 1.7
  */
-
+@SuppressLint("NewApi")
 public class AccessDeniedException
     extends FileSystemException
 {

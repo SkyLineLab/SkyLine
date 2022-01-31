@@ -25,12 +25,15 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Defines the options as to how symbolic links are handled.
  *
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public enum LinkOption implements OpenOption, CopyOption {
     /**
      * Do not follow symbolic links.

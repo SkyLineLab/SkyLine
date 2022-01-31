@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
@@ -95,6 +97,7 @@ import java.util.Iterator;
  * @see Paths
  */
 
+@SuppressLint("NewApi")
 public interface Path
     extends Comparable<Path>, Iterable<Path>, Watchable
 {

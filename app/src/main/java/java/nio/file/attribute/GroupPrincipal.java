@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 /**
  * A {@code UserPrincipal} representing a <em>group identity</em>, used to
  * determine access rights to objects in a file system. The exact definition of
@@ -39,4 +41,5 @@ package java.nio.file.attribute;
  * @see UserPrincipalLookupService#lookupPrincipalByGroupName
  */
 
+@SuppressLint("NewApi")
 public interface GroupPrincipal extends UserPrincipal { }

@@ -25,13 +25,15 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Checked exception thrown when a file cannot be moved as an atomic file system
  * operation.
  *
  * @since 1.7
  */
-
+@SuppressLint("NewApi")
 public class AtomicMoveNotSupportedException
     extends FileSystemException
 {

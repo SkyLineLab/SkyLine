@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.io.IOException;
@@ -68,6 +70,7 @@ import java.io.IOException;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public interface UserDefinedFileAttributeView
     extends FileAttributeView
 {

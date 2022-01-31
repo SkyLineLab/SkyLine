@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 import java.io.IOException;
 
 /**
@@ -80,6 +82,7 @@ import java.io.IOException;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public interface DosFileAttributeView
     extends BasicFileAttributeView
 {

@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Closeable;
@@ -88,6 +90,7 @@ import java.util.stream.StreamSupport;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public final class Files {
     private Files() { }
 

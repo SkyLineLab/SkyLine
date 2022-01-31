@@ -26,6 +26,9 @@
 package java.nio.file.attribute;
 
 import static java.nio.file.attribute.PosixFilePermission.*;
+
+import android.annotation.SuppressLint;
+
 import java.util.*;
 
 /**
@@ -35,6 +38,7 @@ import java.util.*;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public final class PosixFilePermissions {
     private PosixFilePermissions() { }
 

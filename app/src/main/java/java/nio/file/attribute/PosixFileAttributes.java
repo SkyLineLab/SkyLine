@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 import java.util.Set;
 
 /**
@@ -39,6 +41,7 @@ import java.util.Set;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public interface PosixFileAttributes
     extends BasicFileAttributes
 {

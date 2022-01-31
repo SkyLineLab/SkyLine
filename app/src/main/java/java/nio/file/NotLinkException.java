@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Checked exception thrown when a file system operation fails because a file
  * is not a symbolic link.
@@ -32,6 +34,7 @@ package java.nio.file;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public class NotLinkException
     extends FileSystemException
 {

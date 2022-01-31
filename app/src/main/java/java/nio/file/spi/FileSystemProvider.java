@@ -25,6 +25,8 @@
 
 package java.nio.file.spi;
 
+import android.annotation.SuppressLint;
+
 import java.nio.file.*;
 import java.nio.file.attribute.*;
 import java.nio.channels.*;
@@ -74,6 +76,7 @@ import java.security.PrivilegedAction;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public abstract class FileSystemProvider {
     // lock using when loading providers
     private static final Object lock = new Object();

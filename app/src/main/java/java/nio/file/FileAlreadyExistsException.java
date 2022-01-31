@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Checked exception thrown when an attempt is made to create a file or
  * directory and a file of that name already exists.
@@ -32,6 +34,7 @@ package java.nio.file;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public class FileAlreadyExistsException
     extends FileSystemException
 {

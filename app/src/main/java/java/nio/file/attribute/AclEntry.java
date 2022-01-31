@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 import java.util.*;
 
 /**
@@ -61,12 +63,13 @@ import java.util.*;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public final class AclEntry {
 
-    private final AclEntryType type;
-    private final UserPrincipal who;
-    private final Set<AclEntryPermission> perms;
-    private final Set<AclEntryFlag> flags;
+    public final AclEntryType type;
+    public final UserPrincipal who;
+    public final Set<AclEntryPermission> perms;
+    public final Set<AclEntryFlag> flags;
 
     // cached hash code
     private volatile int hash;
@@ -277,7 +280,7 @@ public final class AclEntry {
      * @return  a new builder
      */
     public static Builder newBuilder(AclEntry entry) {
-        return new Builder(entry.type, entry.who, entry.perms, entry.flags);
+        return new Builder(entry.type(), entry.principal(), entry.permissions(), entry.flags());
     }
 
     /**
@@ -345,13 +348,13 @@ public final class AclEntry {
         if (ob == null || !(ob instanceof AclEntry))
             return false;
         AclEntry other = (AclEntry)ob;
-        if (this.type != other.type)
+        if (this.type != other.type())
             return false;
-        if (!this.who.equals(other.who))
+        if (!this.who.equals(other.principal()))
             return false;
-        if (!this.perms.equals(other.perms))
+        if (!this.perms.equals(other.permissions()))
             return false;
-        if (!this.flags.equals(other.flags))
+        if (!this.flags.equals(other.flags()))
             return false;
         return true;
     }

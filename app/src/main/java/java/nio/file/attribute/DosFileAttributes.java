@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 /**
  * File attributes associated with a file in a file system that supports
  * legacy "DOS" attributes.
@@ -38,6 +40,7 @@ package java.nio.file.attribute;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public interface DosFileAttributes
     extends BasicFileAttributes
 {

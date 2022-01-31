@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 import java.nio.file.attribute.BasicFileAttributes;
 import java.io.IOException;
 import java.util.Objects;
@@ -40,6 +42,7 @@ import java.util.Objects;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public class SimpleFileVisitor<T> implements FileVisitor<T> {
     /**
      * Initializes a new instance of this class.

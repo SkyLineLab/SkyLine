@@ -25,12 +25,15 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Defines the <em>standard</em> event kinds.
  *
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public final class StandardWatchEventKinds {
     private StandardWatchEventKinds() { }
 

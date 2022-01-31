@@ -25,12 +25,15 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Defines the standard copy options.
  *
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public enum StandardCopyOption implements CopyOption {
     /**
      * Replace an existing file if it exists.

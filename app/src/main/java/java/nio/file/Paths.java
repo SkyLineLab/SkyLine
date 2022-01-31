@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 import java.nio.file.spi.FileSystemProvider;
 import java.net.URI;
 
@@ -35,6 +37,7 @@ import java.net.URI;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public final class Paths {
     private Paths() { }
 

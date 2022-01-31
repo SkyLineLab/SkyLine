@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Checked exception thrown when a file system operation fails because a
  * directory is not empty.
@@ -32,6 +34,7 @@ package java.nio.file;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public class DirectoryNotEmptyException
     extends FileSystemException
 {

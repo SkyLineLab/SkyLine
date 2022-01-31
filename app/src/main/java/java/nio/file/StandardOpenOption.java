@@ -25,12 +25,15 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Defines the standard open options.
  *
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public enum StandardOpenOption implements OpenOption {
     /**
      * Open for read access.

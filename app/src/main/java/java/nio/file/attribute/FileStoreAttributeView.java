@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 /**
  * An attribute view that is a read-only or updatable view of the attributes of
  * a {@link java.nio.file.FileStore}.
@@ -32,6 +34,7 @@ package java.nio.file.attribute;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public interface FileStoreAttributeView
     extends AttributeView
 {

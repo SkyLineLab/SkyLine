@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 import java.nio.file.attribute.*;
 import java.io.InputStream;
 import java.io.IOException;
@@ -33,7 +35,7 @@ import java.io.IOException;
  * Helper class to support copying or moving files when the source and target
  * are associated with different providers.
  */
-
+@SuppressLint("NewApi")
 class CopyMoveHelper {
     private CopyMoveHelper() { }
 

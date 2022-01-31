@@ -24,6 +24,8 @@
  */
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 import java.nio.file.attribute.*;
 import java.nio.channels.SeekableByteChannel;
 import java.util.Set;
@@ -56,6 +58,7 @@ import java.io.IOException;
  * @since   1.7
  */
 
+@SuppressLint("NewApi")
 public interface SecureDirectoryStream<T>
     extends DirectoryStream<T>
 {

@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 /**
  * An attribute view that is a read-only or updatable view of non-opaque
  * values associated with a file in a filesystem. This interface is extended or
@@ -36,6 +38,7 @@ package java.nio.file.attribute;
  * @see java.nio.file.Files#getFileAttributeView(Path,Class,java.nio.file.LinkOption[])
  */
 
+@SuppressLint("NewApi")
 public interface FileAttributeView
     extends AttributeView
 {

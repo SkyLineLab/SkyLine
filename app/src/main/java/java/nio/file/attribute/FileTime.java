@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -45,6 +47,7 @@ import java.util.concurrent.TimeUnit;
  * @see java.nio.file.Files#getLastModifiedTime
  */
 
+@SuppressLint("NewApi")
 public final class FileTime
     implements Comparable<FileTime>
 {
@@ -305,7 +308,7 @@ public final class FileTime
         return toInstant().hashCode();
     }
 
-    private long toDays() {
+    public long toDays() {
         if (unit != null) {
             return unit.toDays(value);
         } else {
@@ -336,8 +339,8 @@ public final class FileTime
     @Override
     public int compareTo(FileTime other) {
         // same granularity
-        if (unit != null && unit == other.unit) {
-            return Long.compare(value, other.value);
+        if (unit != null && unit == unit) {
+            return Long.compare(value, value);
         } else {
             // compare using instant representation when unit differs
             long secs = toInstant().getEpochSecond();
@@ -357,9 +360,9 @@ public final class FileTime
             // use daysSinceEpoch and nanosOfDays, which will not
             // saturate during calculation.
             long days = toDays();
-            long daysOther = other.toDays();
+            long daysOther = toDays();
             if (days == daysOther) {
-                return Long.compare(toExcessNanos(days), other.toExcessNanos(daysOther));
+                return Long.compare(toExcessNanos(days), toExcessNanos(daysOther));
             }
             return Long.compare(days, daysOther);
         }
@@ -380,6 +383,14 @@ public final class FileTime
             w /= 10;
         }
         return sb;
+    }
+
+    public TimeUnit getUnit() {
+        return unit;
+    }
+
+    public long getValue() {
+        return value;
     }
 
     /**
