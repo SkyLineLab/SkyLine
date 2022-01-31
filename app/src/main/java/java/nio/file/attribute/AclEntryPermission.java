@@ -25,6 +25,8 @@
 
 package java.nio.file.attribute;
 
+import android.annotation.SuppressLint;
+
 /**
  * Defines the permissions for use with the permissions component of an ACL
  * {@link AclEntry entry}.
@@ -32,6 +34,7 @@ package java.nio.file.attribute;
  * @since 1.7
  */
 
+@SuppressLint("NewApi")
 public enum AclEntryPermission {
 
     /**

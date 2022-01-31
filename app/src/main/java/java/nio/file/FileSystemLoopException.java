@@ -25,6 +25,8 @@
 
 package java.nio.file;
 
+import android.annotation.SuppressLint;
+
 /**
  * Checked exception thrown when a file system loop, or cycle, is encountered.
  *
@@ -32,6 +34,7 @@ package java.nio.file;
  * @see Files#walkFileTree
  */
 
+@SuppressLint("NewApi")
 public class FileSystemLoopException
     extends FileSystemException
 {

@@ -35,7 +35,6 @@ import android.annotation.SuppressLint;
  *
  * @since 1.7
  *
- * @see java.nio.file.Files#getFileAttributeView(Path,Class,java.nio.file.LinkOption[])
  */
 
 @SuppressLint("NewApi")
