@@ -10,6 +10,7 @@ import com.skyline.msgbot.bot.api.FileStream
 import com.skyline.msgbot.bot.client.BotClient
 import com.skyline.msgbot.bot.project.ProjectInitUtil
 import com.skyline.msgbot.bot.util.ApiApplyUtil
+import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.bot.util.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import org.graalvm.polyglot.Context
@@ -31,16 +32,7 @@ internal object RuntimeManager {
             return false
         } else {
             val size: Int = runtimes.count() + 1
-            val context: Context = Context.newBuilder("js")
-                .allowHostAccess(HostAccess.ALL)
-                .allowExperimentalOptions(true)
-                .allowIO(true)
-                .option("js.commonjs-require", "true")
-                .option("js.commonjs-require-cwd", "${SDCardUtils.sdcardPath}/${Constants.directoryName}/modules")
-                .option("js.syntax-extensions", "true")
-                .option("js.nashorn-compat", "true")
-                .option("js.ecmascript-version", "2022")
-                .allowHostClassLookup { true }.build()
+            val context: Context = ContextUtils.getJSContext()
             ApiApplyUtil.applyBotApi(context.getBindings("js"), true, size)
             runtimes[size] = context
             powerMap[size] = true

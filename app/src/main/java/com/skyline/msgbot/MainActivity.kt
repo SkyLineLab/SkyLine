@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.ui.PermissionPage
 import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
@@ -23,16 +24,19 @@ class MainActivity : ComponentActivity() {
         super.onStart()
         PermissionUtil.requestAllPermision(this, true)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SkyLineTheme {
-//                // A surface container using the 'background' color from the theme
+                // A surface container using the 'background' color from the theme
 //                Surface(
 //                    modifier = Modifier.fillMaxSize(),
 //                    color = MaterialTheme.colorScheme.background
 //                ) {
-//                    Greeting("Android")
+//                    val context = ContextUtils.getJSContext()
+//                    val value = context.eval("js", "String(java.lang.String)")
+//                    Greeting(value.asString())
 //                }
                 PermissionPage()
             }

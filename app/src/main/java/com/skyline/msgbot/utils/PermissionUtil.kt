@@ -27,7 +27,6 @@ object PermissionUtil {
                 val intent = Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS")
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
-                Toast.makeText(context, "알림 읽기 권한이 없습니다 :( 권한을 허용해주세요", Toast.LENGTH_LONG).show()
             }
             false
         } else true
@@ -36,7 +35,12 @@ object PermissionUtil {
 
     fun requestIgnoreBatteryOptimizations(context: Context, req: Boolean): Boolean {
         val powerCheck = context.getSystemService(ComponentActivity.POWER_SERVICE) as PowerManager
-        return if(powerCheck.isIgnoringBatteryOptimizations(context.packageName)) true
+        return if(if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                powerCheck.isIgnoringBatteryOptimizations(context.packageName)
+            } else {
+                return false
+            }
+        ) true
         else {
             if (req){
                 val intent = Intent()
@@ -60,7 +64,6 @@ object PermissionUtil {
             } else {
                 if (req) {
                     context.startActivity(Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION))
-                    Toast.makeText(context, "파일 권한이 없습니다 :( 권한을 허용해주세요", Toast.LENGTH_LONG).show()
                 }
                 false
             }
@@ -74,7 +77,6 @@ object PermissionUtil {
                         context as Activity,
                         permissions, 0
                     )
-                    Toast.makeText(context, "파일 권한이 없습니다 :( 권한을 허용해주세요", Toast.LENGTH_LONG).show()
                 }
                 false
             }
