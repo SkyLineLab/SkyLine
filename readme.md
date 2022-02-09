@@ -11,7 +11,7 @@ We modified the part that doesn't work on Android and changed it to work on Andr
 #### Android API Support
 - [x] over 26
 - [x] over 24
-- [?] over 21
+- [ ] over 21
 `API 24 or higher guarantees normal operation, but 21 to 23 are theoretically possible, but no bugchecks have been made.`
 ## example
 ```javascript
