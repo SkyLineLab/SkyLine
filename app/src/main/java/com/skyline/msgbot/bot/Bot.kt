@@ -1,13 +1,14 @@
 /**
- * Created by naijun on 2022/01/23
- * Copyright (c) naijun.
- * This code is licensed under the MIT Licensing Principles.
+ * Copyright (c) 2022 SkyLineLab
+ *
+ * PLEASE CHECK LICENSE THE LICENSE OF THE PROJECT REPOSITORY
  */
 
 package com.skyline.msgbot.bot
 
 import com.skyline.msgbot.bot.event.MessageEvent
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.bot.session.BotChannelSession
 import org.graalvm.polyglot.Source
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -16,6 +17,7 @@ object Bot {
     private var pool: ExecutorService = Executors.newCachedThreadPool()
 
     fun callOnMessage(data: MessageEvent) {
+        BotChannelSession.addSession(data) // add Session
         val messageEvent = arrayOf(data)
         RuntimeManager.clients.forEach { (key, value) ->
             println("key = $key value = $value power = ${RuntimeManager.powerMap[key]}")

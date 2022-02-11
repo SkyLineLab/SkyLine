@@ -1,9 +1,8 @@
 /**
- * Created by naijun on 2022/01/23
- * Copyright (c) naijun.
- * This code is licensed under the MIT Licensing Principles.
+ * Copyright (c) 2022 SkyLineLab
+ *
+ * PLEASE CHECK LICENSE THE LICENSE OF THE PROJECT REPOSITORY
  */
-
 package com.skyline.msgbot.bot.api
 
 import com.skyline.msgbot.bot.util.SDCardUtils

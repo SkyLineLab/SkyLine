@@ -1,12 +1,13 @@
 /**
- * Created by naijun on 2022/01/23
- * Copyright (c) naijun.
- * This code is licensed under the MIT Licensing Principles.
+ * Copyright (c) 2022 SkyLineLab
+ *
+ * PLEASE CHECK LICENSE THE LICENSE OF THE PROJECT REPOSITORY
  */
 
 package com.skyline.msgbot.bot.api
 
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.bot.session.BotChannelSession
 import com.skyline.msgbot.bot.util.ApiApplyUtil
 import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.bot.util.SDCardUtils
@@ -17,10 +18,17 @@ import java.io.DataOutputStream
 import java.io.IOException
 import java.io.InputStreamReader
 
+/**
+ * Api Object
+ *
+ * @author naijun
+ */
 object Api {
     fun compile(): Boolean {
         try {
             for (runtime in RuntimeManager.runtimes) {
+                println(runtime)
+                runtime.value.close()
                 val cx = ContextUtils.getJSContext()
                 ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
                 RuntimeManager.runtimes[runtime.key] = cx
@@ -39,11 +47,11 @@ object Api {
         }
     }
 
-    fun getRootPermission(): Boolean {
+    fun getRootPermission(path: String): Boolean {
         return try {
-            val process = Runtime.getRuntime().exec("su")
+            val strArr = arrayOf("su", "mount -o remount rw $path", "chmod -R 777 $path")
+            val process = Runtime.getRuntime().exec(strArr)
             val os = DataOutputStream(process.outputStream)
-            val reader = BufferedReader(InputStreamReader(process.inputStream))
             os.writeBytes("exit\n")
             os.flush()
             process.waitFor()
@@ -51,5 +59,11 @@ object Api {
         } catch (e: IOException) {
             false
         }
+    }
+
+    fun sendRoom(room: Any, text: Any): Boolean {
+        val session = BotChannelSession.getSession(room.toString()) ?: return false
+        session.room.send(text.toString())
+        return true
     }
 }
