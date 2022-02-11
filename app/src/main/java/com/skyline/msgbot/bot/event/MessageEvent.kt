@@ -24,7 +24,7 @@ class BotChannel(
         get() = bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
 
     override val isGroupChat: Boolean
-        get() = this.name != ""
+        get() = this.name == bundle.getString("android.summaryText")
 
     override fun send(message: Any?): Boolean {
         val sendIntent = Intent()
