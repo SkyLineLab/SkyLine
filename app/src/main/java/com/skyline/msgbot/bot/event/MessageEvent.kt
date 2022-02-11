@@ -21,7 +21,7 @@ class BotChannel(
     private val statusBarNotification: StatusBarNotification
 ) : ChatChannel {
     override val name: String
-        get() = bundle.getString("android.summaryText") ?: ""
+        get() = bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
 
     override val isGroupChat: Boolean
         get() = this.name != ""
