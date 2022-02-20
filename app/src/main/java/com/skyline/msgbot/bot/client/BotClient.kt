@@ -21,17 +21,21 @@ class BotClient() {
         return this
     }
 
+    @Synchronized
     fun emit(event: String, vararg arguments: Any): Boolean { //vararg arguments: Any
-        try {
-            println("emit = $event")
-            if (!eventMap.containsKey(event)) return false
-            val func: Value? = eventMap[event]
-            println("debug = ${arguments.toString()}")
-            func?.executeVoid(*arguments)
-            println("call!")
-            return true
-        } catch (e: IllegalStateException) {
-            return false
+        kotlin.synchronized(BotClient::class.java) {
+            try {
+                println("emit = $event")
+                if (!eventMap.containsKey(event)) return false
+                val func: Value? = eventMap[event]
+                println("debug = ${arguments.toString()}")
+                func?.executeVoid(*arguments)
+                println("call!")
+                return true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return false
+            }
         }
     }
 }

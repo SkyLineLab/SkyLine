@@ -13,6 +13,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
+import org.graalvm.polyglot.Value
 
 class BotChannel(
     private val bundle: Bundle,
@@ -20,17 +21,15 @@ class BotChannel(
     private val session: Notification.Action,
     private val statusBarNotification: StatusBarNotification
 ) : ChatChannel {
-    override val name: String
-        get() = bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
+    override val name: String = bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
 
-    override val isGroupChat: Boolean
-        get() = this.name == bundle.getString("android.summaryText")
+    override val isGroupChat: Boolean = name == bundle.getString("android.summaryText")
 
-    override fun send(message: Any?): Boolean {
+    override fun send(message: Value?): Boolean {
         val sendIntent = Intent()
         val msg = Bundle()
         for (inputable in session.remoteInputs)
-            msg.putCharSequence(inputable.resultKey, message?.toString())
+            msg.putCharSequence(inputable.resultKey, message?.`as`(Any::class.java).toString())
         RemoteInput.addResultsToIntent(session.remoteInputs, sendIntent, msg)
         return try {
             session.actionIntent.send(context, 0, sendIntent)
@@ -63,7 +62,7 @@ interface ChatChannel {
 
     val isGroupChat: Boolean
 
-    fun send(message: Any?): Boolean
+    fun send(message: Value?): Boolean
 
     fun markAsRead(): Boolean
 }

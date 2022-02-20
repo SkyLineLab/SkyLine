@@ -50,7 +50,6 @@ object FileStream {
             if (file.exists()) file.delete()
             true
         } catch (e: Exception) {
-            //toast(e.toString());
             false
         }
     }

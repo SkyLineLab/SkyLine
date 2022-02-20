@@ -7,30 +7,29 @@
 package com.skyline.msgbot
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import com.oracle.truffle.js.builtins.JavaBuiltins
+import com.oracle.truffle.js.builtins.commonjs.CommonJSRequireBuiltinNodeGen
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
-import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.ui.HomePage
-import com.skyline.msgbot.ui.PermissionPage
 import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
+import com.skyline.msgbot.utils.ContextHelper
 import com.skyline.msgbot.utils.ForegroundTask
+import java.lang.reflect.InvocationTargetException
+import javax.script.ScriptEngineManager
 
 class MainActivity : ComponentActivity() {
+
     override fun onStart() {
         super.onStart()
         PermissionUtil.requestAllPermision(this, true)
@@ -46,6 +45,16 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    PermissionPage() //DEBUG
                     HomePage(context = this@MainActivity)
+                    ContextHelper.contextGetter = {
+                        this
+                    }
+                    try {
+                        val test = ScriptEngineManager().getEngineByExtension("kts").eval("println(\"HelloWorld!\")");
+                        print("TEST = ${test.toString()}")
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        e.cause?.printStackTrace()
+                    }
                 }
             }
         }
@@ -62,6 +71,7 @@ class MainActivity : ComponentActivity() {
         ForegroundTask.release()
         Bot.destroyThread()
     }
+
 }
 
 @Composable

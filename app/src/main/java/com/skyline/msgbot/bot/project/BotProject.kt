@@ -13,4 +13,9 @@ class BotProject(val runtimeID: Number) {
     fun getClient(): BotClient? {
         return RuntimeManager.clients[runtimeID];
     }
+
+    fun on(): Boolean {
+        RuntimeManager.runtimes.remove(runtimeID)
+        return true
+    }
 }

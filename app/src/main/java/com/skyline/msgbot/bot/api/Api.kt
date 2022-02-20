@@ -6,13 +6,16 @@
 
 package com.skyline.msgbot.bot.api
 
+import android.content.Context
 import com.skyline.msgbot.bot.runtime.RuntimeManager
 import com.skyline.msgbot.bot.session.BotChannelSession
 import com.skyline.msgbot.bot.util.ApiApplyUtil
 import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.bot.util.SDCardUtils
 import com.skyline.msgbot.setting.Constants
+import com.skyline.msgbot.utils.ContextHelper
 import org.graalvm.polyglot.Source
+import org.graalvm.polyglot.Value
 import java.io.BufferedReader
 import java.io.DataOutputStream
 import java.io.IOException
@@ -26,9 +29,23 @@ import java.io.InputStreamReader
 object Api {
     fun compile(): Boolean {
         try {
+//            Thread {
+//                for (runtime in RuntimeManager.runtimes) {
+//                    println(runtime)
+//                    val cx = ContextUtils.getJSContext()
+//                    ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
+//                    RuntimeManager.runtimes[runtime.key] = cx
+//                    RuntimeManager.runtimes[runtime.key]?.eval(
+//                        Source.create(
+//                            "js",
+//                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+//                        )
+//                    )
+//                }
+//            }.start()
+
             for (runtime in RuntimeManager.runtimes) {
                 println(runtime)
-                runtime.value.close()
                 val cx = ContextUtils.getJSContext()
                 ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
                 RuntimeManager.runtimes[runtime.key] = cx
@@ -61,9 +78,13 @@ object Api {
         }
     }
 
-    fun sendRoom(room: Any, text: Any): Boolean {
+    fun sendRoom(room: Any, text: Value?): Boolean {
         val session = BotChannelSession.getSession(room.toString()) ?: return false
-        session.room.send(text.toString())
+        session.room.send(text)
         return true
+    }
+
+    fun getContext(): Context? {
+        return ContextHelper.contextGetter?.invoke();
     }
 }
