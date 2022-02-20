@@ -36,6 +36,11 @@ class TimerBuiltinsModule {
 
         private var timeoutStack = 0
         private val timerMap: HashMap<Number, Timer> = hashMapOf()
+        private val timerPowerMap: HashMap<Number, Boolean> = hashMapOf()
+
+        private var intervalStack = 0
+        private val intervalMap: HashMap<Number, Timer> = hashMapOf()
+        private val intervalPowerMap: HashMap<Number, Boolean> = hashMapOf()
 
         private fun pushTimeout() {
             timeoutStack++
@@ -68,12 +73,17 @@ class TimerBuiltinsModule {
                     }
 
                     try {
+                        if (!callback.canExecute()) {
+                            return // not function
+                        }
+
                         callback.executeVoid(*args)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     } finally {
                         phaser.arriveAndDeregister()
                         popTimeout()
+                        timerPowerMap[timeoutStack] = false
                     }
                 }
             }, delay.toLong())
@@ -86,13 +96,62 @@ class TimerBuiltinsModule {
         @HostAccess.Export
         fun clearTimeout(stackId: Number) {
             timerMap[stackId]?.cancel()
-            popTimeout()
+            if (timerPowerMap[timeoutStack] == true) {
+                popTimeout()
+                timerPowerMap[timeoutStack] = false
+            }
+        }
+
+        private fun pushInterval() {
+            intervalStack++
+        }
+
+        private fun popInterval() {
+            intervalStack--
+            if (intervalStack > 0) return
+
+            intervalMap[intervalStack]?.cancel()
+            phaser.forceTermination()
         }
 
         @HostAccess.Export
-        fun setInterval(callback: Value, delay: Number, vararg args: Value?) {
-            fun loop() {
-                setTimeout(callback, delay)
+        fun setInterval(callback: Value, delay: Number, vararg args: Value?): Number {
+            val phase = phaser.register()
+            val timer = Timer()
+            val canceled = false
+
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    if (canceled) {
+                        timer.cancel()
+                        return
+                    }
+
+                    try {
+                        if (!callback.canExecute()) {
+                            return // not function
+                        }
+
+                        callback.executeVoid(*args)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+            }, delay.toLong(), delay.toLong())
+
+            pushInterval()
+            intervalPowerMap[intervalStack] = true
+            intervalMap[intervalStack] = timer
+            return intervalStack;
+        }
+
+        @HostAccess.Export
+        fun clearInterval(stackId: Number) {
+            intervalMap[stackId]?.cancel()
+            phaser.arriveAndDeregister()
+            if (intervalPowerMap[intervalStack] == true) {
+                popInterval()
+                intervalPowerMap[intervalStack] = false
             }
         }
     }
