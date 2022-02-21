@@ -1,10 +1,10 @@
 # NodeModule
 ## Buffer
-아직 안 구현됨
+Not yet
+
 ## Crypto
-아직 안 구현됨
+Not yet
+
 ## Timer
-### setTimeout/clearTimeout
-구현 완료
-### setInterval/clearInterval
-아직 안 구현됨
+- [x] setTimeout/clearTimeout
+- [x] setInterval/clearInterval
