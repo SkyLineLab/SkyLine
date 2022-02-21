@@ -27,5 +27,9 @@ object ApiApplyUtil {
         value.putMember("clearTimeout", Function<Any, Any> { stackId ->
             TimerBuiltinsModule.clearTimeout(stackId as Number)
         })
+        value.putMember("setInterval", TimerBuiltinsModule.Companion.SetInterval())
+        value.putMember("clearInterval", Function<Any, Any> { stackId ->
+            TimerBuiltinsModule.clearInterval(stackId as Number)
+        })
     }
 }

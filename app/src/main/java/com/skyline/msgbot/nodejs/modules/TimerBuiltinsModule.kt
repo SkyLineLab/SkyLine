@@ -32,6 +32,16 @@ class TimerBuiltinsModule {
             }
         }
 
+        class SetInterval : TimerInterface.Companion.SetTimeoutFunction<Value, Number, List<Value?>> {
+            override fun apply(callback: Value, delay: Number, args: List<Value?>): Number {
+                return setInterval(callback, delay, *args.toTypedArray())
+            }
+
+            override fun apply(callback: Value, delay: Number): Number {
+                return setInterval(callback, delay)
+            }
+        }
+
         private val phaser = Phaser();
 
         private var timeoutStack = 0
