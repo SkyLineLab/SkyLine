@@ -2,8 +2,7 @@
 Unofficial KakaoTalk ChatBot for Android
 ## Script Engine
 - [x] [javascript](https://github.com/oracle/graaljs)
-- [ ] [python](https://github.com/oracle/graalpython)
-- [ ] [ruby](https://github.com/oracle/truffleruby)
+- [ ] kotlin script
 ## Why GraalJS?
 The Rhino engine also supports ES2015 poorly, while the GraalJS supports the majority of grammar until ES2022.
 ### Warning
