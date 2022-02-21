@@ -28,6 +28,7 @@ object FileStream {
             saveString(value, file, false)
             true
         } catch (e: Exception) {
+            e.printStackTrace()
             false
         }
     }

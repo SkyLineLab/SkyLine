@@ -55,7 +55,7 @@ object ProjectInitUtil {
     fun makeModuleDir(): Boolean {
         return try {
             if (!isExistsModuleDir()) {
-                File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("modules").mkdirs()
+                File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").mkdirs()
                 return true
             } else true
         } catch (e: Exception) {
@@ -76,7 +76,7 @@ object ProjectInitUtil {
 
     private fun isExistsModuleDir(): Boolean {
         return try {
-            val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/modules")
+            val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/node_modules")
             path.exists()
         } catch (e: Exception) {
             e.printStackTrace()

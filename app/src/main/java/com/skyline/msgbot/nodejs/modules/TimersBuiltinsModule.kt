@@ -20,7 +20,7 @@ import kotlin.collections.HashMap
  * @author naijun
  */
 @NodeModule(name = "timers")
-class TimerBuiltinsModule {
+class TimersBuiltinsModule {
     companion object {
         class SetTimeOut : TimerInterface.Companion.SetTimeoutFunction<Value, Number, List<Value?>> {
             override fun apply(callback: Value, delay: Number, args: List<Value?>): Number {
@@ -39,6 +39,16 @@ class TimerBuiltinsModule {
 
             override fun apply(callback: Value, delay: Number): Number {
                 return setInterval(callback, delay)
+            }
+        }
+
+        class SetImmediate : TimerInterface.Companion.SetImmediateFunction<Value, List<Value?>> {
+            override fun apply(callback: Value, args: List<Value?>): Number {
+                return setImmediate(callback, *args.toTypedArray())
+            }
+
+            override fun apply(callback: Value): Number {
+                return setImmediate(callback)
             }
         }
 
@@ -163,6 +173,16 @@ class TimerBuiltinsModule {
                 popInterval()
                 intervalPowerMap[intervalStack] = false
             }
+        }
+
+        @HostAccess.Export
+        fun setImmediate(callback: Value, vararg args: Value?): Number {
+            return setTimeout(callback, 0, *args);
+        }
+
+        @HostAccess.Export
+        fun clearImmediate(stackId: Number) {
+            clearTimeout(stackId)
         }
     }
 }

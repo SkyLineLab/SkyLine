@@ -9,8 +9,7 @@ package com.skyline.msgbot.bot.util
 import com.skyline.msgbot.bot.api.Api
 import com.skyline.msgbot.bot.api.FileStream
 import com.skyline.msgbot.bot.project.BotProject
-import com.skyline.msgbot.nodejs.interfaces.TimerInterface
-import com.skyline.msgbot.nodejs.modules.TimerBuiltinsModule
+import com.skyline.msgbot.nodejs.modules.TimersBuiltinsModule
 import org.graalvm.polyglot.Value
 import java.util.function.Function
 
@@ -22,14 +21,19 @@ object ApiApplyUtil {
             value.putMember("BotProject", BotProject(runtimeId))
         }
 
-        value.putMember("timers", TimerBuiltinsModule)
-        value.putMember("setTimeout", TimerBuiltinsModule.Companion.SetTimeOut())
+        // nodejs: Timer
+        value.putMember("timers", TimersBuiltinsModule)
+        value.putMember("setTimeout", TimersBuiltinsModule.Companion.SetTimeOut())
         value.putMember("clearTimeout", Function<Any, Any> { stackId ->
-            TimerBuiltinsModule.clearTimeout(stackId as Number)
+            TimersBuiltinsModule.clearTimeout(stackId as Number)
         })
-        value.putMember("setInterval", TimerBuiltinsModule.Companion.SetInterval())
+        value.putMember("setInterval", TimersBuiltinsModule.Companion.SetInterval())
         value.putMember("clearInterval", Function<Any, Any> { stackId ->
-            TimerBuiltinsModule.clearInterval(stackId as Number)
+            TimersBuiltinsModule.clearInterval(stackId as Number)
+        })
+        value.putMember("setImmediate", TimersBuiltinsModule.Companion.SetImmediate())
+        value.putMember("clearImmediate", Function<Any, Any> { stackId ->
+            TimersBuiltinsModule.clearInterval(stackId as Number)
         })
     }
 }

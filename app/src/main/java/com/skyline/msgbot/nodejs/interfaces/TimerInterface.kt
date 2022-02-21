@@ -15,5 +15,11 @@ class TimerInterface {
             fun apply(callback: callback, delay: delay, args: args): Number
             fun apply(callback: callback, delay: delay): Number
         }
+
+        @FunctionalInterface
+        interface SetImmediateFunction<callback: Value, args: List<Value?>> {
+            fun apply(callback: callback, args: args): Number
+            fun apply(callback: callback): Number
+        }
     }
 }

@@ -20,6 +20,7 @@ import com.oracle.truffle.js.builtins.JavaBuiltins
 import com.oracle.truffle.js.builtins.commonjs.CommonJSRequireBuiltinNodeGen
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.nodejs.utils.NodeJSModuleInitUtils
 import com.skyline.msgbot.ui.HomePage
 import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
@@ -48,18 +49,12 @@ class MainActivity : ComponentActivity() {
                     ContextHelper.contextGetter = {
                         this
                     }
-                    try {
-                        val test = ScriptEngineManager().getEngineByExtension("kts").eval("println(\"HelloWorld!\")");
-                        print("TEST = ${test.toString()}")
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        e.cause?.printStackTrace()
-                    }
                 }
             }
         }
         ForegroundTask.startForeground(this)
         if(PermissionUtil.requestAllPermision(this, false)) {
+            NodeJSModuleInitUtils.initAllModule()
             if (!RuntimeManager.hasRuntime("test")) {
                 RuntimeManager.addRuntime("test")
             }
