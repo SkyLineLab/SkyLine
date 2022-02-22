@@ -13,6 +13,7 @@ import android.widget.Toast
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.api.ProfileImage
 import com.skyline.msgbot.bot.event.BotChannel
+import com.skyline.msgbot.bot.event.BotSender
 import com.skyline.msgbot.bot.event.ChatSender
 import com.skyline.msgbot.bot.event.MessageEvent
 import com.skyline.msgbot.setting.Constants
@@ -42,17 +43,18 @@ class MessageListenerService : NotificationListenerService() {
                     val data = sbn.notification.extras
                     val message = data.get("android.text").toString()
                     val channel = BotChannel(data, applicationContext, action, sbn)
-                    val profileImage = ProfileImage(applicationContext, sbn)
-                    val sender = ChatSender(
-                        data.get("android.title").toString(),
-                        profileImage.hashCode,
-                        profileImage.getProfileHash()
+                    val profileImage = ProfileImage(applicationContext, sbn, data)
+                    val sender = BotSender(
+                        data,
+                        profileImage,
+                        sbn.packageName
                     )
                     val eventData = MessageEvent(
                         message,
                         sender,
                         channel,
-                        sbn.packageName
+                        sbn.packageName,
+                        data
                     )
                     println("ready call message")
                     Bot.callOnMessage(eventData)

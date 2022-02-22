@@ -8,11 +8,15 @@ package com.skyline.msgbot.bot.event
 
 import android.app.Notification
 import android.app.PendingIntent
+import android.app.Person
 import android.app.RemoteInput
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
+import com.skyline.msgbot.bot.api.ProfileImage
+import com.skyline.msgbot.utils.AppUtil
 import org.graalvm.polyglot.Value
 
 class BotChannel(
@@ -21,9 +25,23 @@ class BotChannel(
     private val session: Notification.Action,
     private val statusBarNotification: StatusBarNotification
 ) : ChatChannel {
-    override val name: String = bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
+    override val name: String
+        get() {
+            return if (AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+                bundle.getString("android.subText") ?: ""
+            } else {
+                bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
+            }
+        }
 
-    override val isGroupChat: Boolean = name == bundle.getString("android.summaryText")
+    override val isGroupChat: Boolean
+        get() {
+            return if (AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+                bundle.getBoolean("android.isGroupConversation")
+            } else {
+                name == bundle.getString("android.summaryText")
+            }
+        }
 
     override fun send(message: Value?): Boolean {
         val sendIntent = Intent()
@@ -50,11 +68,33 @@ class BotChannel(
     }
 }
 
+class BotSender(
+    private val bundle: Bundle,
+    private val profileImage: ProfileImage,
+    private val packageName: String
+) : ChatSender {
+    override val name: String
+        get() {
+            return if (AppUtil.getPackageVersion(packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+                (bundle.get("android.messagingUser") as Person).name.toString()
+            } else {
+                bundle.get("android.title").toString()
+            }
+        }
+
+    override val profileBase64: String
+        get() = profileImage.hashCode
+
+    override val profileHash: Int
+        get() = profileImage.getProfileHash()
+}
+
 data class MessageEvent(
     val message: String,
     val sender: ChatSender,
     val room: ChatChannel,
-    val packageName: String
+    val packageName: String,
+    val chat: Bundle?
 )
 
 interface ChatChannel {
@@ -67,8 +107,10 @@ interface ChatChannel {
     fun markAsRead(): Boolean
 }
 
-data class ChatSender(
-    val name: String,
-    val profileBase64: String,
+interface ChatSender {
+    val name: String
+
+    val profileBase64: String
+
     val profileHash: Int
-)
+}

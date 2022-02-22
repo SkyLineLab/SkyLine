@@ -6,6 +6,7 @@
 
 package com.skyline.msgbot.bot.api
 
+import android.app.Person
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -13,16 +14,28 @@ import android.graphics.PixelFormat
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.Icon
 import android.os.Build
+import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import android.util.Base64
+import android.widget.ImageView
+import android.widget.Toast
+import com.skyline.msgbot.utils.AppUtil
 import java.io.ByteArrayOutputStream
 
-class ProfileImage(var context: Context, var statusBarNotification: StatusBarNotification) {
+class ProfileImage(
+    var context: Context,
+    var statusBarNotification: StatusBarNotification,
+    var bundle: Bundle
+) {
     var hashCode: String = ""
     var profileImageDB: Bitmap? = null
 
     init {
-        profileImageDB = getLargeIcon()
+        profileImageDB = if (AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+            icon2Bitmap(context, (bundle.get("android.messagingUser") as Person).icon!!)
+        } else {
+            getLargeIcon()
+        }
         if(profileImageDB !== null) hashCode = encodeBitmap(profileImageDB!!)
     }
 
