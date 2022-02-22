@@ -6,6 +6,9 @@
 
 package com.skyline.msgbot.nodejs.utils
 
+import com.skyline.msgbot.bot.util.SDCardUtils
+import com.skyline.msgbot.setting.Constants
+
 object NodeJSModuleScript {
     const val timers = "module.exports = {\n" +
             "    setTimeout: setTimeout,\n" +
@@ -15,4 +18,5 @@ object NodeJSModuleScript {
             "    setImmediate: setImmediate,\n" +
             "    clearImmediate: clearImmediate\n" +
             "}"
+    var global = "globalThis.Buffer = require('${SDCardUtils.sdcardPath}/${Constants.directoryName}/node_modules/buffer').Buffer; // buffer"
 }

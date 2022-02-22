@@ -20,7 +20,7 @@ import kotlin.collections.HashMap
  * @author naijun
  */
 @NodeModule(name = "timers")
-class TimersBuiltinsModule {
+final class TimersBuiltinsModule {
     companion object {
         class SetTimeOut : TimerInterface.Companion.SetTimeoutFunction<Value, Number, List<Value?>> {
             override fun apply(callback: Value, delay: Number, args: List<Value?>): Number {

@@ -18,7 +18,7 @@ object ContextUtils {
             .allowIO(true)
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", "${SDCardUtils.sdcardPath}/${Constants.directoryName}/")
-//            .option("js.commonjs-core-modules-replacements", "timers:timers")
+            .option("js.commonjs-global-properties", "/data/user/0/com.skyline.msgbot/files/lib/global.js")
             .option("js.syntax-extensions", "true")
             .option("js.nashorn-compat", "true")
             .option("js.ecmascript-version", "2022")
