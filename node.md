@@ -1,8 +1,11 @@
 # NodeModule
 ## Buffer
-Not yet
+Complete
 
 ## Crypto
+Not yet
+
+## http/https
 Not yet
 
 ## Timer
