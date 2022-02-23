@@ -7,7 +7,7 @@
 package com.skyline.msgbot.nodejs.utils
 
 import com.skyline.msgbot.bot.api.FileStream
-import com.skyline.msgbot.bot.util.SDCardUtils
+import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import com.skyline.msgbot.utils.HttpRequestUtil
 import java.io.File
@@ -21,6 +21,7 @@ object NodeJSModuleInitUtils {
     fun initAllModule() {
         initTimer()
         initBuffer()
+        initProcess()
         initGlobal()
     }
 
@@ -54,6 +55,17 @@ object NodeJSModuleInitUtils {
                 FileStream.write("node_modules/buffer/base64-js.js", base64)
                 FileStream.write("node_modules/buffer/ieee754.js", ieee754)
                 FileStream.write("node_modules/buffer/index.js", result)
+            }.start()
+        }
+    }
+
+    private fun initProcess() {
+        if (!checkModule("process")) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("process").mkdirs()
+            Thread {
+                val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/process.js")
+
+                FileStream.write("node_modules/process/index.js", process)
             }.start()
         }
     }

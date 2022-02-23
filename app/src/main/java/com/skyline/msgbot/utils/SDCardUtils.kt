@@ -4,7 +4,7 @@
  * PLEASE CHECK LICENSE THE LICENSE OF THE PROJECT REPOSITORY
  */
 
-package com.skyline.msgbot.bot.util
+package com.skyline.msgbot.utils
 
 import android.os.Environment
 

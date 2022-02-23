@@ -11,10 +11,9 @@ import com.skyline.msgbot.bot.client.BotClient
 import com.skyline.msgbot.bot.project.ProjectInitUtil
 import com.skyline.msgbot.bot.util.ApiApplyUtil
 import com.skyline.msgbot.bot.util.ContextUtils
-import com.skyline.msgbot.bot.util.SDCardUtils
+import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import org.graalvm.polyglot.Context
-import org.graalvm.polyglot.HostAccess
 import org.graalvm.polyglot.Source
 
 internal object RuntimeManager {

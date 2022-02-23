@@ -7,7 +7,7 @@
 package com.skyline.msgbot.bot.project
 
 import com.skyline.msgbot.bot.api.FileStream
-import com.skyline.msgbot.bot.util.SDCardUtils
+import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import org.json.JSONArray
 import org.json.JSONObject

@@ -16,18 +16,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.oracle.truffle.js.builtins.JavaBuiltins
-import com.oracle.truffle.js.builtins.commonjs.CommonJSRequireBuiltinNodeGen
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
 import com.skyline.msgbot.nodejs.utils.NodeJSModuleInitUtils
 import com.skyline.msgbot.ui.HomePage
-import com.skyline.msgbot.utils.PermissionUtil
 import com.skyline.msgbot.ui.theme.SkyLineTheme
 import com.skyline.msgbot.utils.ContextHelper
 import com.skyline.msgbot.utils.ForegroundTask
-import java.lang.reflect.InvocationTargetException
-import javax.script.ScriptEngineManager
+import com.skyline.msgbot.utils.PermissionUtil
 
 class MainActivity : ComponentActivity() {
 
@@ -52,6 +48,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
         ForegroundTask.startForeground(this)
         if(PermissionUtil.requestAllPermision(this, false)) {
             NodeJSModuleInitUtils.initAllModule()

@@ -5,7 +5,7 @@
  */
 package com.skyline.msgbot.bot.api
 
-import com.skyline.msgbot.bot.util.SDCardUtils
+import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import java.io.*
 

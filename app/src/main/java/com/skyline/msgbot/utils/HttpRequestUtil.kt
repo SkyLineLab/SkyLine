@@ -15,7 +15,7 @@ object HttpRequestUtil {
      * 반드시 새 쓰레드에서 실행하세요!
      */
     fun request(url: String): String {
-       val html = Jsoup.connect(url).get()
+       val html = Jsoup.connect(url).ignoreHttpErrors(true).ignoreContentType(true).get()
         html.outputSettings(Document.OutputSettings().prettyPrint(false))
         html.select("br").append("\\n")
         html.select("p").append("\\n\\n")
