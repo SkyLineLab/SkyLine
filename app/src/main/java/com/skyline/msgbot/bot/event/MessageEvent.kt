@@ -28,7 +28,7 @@ class BotChannel(
     override val name: String
         get() {
             return if (AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
-                bundle.getString("android.subText") ?: ""
+                bundle.getString("android.subText") ?: (bundle.getString("android.title") ?: "")
             } else {
                 bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
             }

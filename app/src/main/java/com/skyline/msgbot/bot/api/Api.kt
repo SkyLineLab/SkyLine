@@ -29,33 +29,20 @@ import java.io.InputStreamReader
 object Api {
     fun compile(): Boolean {
         try {
-//            Thread {
-//                for (runtime in RuntimeManager.runtimes) {
-//                    println(runtime)
-//                    val cx = ContextUtils.getJSContext()
-//                    ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
-//                    RuntimeManager.runtimes[runtime.key] = cx
-//                    RuntimeManager.runtimes[runtime.key]?.eval(
-//                        Source.create(
-//                            "js",
-//                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
-//                        )
-//                    )
-//                }
-//            }.start()
-
-            for (runtime in RuntimeManager.runtimes) {
-                println(runtime)
-                val cx = ContextUtils.getJSContext()
-                ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
-                RuntimeManager.runtimes[runtime.key] = cx
-                RuntimeManager.runtimes[runtime.key]?.eval(
-                    Source.create(
-                        "js",
-                        FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+            Thread {
+                for (runtime in RuntimeManager.runtimes) {
+                    println(runtime)
+                    val cx = ContextUtils.getJSContext()
+                    ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
+                    RuntimeManager.runtimes[runtime.key] = cx
+                    RuntimeManager.runtimes[runtime.key]?.eval(
+                        Source.create(
+                            "js",
+                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+                        )
                     )
-                )
-            }
+                }
+            }.start()
 
             return true
         } catch (e: Exception) {
