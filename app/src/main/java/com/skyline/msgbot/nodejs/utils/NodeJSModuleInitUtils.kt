@@ -22,6 +22,9 @@ object NodeJSModuleInitUtils {
         initTimer()
         initBuffer()
         initProcess()
+        initUtil()
+        initEvents()
+        initDomain()
         initGlobal()
     }
 
@@ -66,6 +69,39 @@ object NodeJSModuleInitUtils {
                 val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/process.js")
 
                 FileStream.write("node_modules/process/index.js", process)
+            }.start()
+        }
+    }
+
+    private fun initUtil() {
+        if (!checkModule("util")) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("util").mkdirs()
+            Thread {
+                val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/util.js")
+
+                FileStream.write("node_modules/util/index.js", process)
+            }.start()
+        }
+    }
+
+    private fun initEvents() {
+        if (!checkModule("events")) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("events").mkdirs()
+            Thread {
+                val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/events.js")
+
+                FileStream.write("node_modules/events/index.js", process)
+            }.start()
+        }
+    }
+
+    private fun initDomain() {
+        if (!checkModule("domain")) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("domain").mkdirs()
+            Thread {
+                val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/domain.js")
+
+                FileStream.write("node_modules/domain/index.js", process)
             }.start()
         }
     }
