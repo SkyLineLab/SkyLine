@@ -9,6 +9,11 @@ package com.skyline.msgbot.utils
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.safety.Whitelist
+import java.net.URL
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+
 
 object HttpRequestUtil {
     /**
@@ -23,5 +28,15 @@ object HttpRequestUtil {
         return Jsoup.clean(str, "", Whitelist.none(), Document.OutputSettings().prettyPrint(false)).replace("&amp;", "&")
             .replace("&gt;", ">")
             .replace("&lt;", "<")
+    }
+
+    /**
+     * 새쓰레드에서 쓰길 권장
+     */
+    fun downloadFile(url: String, path: String) {
+        URL(url).openStream().use { `in` ->
+            val imagePath: Path = Paths.get(path)
+            Files.copy(`in`, imagePath)
+        }
     }
 }

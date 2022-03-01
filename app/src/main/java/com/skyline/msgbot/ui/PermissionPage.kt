@@ -15,6 +15,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -62,36 +63,41 @@ fun PermissionPage() {
                     fontFamily = gothicFont,
                     style = MaterialTheme.typography.headlineMedium.copy(textAlign = TextAlign.Center)
                 )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 80.dp, bottom = 40.dp, start = 30.dp)
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.bell_24),
-                        contentDescription = "test",
+                Column {
+                    Row(
                         modifier = Modifier
-                            .size(60.dp)
-                            .clip(CircleShape)
-                    )
-                    
-                    Spacer(modifier = Modifier.width(30.dp))
-
-                    Column {
-                        Text(
-                            text = "알림 접근 권한",
-                            fontFamily = gothicFont,
-                            modifier = Modifier.padding(5.dp)
+                            .fillMaxWidth()
+                            .padding(top = 40.dp, bottom = 60.dp, start = 30.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.bell_24),
+                            contentDescription = "bell",
+                            modifier = Modifier
+                                .size(60.dp)
+                                .clip(CircleShape),
                         )
 
-                        Spacer(modifier = Modifier.height(4.dp))
+                        Spacer(modifier = Modifier.width(30.dp))
 
-                        Text(
-                            text = "카카오톡 봇은 알림에 있는 \"답장\" 기능을 이용한거라 해당 권한이 필수적으로 필요합니다.",
-                            fontFamily = gothicFont,
-                            modifier = Modifier.padding(5.dp),
-                            textAlign = TextAlign.Center
-                        )
+                        Column(
+                            horizontalAlignment = BiasAlignment.Horizontal(-0.13f),
+                        ) {
+                            Text(
+                                text = "알림 접근 권한",
+                                fontFamily = gothicFont,
+                                modifier = Modifier.padding(5.dp),
+                                textAlign = TextAlign.Right
+                            )
+
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            Text(
+                                text = "카카오톡 봇은 알림에 있는 \"답장\" 기능을 이용한거라 해당 권한이 필수적으로 필요합니다.",
+                                fontFamily = gothicFont,
+                                modifier = Modifier.padding(5.dp),
+                                textAlign = TextAlign.Center
+                            )
+                        }
                     }
                 }
             }
