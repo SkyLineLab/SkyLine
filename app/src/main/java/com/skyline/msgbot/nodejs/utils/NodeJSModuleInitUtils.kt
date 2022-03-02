@@ -6,10 +6,13 @@
 
 package com.skyline.msgbot.nodejs.utils
 
+import android.annotation.SuppressLint
 import com.skyline.msgbot.bot.api.FileStream
 import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
 import com.skyline.msgbot.utils.HttpRequestUtil
+import com.skyline.msgbot.utils.NpmUtil
+import org.json.JSONObject
 import java.io.File
 
 /**
@@ -18,98 +21,101 @@ import java.io.File
  * @author naijun
  */
 object NodeJSModuleInitUtils {
-    fun initAllModule() {
-        initTimer()
-        initBuffer()
-        initProcess()
-        initUtil()
-        initEvents()
-        initDomain()
-        initGlobal()
+    fun initAllModule(project: String) {
+        initBuffer(project)
+        initProcess(project)
+        initTimer(project)
+        initUtil(project)
+        initEvents(project)
+        initDomain(project)
+        initGlobal(project)
     }
 
-    private fun initTimer() {
-        if (!checkModule("timers")) {
-            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("timers").mkdirs()
-            FileStream.write("node_modules/timers/index.js", NodeJSModuleScript.timers)
+    private fun initTimer(project: String) {
+        if (!checkModule("timers", project)) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("Projects").resolve(project).resolve("node_modules").resolve("timers").mkdirs()
+            FileStream.write("Projects/$project/node_modules/timers/index.js", NodeJSModuleScript.timers)
         }
     }
 
-    private fun initGlobal() {
-        if (!File("/data/user/0/com.skyline.msgbot/files/lib/global.js").exists()) {
-            if (!File("/data/user/0/com.skyline.msgbot/files/lib").exists()) {
-                File("/data/user/0").resolve("com.skyline.msgbot").resolve("files").resolve("lib").mkdirs()
+    @SuppressLint("SdCardPath")
+    private fun initGlobal(project: String) {
+        if (!File("/data/user/0/com.skyline.msgbot/files/lib/$project/global.js").exists()) {
+            if (!File("/data/user/0/com.skyline.msgbot/files/lib/$project").exists()) {
+                File("/data/user/0").resolve("com.skyline.msgbot").resolve("files").resolve("lib").resolve(project).mkdirs()
             }
 
-            FileStream.write("/data/user/0/com.skyline.msgbot/files/lib/global.js", NodeJSModuleScript.global)
+            FileStream.write("/data/user/0/com.skyline.msgbot/files/lib/$project/global.js", NodeJSModuleScript.getGlobalScript(project))
         }
     }
 
-    private fun initBuffer() {
-        if (!checkModule("buffer")) {
-            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("buffer").mkdirs()
+    private fun initBuffer(project: String) {
+        if (!checkModuleDeep("buffer", project)) {
             Thread {
-                val base64 = HttpRequestUtil.request("https://raw.githubusercontent.com/beatgammit/base64-js/master/index.js")
-                val ieee754 = HttpRequestUtil.request("https://raw.githubusercontent.com/feross/ieee754/master/index.js")
-                val result = HttpRequestUtil.request("https://raw.githubusercontent.com/feross/buffer/master/index.js")
-                    .replace("require('base64-js')", "require('./base64-js')")
-                    .replace("require('ieee754')", "require('./ieee754')")
-
-                FileStream.write("node_modules/buffer/base64-js.js", base64)
-                FileStream.write("node_modules/buffer/ieee754.js", ieee754)
-                FileStream.write("node_modules/buffer/index.js", result)
+                NpmUtil.getPackage("buffer", project)
             }.start()
         }
     }
 
-    private fun initProcess() {
-        if (!checkModule("process")) {
-            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("process").mkdirs()
+    private fun initProcess(project: String) {
+        if (!checkModule("process", project)) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("Projects").resolve(project).resolve("node_modules").resolve("process").mkdirs()
             Thread {
                 val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/process.js")
 
-                FileStream.write("node_modules/process/index.js", process)
+                FileStream.write("Projects/$project/node_modules/process/index.js", process)
             }.start()
         }
     }
 
-    private fun initUtil() {
-        if (!checkModule("util")) {
-            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("util").mkdirs()
+    private fun initUtil(project: String) {
+        if (!checkModule("util", project)) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("Projects").resolve(project).resolve("node_modules").resolve("util").mkdirs()
             Thread {
                 val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/util.js")
 
-                FileStream.write("node_modules/util/index.js", process)
+                FileStream.write("Projects/$project/node_modules/util/index.js", process)
             }.start()
         }
     }
 
-    private fun initEvents() {
-        if (!checkModule("events")) {
-            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("events").mkdirs()
+    private fun initEvents(project: String) {
+        if (!checkModule("events", project)) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("Projects").resolve(project).resolve("node_modules").resolve("events").mkdirs()
             Thread {
                 val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/events.js")
 
-                FileStream.write("node_modules/events/index.js", process)
+                FileStream.write("Projects/$project/node_modules/events/index.js", process)
             }.start()
         }
     }
 
-    private fun initDomain() {
-        if (!checkModule("domain")) {
-            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("node_modules").resolve("domain").mkdirs()
+    private fun initDomain(project: String) {
+        if (!checkModule("domain", project)) {
+            File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("Projects").resolve(project).resolve("node_modules").resolve("domain").mkdirs()
             Thread {
                 val process = HttpRequestUtil.request("https://archethic.github.io/nodejs/domain.js")
 
-                FileStream.write("node_modules/domain/index.js", process)
+                FileStream.write("Projects/$project/node_modules/domain/index.js", process)
             }.start()
         }
     }
 
-    private fun checkModule(module: String): Boolean {
+    private fun checkModule(module: String, project: String): Boolean {
         return try {
-            val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/node_modules/$module/index.js")
+            val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$project/node_modules/$module/index.js")
             path.exists()
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun checkModuleDeep(module: String, project: String): Boolean {
+        return try {
+            val path = File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$project/node_modules/$module/index.js")
+            val packageJson = JSONObject(FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$project/node_modules/$module/index.js")!!)
+            val exists = packageJson.getJSONObject("dependencies").has(module)
+            path.exists() && exists
         } catch (e: Exception) {
             false
         }

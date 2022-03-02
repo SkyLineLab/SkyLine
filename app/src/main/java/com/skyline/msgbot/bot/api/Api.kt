@@ -30,13 +30,13 @@ object Api {
             Thread {
                 for (runtime in RuntimeManager.runtimes) {
                     println(runtime)
-                    val cx = ContextUtils.getJSContext()
+                    val cx = ContextUtils.getJSContext(RuntimeManager.projectIds[runtime.key]!!)
                     ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
                     RuntimeManager.runtimes[runtime.key] = cx
                     RuntimeManager.runtimes[runtime.key]?.eval(
                         Source.create(
                             "js",
-                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/${RuntimeManager.projectIds[runtime.key]}/script.js")
                         )
                     )
                 }

@@ -38,4 +38,8 @@ class BotClient() {
             }
         }
     }
+
+    override fun toString(): String {
+        return super.toString()
+    }
 }

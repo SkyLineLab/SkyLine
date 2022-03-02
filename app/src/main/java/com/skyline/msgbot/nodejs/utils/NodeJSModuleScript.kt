@@ -18,6 +18,9 @@ object NodeJSModuleScript {
             "    setImmediate: setImmediate,\n" +
             "    clearImmediate: clearImmediate\n" +
             "}"
-    var global = "globalThis.Buffer = require('${SDCardUtils.sdcardPath}/${Constants.directoryName}/node_modules/buffer').Buffer; // buffer\n" +
-            "globalThis.process = require('${SDCardUtils.sdcardPath}/${Constants.directoryName}/node_modules/process'); // process"
+
+    fun getGlobalScript(projectName: String): String {
+        return "globalThis.Buffer = require('${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$projectName/node_modules/buffer').Buffer; // buffer\n" +
+                "globalThis.process = require('${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$projectName/node_modules/process'); // process"
+    }
 }

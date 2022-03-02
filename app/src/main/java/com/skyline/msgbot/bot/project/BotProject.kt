@@ -38,7 +38,7 @@ class BotProject(val runtimeID: Number) {
             Thread {
                 for (runtime in RuntimeManager.runtimes) {
                     println(runtime)
-                    val cx = ContextUtils.getJSContext()
+                    val cx = ContextUtils.getJSContext(RuntimeManager.projectIds[runtime.key]!!)
                     ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
                     RuntimeManager.runtimes[runtime.key] = cx
                     RuntimeManager.runtimes[runtime.key]?.eval(

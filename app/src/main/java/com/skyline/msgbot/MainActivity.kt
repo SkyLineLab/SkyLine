@@ -51,9 +51,10 @@ class MainActivity : ComponentActivity() {
 
         ForegroundTask.startForeground(this)
         if(PermissionUtil.requestAllPermision(this, false)) {
-            NodeJSModuleInitUtils.initAllModule()
             if (!RuntimeManager.hasRuntime("test")) {
-                RuntimeManager.addRuntime("test")
+                Thread {
+                    RuntimeManager.addRuntime("test")
+                }.start()
             }
         }
     }

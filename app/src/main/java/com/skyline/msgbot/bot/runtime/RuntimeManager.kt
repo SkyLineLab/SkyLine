@@ -13,6 +13,7 @@ import com.skyline.msgbot.bot.util.ApiApplyUtil
 import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
+import kotlinx.coroutines.runBlocking
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.Source
 
@@ -25,13 +26,13 @@ internal object RuntimeManager {
 
     fun addRuntime(projectName: String): Boolean {
         val res = ProjectInitUtil.createProject(projectName)
-        ProjectInitUtil.makeModuleDir()
+        ProjectInitUtil.makeModuleDir(projectName)
         if (!res && !ProjectInitUtil.isExistsProject(projectName)) {
             println("Create Project Error")
             return false
         } else {
             val size: Int = runtimes.count() + 1
-            val context: Context = ContextUtils.getJSContext()
+            val context: Context = ContextUtils.getJSContext(projectName)
             ApiApplyUtil.applyBotApi(context.getBindings("js"), true, size)
             runtimes[size] = context
             powerMap[size] = true
@@ -39,7 +40,7 @@ internal object RuntimeManager {
             projectIds[size] = projectName
             projectNames[projectName] = size
             runtimes[size]?.eval(
-                Source.create("js", FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/$projectName/script.js"))
+                Source.create("js", FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$projectName/script.js"))
             )
             return true
         }
@@ -63,7 +64,7 @@ internal object RuntimeManager {
         return if (projectNames[project] == null) false
         else {
             runtimes[projectNames[project]]?.eval(
-                Source.create("js", FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/$project/script.js"))
+                Source.create("js", FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$project/script.js"))
             )
             true
         }

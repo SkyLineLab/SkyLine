@@ -6,8 +6,6 @@
 
 package com.skyline.msgbot.utils
 
-import com.oracle.truffle.js.runtime.util.UnsafeUtil
-
 object AppUtil {
     fun getPackageVersion(packageName: String): Double {
         val fullName = ContextHelper.contextGetter!!.invoke().packageManager.getPackageInfo(packageName, 0).versionName
