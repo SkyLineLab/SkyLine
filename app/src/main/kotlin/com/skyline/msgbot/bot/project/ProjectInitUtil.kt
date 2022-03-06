@@ -7,6 +7,7 @@
 package com.skyline.msgbot.bot.project
 
 import com.skyline.msgbot.bot.api.FileStream
+import com.skyline.msgbot.bot.script.ScriptLanguage
 import com.skyline.msgbot.nodejs.utils.NodeJSModuleInitUtils
 import com.skyline.msgbot.utils.SDCardUtils
 import com.skyline.msgbot.setting.Constants
@@ -15,7 +16,7 @@ import org.json.JSONObject
 import java.io.File
 
 object ProjectInitUtil {
-    fun createProject(projectName: String): Boolean {
+    fun createProject(projectName: String, language: ScriptLanguage): Boolean {
         if (isExistsProject(projectName)) return false
         return try {
             val appPath = File(SDCardUtils.sdcardPath).resolve(Constants.directoryName).resolve("Projects")
@@ -35,12 +36,24 @@ object ProjectInitUtil {
                     .put("dependencies", JSONObject())
                 FileStream.write(packageJsonPath, jsonObject.toString(4))
             }
-            FileStream.write("${dirPath.absolutePath}/script.js", Constants.initScript)
+            when (language) {
+                ScriptLanguage.JAVASCRIPT -> {
+                    FileStream.write("${dirPath.absolutePath}/script.js", Constants.jsInitScript)
+                }
+
+                ScriptLanguage.TYPESCRIPT -> {
+                    FileStream.write("${dirPath.absolutePath}/script.ts", Constants.tsInitScript)
+                }
+
+                else -> throw UnsupportedOperationException("Not Support Language: $language")
+            }
             NodeJSModuleInitUtils.initAllModule(projectName)
             FileStream.write(
                 "${dirPath.absolutePath}/bot.json",
                 JSONObject().put("power", true)
-                    .put("name", projectName).toString(4)
+                    .put("name", projectName)
+                    .put("language", language)
+                    .toString(4)
             )
             val projectListPath = "${appPath.absolutePath}/project.json"
             val projectListDB = File(projectListPath)

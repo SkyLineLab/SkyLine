@@ -48,20 +48,20 @@ android {
     }
     
     packagingOptions {
-        resources.excludes.add("/kotlin/*")
+//        resources.excludes.add("/kotlin/*")
         resources.excludes.add("/META-INF/*")
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
-            excludes += '/kotlin/reflect/reflect.kotlin_builtins'
-            excludes += '/META-INF/native/windows32/jansi.dll'
-            excludes += '/META-INF/native/osx/libjansi.jnilib'
-            excludes += '/kotlin/collections/collections.kotlin_builtins'
-            excludes += '/META-INF/native/windows64/jansi.dll'
-            excludes += '/kotlin/annotation/annotation.kotlin_builtins'
-            excludes += '/kotlin/coroutines/coroutines.kotlin_builtins'
-            excludes += '/kotlin/internal/internal.kotlin_builtins'
-            excludes += '/kotlin/ranges/ranges.kotlin_builtins'
-            excludes += '/META-INF/native-image/native-image.properties'
+//            excludes += '/kotlin/reflect/reflect.kotlin_builtins'
+//            excludes += '/META-INF/native/windows32/jansi.dll'
+//            excludes += '/META-INF/native/osx/libjansi.jnilib'
+//            excludes += '/kotlin/collections/collections.kotlin_builtins'
+//            excludes += '/META-INF/native/windows64/jansi.dll'
+//            excludes += '/kotlin/annotation/annotation.kotlin_builtins'
+//            excludes += '/kotlin/coroutines/coroutines.kotlin_builtins'
+//            excludes += '/kotlin/internal/internal.kotlin_builtins'
+//            excludes += '/kotlin/ranges/ranges.kotlin_builtins'
+//            excludes += '/META-INF/native-image/native-image.properties'
         }
     }
 }
@@ -95,13 +95,13 @@ dependencies {
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
-    implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.6.10"
-//    implementation( "org.jetbrains.kotlin:kotlin-script-util:1.6.10")
-    implementation("org.jetbrains.kotlin:kotlin-scripting-common:1.6.10")
-    implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.6.10")
-    implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.6.10")
-//    implementation("org.jetbrains.kotlin:kotlin-scripting-compiler:1.6.10")
-    implementation("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.6.10")
-    implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.6.10")
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
+//    implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.6.10"
+////    implementation( "org.jetbrains.kotlin:kotlin-script-util:1.6.10")
+//    implementation("org.jetbrains.kotlin:kotlin-scripting-common:1.6.10")
+//    implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.6.10")
+//    implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.6.10")
+////    implementation("org.jetbrains.kotlin:kotlin-scripting-compiler:1.6.10")
+//    implementation("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.6.10")
+//    implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.6.10")
+//    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.10'
 }

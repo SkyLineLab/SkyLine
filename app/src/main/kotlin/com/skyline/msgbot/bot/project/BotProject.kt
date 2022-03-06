@@ -9,6 +9,8 @@ package com.skyline.msgbot.bot.project
 import com.skyline.msgbot.bot.api.FileStream
 import com.skyline.msgbot.bot.client.BotClient
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.bot.script.ScriptLanguage
+import com.skyline.msgbot.bot.script.TypeScript
 import com.skyline.msgbot.bot.util.ApiApplyUtil
 import com.skyline.msgbot.bot.util.ContextUtils
 import com.skyline.msgbot.setting.Constants
@@ -33,7 +35,7 @@ class BotProject(val runtimeID: Number) {
         return RuntimeManager.runtimes[runtimeID]
     }
 
-    fun compile(): Boolean {
+    fun compileAll(): Boolean {
         try {
             Thread {
                 for (runtime in RuntimeManager.runtimes) {
@@ -41,12 +43,31 @@ class BotProject(val runtimeID: Number) {
                     val cx = ContextUtils.getJSContext(RuntimeManager.projectIds[runtime.key]!!)
                     ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
                     RuntimeManager.runtimes[runtime.key] = cx
-                    RuntimeManager.runtimes[runtime.key]?.eval(
-                        Source.create(
-                            "js",
-                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
-                        )
-                    )
+                    when (RuntimeManager.projectLanguage[runtime.key]) {
+                        ScriptLanguage.JAVASCRIPT -> {
+                            RuntimeManager.runtimes[runtime.key]?.eval(
+                                Source.create(
+                                    "js",
+                                    FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+                                )
+                            )
+                        }
+
+                        ScriptLanguage.TYPESCRIPT -> {
+                            val originalScript = FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/${RuntimeManager.projectIds[runtime.key]}/script.ts") ?: ""
+                            val convertedScript = TypeScript.convertScript(originalScript)
+                            RuntimeManager.runtimes[runtime.key]?.eval(
+                                Source.create(
+                                    "js",
+                                    convertedScript
+                                )
+                            )
+                        }
+
+                        else -> {
+                            // DO NOT ANYTHING
+                        }
+                    }
                 }
             }.start()
 

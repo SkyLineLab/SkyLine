@@ -60,7 +60,7 @@ fun HomePage(context: Context) {
                         .padding(top = 80.dp, bottom = 40.dp, start = 30.dp)
                 ) {
                     OutlinedButton(onClick = {
-                        Api.compile()
+                        Api.compileAll()
                         Toast.makeText(context, "컴파일 되었습니다.", Toast.LENGTH_SHORT).show()
                     }, border = BorderStroke(1.dp, Purple40),
                     shape = RoundedCornerShape(50),

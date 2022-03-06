@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.skyline.msgbot.bot.Bot
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.bot.script.ScriptLanguage
 import com.skyline.msgbot.nodejs.utils.NodeJSModuleInitUtils
 import com.skyline.msgbot.ui.HomePage
 import com.skyline.msgbot.ui.theme.SkyLineTheme
@@ -34,26 +35,25 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        ContextHelper.contextGetter = {
+            this
+        }
         setContent {
             MaterialTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    PermissionPage() //DEBUG
                     HomePage(context = this@MainActivity)
-                    ContextHelper.contextGetter = {
-                        this
-                    }
                 }
             }
         }
 
         ForegroundTask.startForeground(this)
         if(PermissionUtil.requestAllPermision(this, false)) {
-            if (!RuntimeManager.hasRuntime("test")) {
+            if (!RuntimeManager.hasRuntime("ts")) {
                 Thread {
-                    RuntimeManager.addRuntime("test")
+                    RuntimeManager.addRuntime("ts", ScriptLanguage.TYPESCRIPT)
                 }.start()
             }
         }

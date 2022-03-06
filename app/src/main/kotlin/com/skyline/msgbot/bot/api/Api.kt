@@ -8,6 +8,8 @@ package com.skyline.msgbot.bot.api
 
 import android.content.Context
 import com.skyline.msgbot.bot.runtime.RuntimeManager
+import com.skyline.msgbot.bot.script.ScriptLanguage
+import com.skyline.msgbot.bot.script.TypeScript
 import com.skyline.msgbot.bot.session.BotChannelSession
 import com.skyline.msgbot.bot.util.ApiApplyUtil
 import com.skyline.msgbot.bot.util.ContextUtils
@@ -25,7 +27,7 @@ import java.io.IOException
  * @author naijun
  */
 object Api {
-    fun compile(): Boolean {
+    fun compileAll(): Boolean {
         try {
             Thread {
                 for (runtime in RuntimeManager.runtimes) {
@@ -33,12 +35,31 @@ object Api {
                     val cx = ContextUtils.getJSContext(RuntimeManager.projectIds[runtime.key]!!)
                     ApiApplyUtil.applyBotApi(cx.getBindings("js"), true, runtime.key)
                     RuntimeManager.runtimes[runtime.key] = cx
-                    RuntimeManager.runtimes[runtime.key]?.eval(
-                        Source.create(
-                            "js",
-                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/${RuntimeManager.projectIds[runtime.key]}/script.js")
-                        )
-                    )
+                    when (RuntimeManager.projectLanguage[runtime.key]) {
+                        ScriptLanguage.JAVASCRIPT -> {
+                            RuntimeManager.runtimes[runtime.key]?.eval(
+                                Source.create(
+                                    "js",
+                                    FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+                                )
+                            )
+                        }
+
+                        ScriptLanguage.TYPESCRIPT -> {
+                            val originalScript = FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/${RuntimeManager.projectIds[runtime.key]}/script.ts") ?: ""
+                            val convertedScript = TypeScript.convertScript(originalScript)
+                            RuntimeManager.runtimes[runtime.key]?.eval(
+                                Source.create(
+                                    "js",
+                                    convertedScript
+                                )
+                            )
+                        }
+
+                        else -> {
+                            // DO NOT ANYTHING
+                        }
+                    }
                 }
             }.start()
 
