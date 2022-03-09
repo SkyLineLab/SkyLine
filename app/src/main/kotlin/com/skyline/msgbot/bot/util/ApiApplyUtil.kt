@@ -6,6 +6,7 @@
 
 package com.skyline.msgbot.bot.util
 
+import com.skyline.gordjs.GordJS
 import com.skyline.msgbot.bot.api.Api
 import com.skyline.msgbot.bot.api.FileStream
 import com.skyline.msgbot.bot.project.BotProject
@@ -20,6 +21,8 @@ object ApiApplyUtil {
         if (isProject) {
             value.putMember("BotProject", BotProject(runtimeId))
         }
+
+        GordJS.applyContext(value)
 
         // nodejs: Timer
         value.putMember("timers", TimersBuiltinsModule)

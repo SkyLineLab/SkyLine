@@ -51,9 +51,9 @@ class MainActivity : ComponentActivity() {
 
         ForegroundTask.startForeground(this)
         if(PermissionUtil.requestAllPermision(this, false)) {
-            if (!RuntimeManager.hasRuntime("ts")) {
+            if (!RuntimeManager.hasRuntime("test")) {
                 Thread {
-                    RuntimeManager.addRuntime("ts", ScriptLanguage.TYPESCRIPT)
+                    RuntimeManager.addRuntime("test", ScriptLanguage.JAVASCRIPT)
                 }.start()
             }
         }

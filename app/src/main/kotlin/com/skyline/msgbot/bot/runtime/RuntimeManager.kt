@@ -18,6 +18,7 @@ import com.skyline.msgbot.setting.Constants
 import kotlinx.coroutines.runBlocking
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.Source
+import java.io.File
 
 internal object RuntimeManager {
     val runtimes: HashMap<Number, Context> = hashMapOf()
@@ -46,10 +47,16 @@ internal object RuntimeManager {
                 ScriptLanguage.JAVASCRIPT -> {
                     projectLanguage[size] = language
                     runtimes[size]?.eval(
-                        Source.create(
+
+//                        Source.newBuilder(
+//                            "js",
+//                            File("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$projectName/script.js")
+//                        ).mimeType("application/javascript+module").build()
+                        Source.newBuilder(
                             "js",
-                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$projectName/script.js")
-                        )
+                            FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/$projectName/script.js"),
+                            "script.mjs"
+                        ).build()
                     )
                 }
 
