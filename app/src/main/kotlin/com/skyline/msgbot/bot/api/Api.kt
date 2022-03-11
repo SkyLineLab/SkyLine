@@ -40,7 +40,7 @@ object Api {
                             RuntimeManager.runtimes[runtime.key]?.eval(
                                 Source.create(
                                     "js",
-                                    FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/${RuntimeManager.projectIds[runtime.key]}/script.js")
+                                    FileStream.read("${SDCardUtils.sdcardPath}/${Constants.directoryName}/Projects/${RuntimeManager.projectIds[runtime.key]}/script.js")
                                 )
                             )
                         }

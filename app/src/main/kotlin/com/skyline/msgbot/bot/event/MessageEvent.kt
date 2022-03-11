@@ -15,9 +15,16 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
+import com.oracle.truffle.api.utilities.JSONHelper
+import com.oracle.truffle.js.builtins.JSONBuiltins
+import com.oracle.truffle.js.runtime.builtins.JSON
+import com.oracle.truffle.js.runtime.objects.JSObject
+import com.oracle.truffle.js.runtime.objects.JSObjectUtil
+import com.oracle.truffle.js.runtime.objects.Undefined
 import com.skyline.msgbot.bot.api.ProfileImage
 import com.skyline.msgbot.utils.AppUtil
 import org.graalvm.polyglot.Value
+import org.graalvm.polyglot.proxy.ProxyObject
 
 class BotChannel(
     private val bundle: Bundle,
@@ -46,8 +53,17 @@ class BotChannel(
     override fun send(message: Value?): Boolean {
         val sendIntent = Intent()
         val msg = Bundle()
+        val sendData = try {
+            message?.`as`(Map::class.java)?.toMap().toString().replace("{", "{ ").replace("}", " }").replace("=", ": ")
+        } catch (e: Exception) {
+            if (Undefined.instance.equals(message?.`as`(Any::class.java))) {
+                 "undefined"
+            } else {
+                message?.`as`(Any::class.java).toString()
+            }
+        }
         for (inputable in session.remoteInputs)
-            msg.putCharSequence(inputable.resultKey, message?.`as`(Any::class.java).toString())
+            msg.putCharSequence(inputable.resultKey, sendData)
         RemoteInput.addResultsToIntent(session.remoteInputs, sendIntent, msg)
         return try {
             session.actionIntent.send(context, 0, sendIntent)
