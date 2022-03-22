@@ -19,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.skyline.msgbot.bot.api.Api
+import com.skyline.msgbot.script.api.Api
 import com.skyline.msgbot.ui.theme.Purple40
+
+// val gothicFont = FontFamily(Font(R.font.nanum))
 
 @Composable
 fun HomePage(context: Context) {
@@ -51,8 +53,7 @@ fun HomePage(context: Context) {
                 Spacer(modifier = Modifier.padding(16.dp))
                 Text(
                     text = "Dev Skyline HomePage",
-                    fontFamily = gothicFont,
-                    style = MaterialTheme.typography.headlineMedium.copy(textAlign = TextAlign.Center)
+                    style = MaterialTheme.typography.headlineMedium.copy(textAlign = TextAlign.Center, color = Color.Black)
                 )
                 Row(
                     modifier = Modifier
@@ -63,10 +64,10 @@ fun HomePage(context: Context) {
                         Api.compileAll()
                         Toast.makeText(context, "컴파일 되었습니다.", Toast.LENGTH_SHORT).show()
                     }, border = BorderStroke(1.dp, Purple40),
-                    shape = RoundedCornerShape(50),
-                    colors = ButtonDefaults.outlinedButtonColors(
-                        contentColor = Purple40
-                    )) {
+                        shape = RoundedCornerShape(50),
+                        colors = ButtonDefaults.outlinedButtonColors(
+                            contentColor = Purple40
+                        )) {
                         Text(text = "Compile")
                     }
                 }

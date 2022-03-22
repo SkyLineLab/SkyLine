@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2022 SkyLineLab
- *
- * PLEASE CHECK LICENSE THE LICENSE OF THE PROJECT REPOSITORY
- */
-
 package com.skyline.msgbot
 
 import android.os.Bundle
@@ -16,18 +10,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.skyline.msgbot.bot.Bot
-import com.skyline.msgbot.bot.runtime.RuntimeManager
-import com.skyline.msgbot.bot.script.ScriptLanguage
-import com.skyline.msgbot.nodejs.utils.NodeJSModuleInitUtils
+import com.orhanobut.logger.Logger
+import com.skyline.msgbot.core.CoreHelper
+import com.skyline.msgbot.runtime.RuntimeManager
+import com.skyline.msgbot.script.ScriptLanguage
+import com.skyline.msgbot.service.ForegroundService
 import com.skyline.msgbot.ui.HomePage
 import com.skyline.msgbot.ui.theme.SkyLineTheme
-import com.skyline.msgbot.utils.ContextHelper
-import com.skyline.msgbot.utils.ForegroundTask
-import com.skyline.msgbot.utils.PermissionUtil
+import com.skyline.msgbot.util.PermissionUtil
+import kotlinx.coroutines.CoroutineScope
 
 class MainActivity : ComponentActivity() {
-
     override fun onStart() {
         super.onStart()
         PermissionUtil.requestAllPermision(this, true)
@@ -35,36 +28,33 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ContextHelper.contextGetter = {
+        CoreHelper.contextGetter = {
             this
         }
+        Logger.d("Logger Test")
         setContent {
-            MaterialTheme {
+            SkyLineTheme {
+                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    HomePage(context = this@MainActivity)
+                    HomePage(context = this)
                 }
             }
         }
-
-        ForegroundTask.startForeground(this)
+        ForegroundService.startForeground(this)
         if(PermissionUtil.requestAllPermision(this, false)) {
             if (!RuntimeManager.hasRuntime("test")) {
-                Thread {
-                    RuntimeManager.addRuntime("test", ScriptLanguage.JAVASCRIPT)
-                }.start()
+                RuntimeManager.addRuntime("test", ScriptLanguage.JAVASCRIPT)
             }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        ForegroundTask.release()
-        Bot.destroyThread()
+        ForegroundService.release()
     }
-
 }
 
 @Composable
