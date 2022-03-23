@@ -87,4 +87,8 @@ object FileStream {
             e.toString()
         }
     }
+
+    override fun toString(): String {
+        return "[object FS]"
+    }
 }

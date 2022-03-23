@@ -55,4 +55,8 @@ object Api {
             return false
         }
     }
+
+    override fun toString(): String {
+        return "[object Api]"
+    }
 }
