@@ -42,6 +42,6 @@ class BotClient {
     }
 
     override fun toString(): String {
-        return "JavaClass<BotClient>"
+        return "[object BotClient]"
     }
 }

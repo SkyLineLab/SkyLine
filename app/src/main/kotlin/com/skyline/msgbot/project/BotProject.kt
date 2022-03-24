@@ -9,14 +9,15 @@ package com.skyline.msgbot.project
 import com.skyline.msgbot.runtime.RuntimeManager
 import com.skyline.msgbot.script.client.BotClient
 import org.graalvm.polyglot.Context
+import org.graalvm.polyglot.proxy.ProxyArray
 
 class BotProject(val runtimeID: Int) {
     fun getClient(): BotClient? {
         return RuntimeManager.clients[runtimeID]
     }
 
-    fun getAllProjectNames(): List<String> {
-        return RuntimeManager.projectNames.keys.toList()
+    fun getAllProjectNames(): ProxyArray {
+        return ProxyArray.fromList(RuntimeManager.projectNames.keys.toList())
     }
 
     fun getCurrentProjectId(): Number {
@@ -25,5 +26,9 @@ class BotProject(val runtimeID: Int) {
 
     fun getScriptContext(): Context? {
         return RuntimeManager.runtimes[runtimeID]
+    }
+
+    override fun toString(): String {
+        return "[object BotProject]"
     }
 }

@@ -13,6 +13,7 @@ import com.skyline.msgbot.runtime.RuntimeManager
 import com.skyline.msgbot.script.ScriptLanguage
 import com.skyline.msgbot.script.api.util.ApiApplyUtil
 import com.skyline.msgbot.script.context.ContextUtil
+import com.skyline.msgbot.session.ChannelSession
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,6 +55,10 @@ object Api {
             Logger.e("Compile: ${e.message} stackTrace = ${e.stackTraceToString()}")
             return false
         }
+    }
+
+    fun canReply(room: String): Boolean {
+        return ChannelSession.hasSession(room)
     }
 
     override fun toString(): String {
