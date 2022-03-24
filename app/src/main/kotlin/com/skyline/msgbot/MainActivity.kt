@@ -23,14 +23,14 @@ import kotlinx.coroutines.CoroutineScope
 class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
+        CoreHelper.contextGetter = {
+            this
+        }
         PermissionUtil.requestAllPermision(this, true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        CoreHelper.contextGetter = {
-            this
-        }
         Logger.d("Logger Test")
         setContent {
             SkyLineTheme {

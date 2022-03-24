@@ -25,6 +25,14 @@ object Bridge {
             ?: throw Errors.createLinkError("Not Found Project ID: $id")
     }
 
+    fun canAccessByName(name: String): Boolean {
+        return RuntimeManager.hasRuntime(name)
+    }
+
+    fun canAccessById(id: Int): Boolean {
+        return RuntimeManager.runtimes.containsKey(id)
+    }
+
     override fun toString(): String {
         return "[object Bridge]"
     }

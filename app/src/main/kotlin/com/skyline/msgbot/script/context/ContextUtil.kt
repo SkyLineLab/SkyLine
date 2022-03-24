@@ -6,6 +6,7 @@
 
 package com.skyline.msgbot.script.context
 
+import com.naijun.graaldalvik.AndroidClassLoaderFactory
 import com.skyline.msgbot.core.CoreHelper
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.HostAccess
@@ -21,6 +22,7 @@ object ContextUtil {
         return Context.newBuilder("js")
             .allowHostAccess(HostAccess.ALL)
             .allowPolyglotAccess(PolyglotAccess.ALL)
+            .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(CoreHelper.contextGetter!!.invoke()))
             .allowExperimentalOptions(true)
             .allowIO(true)
             .option("js.commonjs-require", "true")
