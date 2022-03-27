@@ -28,4 +28,4 @@ client.on('message', (data) => {
 ### LOGGER
 SkyLine uses the orhanobut logger.
 ### How to view SkyLine Log?
-Among the logs, "PRETTY LOGGER" is the log that SkyLine debugs.
+Among the logs, "PRETTY_LOGGER" is the log that SkyLine debugs.

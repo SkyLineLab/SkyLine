@@ -15,13 +15,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
-import com.oracle.truffle.api.interop.TruffleObject
-import com.oracle.truffle.js.runtime.objects.JSObject
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.script.api.util.ProfileImage
 import com.skyline.msgbot.util.AppUtil
 import org.graalvm.polyglot.Value
-import org.graalvm.polyglot.proxy.ProxyObject
 
 class BotChannel(
     private val bundle: Bundle,

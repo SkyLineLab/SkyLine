@@ -11,7 +11,7 @@ import com.skyline.msgbot.script.client.BotClient
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.proxy.ProxyArray
 
-class BotProject(val runtimeID: Int) {
+class BotProject(private val runtimeID: Int) {
     fun getClient(): BotClient? {
         return RuntimeManager.clients[runtimeID]
     }
