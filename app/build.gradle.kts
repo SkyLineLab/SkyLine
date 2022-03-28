@@ -74,6 +74,7 @@ dependencies {
     implementation(project(mapOf("path" to ":java-pkg")))
     implementation("com.orhanobut:logger:2.2.0")
     implementation("commons-io:commons-io:2.11.0")
+    implementation("com.ibm.icu:icu4j:70.1")
     implementation(files("libs/graal-dalvik.main.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

@@ -28,6 +28,21 @@ class BotProject(private val runtimeID: Int) {
         return RuntimeManager.runtimes[runtimeID]
     }
 
+    fun on(): Boolean {
+        RuntimeManager.powerMap[runtimeID] = true
+        return true
+    }
+
+    fun off(): Boolean {
+        // TODO
+        return false
+    }
+
+    fun compile(): Boolean {
+        RuntimeManager.compile(RuntimeManager.projectIds[runtimeID]!!)
+        return true
+    }
+
     override fun toString(): String {
         return "[object BotProject]"
     }
