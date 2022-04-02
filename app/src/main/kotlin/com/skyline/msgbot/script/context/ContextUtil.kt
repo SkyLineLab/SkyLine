@@ -14,7 +14,7 @@ import org.graalvm.polyglot.PolyglotAccess
 import org.graalvm.polyglot.io.FileSystem
 
 /**
- * GraalJS Context getter
+ * GraalVM Context getter
  * @author naijun
  */
 object ContextUtil {
@@ -27,13 +27,23 @@ object ContextUtil {
             .allowIO(true)
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", "${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName")
-//            .option("js.commonjs-global-properties", "/data/user/0/com.skyline.msgbot/files/lib/$projectName/global.js")
+            .option("js.commonjs-global-properties", "/data/user/0/com.skyline.msgbot/files/global.js")
+            .option("js.commonjs-core-modules-replacements", """buffer:/data/user/0/com.skyline.msgbot/files/node_modules/buffer
+            """.trimMargin())
             .option("js.foreign-object-prototype", "true")
             .option("js.syntax-extensions", "true")
             .option("js.nashorn-compat", "true")
             .option("js.ecmascript-version", "2022")
+            .option("js.intl-402", "true")
             .allowCreateThread(true)
+            .allowCreateProcess(true)
+            .allowNativeAccess(true)
+            .allowHostClassLoading(true)
             .fileSystem(FileSystem.newDefaultFileSystem())
             .allowHostClassLookup { true }.build()
+    }
+
+    fun getPythonContext(): Context {
+        throw UnsupportedOperationException("GraalPython not support yet")
     }
 }

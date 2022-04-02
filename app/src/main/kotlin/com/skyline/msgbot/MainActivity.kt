@@ -18,14 +18,13 @@ import com.skyline.msgbot.service.ForegroundService
 import com.skyline.msgbot.ui.HomePage
 import com.skyline.msgbot.ui.theme.SkyLineTheme
 import com.skyline.msgbot.util.PermissionUtil
-import kotlinx.coroutines.CoroutineScope
 
 class MainActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         CoreHelper.contextGetter = {
             this
-        }
+        } // set android context
         PermissionUtil.requestAllPermision(this, true)
     }
 

@@ -3,6 +3,7 @@ package com.skyline.msgbot.project
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.orhanobut.logger.Logger
+import com.skyline.gordjs.util.NodeModuleUtil
 import com.skyline.msgbot.core.CoreHelper
 import com.skyline.msgbot.script.ScriptLanguage
 import com.skyline.msgbot.script.api.FileStream
@@ -17,6 +18,20 @@ object ProjectInitUtil {
     fun createProject(projectName: String, language: ScriptLanguage): Boolean {
         if (isExistsProject(projectName)) return false
         return try {
+            val gnm = File("/data/user/0/com.skyline.msgbot/files/global.js")
+            if (!gnm.exists()) {
+                FileStream.write("/data/user/0/com.skyline.msgbot/files/global.js", """
+                    globalThis.process = require('/data/user/0/com.skyline.msgbot/files/node_modules/process');
+                    globalThis.Buffer = require('/data/user/0/com.skyline.msgbot/files/node_modules/buffer').Buffer;
+                """.trimIndent())
+            }
+
+            val nmPath = File("/data/user/0/com.skyline.msgbot/files/node_modules")
+            if (!nmPath.exists()) {
+                Logger.d("Noting :(")
+                NodeModuleUtil.installNodeModule()
+            }
+
             val appPath = File(CoreHelper.sdcardPath).resolve(CoreHelper.directoryName).resolve("Projects")
             if (!appPath.exists()) {
                 appPath.mkdirs()
@@ -111,6 +126,22 @@ object ProjectInitUtil {
         } catch (e: Exception) {
             e.printStackTrace()
             false
+        }
+    }
+
+    fun installNodePackage() {
+        val gnm = File("/data/user/0/com.skyline.msgbot/files/global.js")
+        if (!gnm.exists()) {
+            FileStream.write("/data/user/0/com.skyline.msgbot/files/global.js", """
+                    globalThis.process = require('/data/user/0/com.skyline.msgbot/files/node_modules/process');
+                    globalThis.Buffer = require('/data/user/0/com.skyline.msgbot/files/node_modules/buffer').Buffer;
+                """.trimIndent())
+        }
+
+        val nmPath = File("/data/user/0/com.skyline.msgbot/files/node_modules")
+        if (!nmPath.exists()) {
+            Logger.d("Noting :(")
+            NodeModuleUtil.installNodeModule()
         }
     }
 }

@@ -35,6 +35,7 @@ internal object RuntimeManager {
     fun addRuntime(projectName: String, language: ScriptLanguage): Boolean {
         CoroutineScope(Dispatchers.IO).launch {
             ProjectInitUtil.createProject(projectName, language)
+            ProjectInitUtil.installNodePackage()
             ProjectInitUtil.makeModuleDir(projectName)
             if (!ProjectInitUtil.isExistsProject(projectName)) {
                 Logger.e("Create Project Error")

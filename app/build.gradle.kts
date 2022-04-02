@@ -74,6 +74,7 @@ dependencies {
     implementation(project(mapOf("path" to ":java-pkg")))
     implementation("com.orhanobut:logger:2.2.0")
     implementation("commons-io:commons-io:2.11.0")
+    implementation("org.rauschig:jarchivelib:1.2.0")
     implementation("com.ibm.icu:icu4j:70.1")
     implementation(files("libs/graal-dalvik.main.jar"))
     testImplementation("junit:junit:4.13.2")
@@ -82,4 +83,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
     debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
     debugImplementation("androidx.compose.ui:ui-test-manifest:${rootProject.extra["compose_version"]}")
+
+    // implementation("org.jetbrains.kotlin:kotlin-scripting-compiler-embeddable:1.6.10")
+    // implementation("org.jetbrains.kotlin:kotlin-scripting-jsr223:1.6.10")
+    // implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.10")
+    // implementation("org.jetbrains.kotlin:kotlin-scripting-common:1.6.10")
+    // implementation("org.jetbrains.kotlin:kotlin-scripting-jvm-host:1.6.10")
+    // implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.6.10")
+    // implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.6.10")
 }
