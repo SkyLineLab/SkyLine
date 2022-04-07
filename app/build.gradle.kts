@@ -75,7 +75,7 @@ dependencies {
     implementation("com.orhanobut:logger:2.2.0")
     implementation("commons-io:commons-io:2.11.0")
     implementation("org.rauschig:jarchivelib:1.2.0")
-    implementation("com.ibm.icu:icu4j:70.1")
+    implementation("com.ibm.icu:icu4j:71.1")
     implementation(files("libs/graal-dalvik.main.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
