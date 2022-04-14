@@ -9,7 +9,7 @@ package com.skyline.msgbot.session
 import com.skyline.msgbot.event.MessageEvent
 
 object ChannelSession {
-    private val sessions: HashMap<String, MessageEvent> = HashMap() // roomName, MessageEvent
+    val sessions: HashMap<String, MessageEvent> = HashMap() // roomName, MessageEvent
 
     fun addSession(eventData: MessageEvent) {
         sessions[eventData.room.name] = eventData

@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.skyline.msgbot"
         minSdk = 21
-        targetSdk = 32
+        targetSdk = 29
         versionCode = 1
         versionName = "1.0"
 
@@ -75,8 +75,13 @@ dependencies {
     implementation("com.orhanobut:logger:2.2.0")
     implementation("commons-io:commons-io:2.11.0")
     implementation("org.rauschig:jarchivelib:1.2.0")
-    implementation("com.ibm.icu:icu4j:70.1")
+    // implementation("com.ibm.icu:icu4j:70.1")
     implementation(files("libs/graal-dalvik.main.jar"))
+    implementation(files("libs/wasm-launcher.jar"))
+    implementation(files("libs/wasm.jar"))
+    implementation(files("libs/truffle-sl-launcher.jar"))
+    implementation(files("libs/truffle-sl.jar"))
+    implementation("org.antlr:antlr4-runtime:4.9.3")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.script.api.util.ProfileImage
+import com.skyline.msgbot.session.ChannelSession
 import com.skyline.msgbot.util.AppUtil
 import org.graalvm.polyglot.Value
 
@@ -68,6 +69,15 @@ class BotChannel(
         } catch (e: PendingIntent.CanceledException) {
             false
         }
+    }
+
+    override fun sendAllRoom(message: Value?): Boolean {
+        val keys = ChannelSession.sessions.keys.toTypedArray()
+        for (i in 0 until ChannelSession.sessions.size) {
+            val roomName = keys[i]
+            ChannelSession.getSession(roomName)!!.room.send(message)
+        }
+        return true
     }
 
     override fun markAsRead(): Boolean {
@@ -124,6 +134,8 @@ interface ChatChannel {
     val isGroupChat: Boolean
 
     fun send(message: Value?): Boolean
+
+    fun sendAllRoom(message: Value?): Boolean
 
     fun markAsRead(): Boolean
 }

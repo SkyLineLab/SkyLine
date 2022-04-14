@@ -23,14 +23,14 @@ import java.io.ByteArrayOutputStream
 class ProfileImage(
     var context: Context,
     var statusBarNotification: StatusBarNotification,
-    var bundle: Bundle
+    var bundle: Bundle,
 ) {
     var hashCode: String = ""
     var profileImageDB: Bitmap? = null
 
     init {
-        profileImageDB = if (AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
-            icon2Bitmap(context, (bundle.get("android.messagingUser") as Person).icon!!)
+        profileImageDB = if ((AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7) && Build.VERSION.SDK_INT >= 29) {
+            icon2Bitmap(context, ((bundle.getParcelableArray("android.messages")!![0] as Bundle).getParcelable<Person>("sender_person")?.icon))
         } else {
             getLargeIcon()
         }

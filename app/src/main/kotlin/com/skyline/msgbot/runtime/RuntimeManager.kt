@@ -40,6 +40,7 @@ internal object RuntimeManager {
             if (!ProjectInitUtil.isExistsProject(projectName)) {
                 Logger.e("Create Project Error")
             } else {
+                Logger.d("add")
                 val id = runtimes.count() + 1
                 val context = ContextUtil.getJSContext(projectName)
                 ApiApplyUtil.apply(context.getBindings("js"), true, id)
