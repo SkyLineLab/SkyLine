@@ -7,6 +7,7 @@
 package com.skyline.msgbot.script.api.util
 
 import com.skyline.gordjs.GordJS
+import com.skyline.msgbot.event.Events
 import com.skyline.msgbot.project.BotProject
 import com.skyline.msgbot.script.api.Api
 import com.skyline.msgbot.script.api.Bridge
@@ -18,6 +19,8 @@ object ApiApplyUtil {
         value.putMember("FileStream", FileStream)
         value.putMember("Api", Api)
         value.putMember("Bridge", Bridge)
+        value.putMember("Events", Events.Companion)
+
         if (isProject) {
             value.putMember("BotProject", BotProject(runtimeId))
         }

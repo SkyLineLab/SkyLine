@@ -43,7 +43,8 @@ internal object RuntimeManager {
                 Logger.d("add")
                 val id = runtimes.count() + 1
                 val context = ContextUtil.getJSContext(projectName)
-                ApiApplyUtil.apply(context.getBindings("js"), true, id)
+                val global = context.getBindings("js")
+                ApiApplyUtil.apply(global, true, id)
                 runtimes[id] = context
                 powerMap[id] = true
                 clients[id] = BotClient()

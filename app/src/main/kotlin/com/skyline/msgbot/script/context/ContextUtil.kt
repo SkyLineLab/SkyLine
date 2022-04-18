@@ -44,6 +44,25 @@ object ContextUtil {
             .allowHostClassLookup { true }.build()
     }
 
+    fun getJSContext(): Context {
+        return Context.newBuilder("js")
+            .allowHostAccess(HostAccess.ALL)
+            .allowPolyglotAccess(PolyglotAccess.ALL)
+            .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(CoreHelper.contextGetter!!.invoke()))
+            .allowExperimentalOptions(true)
+            .allowIO(true)
+            .option("js.foreign-object-prototype", "true")
+            .option("js.syntax-extensions", "true")
+            .option("js.nashorn-compat", "true")
+            .option("js.ecmascript-version", "2022")
+            .option("js.intl-402", "true")
+            .allowCreateThread(true)
+            .allowCreateProcess(true)
+            .allowNativeAccess(true)
+            .allowHostClassLoading(true)
+            .allowHostClassLookup { true }.build()
+    }
+
     fun getPythonContext(): Context {
         throw UnsupportedOperationException("GraalPython not support yet")
     }

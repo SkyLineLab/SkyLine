@@ -19,6 +19,7 @@ import com.orhanobut.logger.Logger
 import com.skyline.msgbot.script.api.util.ProfileImage
 import com.skyline.msgbot.session.ChannelSession
 import com.skyline.msgbot.util.AppUtil
+import com.skyline.msgbot.util.JSPromise
 import org.graalvm.polyglot.Value
 
 class BotChannel(
@@ -45,7 +46,7 @@ class BotChannel(
             }
         }
 
-    override fun send(message: Value?): Boolean {
+    override fun send(message: Value?): Value {
         val sendIntent = Intent()
         val msg = Bundle()
         val actualInputs: ArrayList<RemoteInput> = java.util.ArrayList<RemoteInput>()
@@ -65,28 +66,28 @@ class BotChannel(
         RemoteInput.addResultsToIntent(actualInputs.toArray(arrayOfNulls(actualInputs.size)), sendIntent, msg)
         return try {
             session.actionIntent.send(context, 0, sendIntent)
-            true
+            JSPromise.wrapPromise(result = true, isSuccess = true)
         } catch (e: PendingIntent.CanceledException) {
-            false
+            JSPromise.wrapPromise(result = false, isSuccess = false)
         }
     }
 
-    override fun sendAllRoom(message: Value?): Boolean {
+    override fun sendAllRoom(message: Value?): Value {
         val keys = ChannelSession.sessions.keys.toTypedArray()
         for (i in 0 until ChannelSession.sessions.size) {
             val roomName = keys[i]
             ChannelSession.getSession(roomName)!!.room.send(message)
         }
-        return true
+        return JSPromise.wrapPromise(result = true, isSuccess = true)
     }
 
-    override fun markAsRead(): Boolean {
+    override fun markAsRead(): Value {
         return try {
             statusBarNotification.notification.actions[0].actionIntent.send(context, 1, Intent())
-            true
+            JSPromise.wrapPromise(result = true, isSuccess = true)
         }
         catch (e: PendingIntent.CanceledException){
-            false
+            JSPromise.wrapPromise(result = false, isSuccess = false)
         }
     }
 
@@ -133,11 +134,11 @@ interface ChatChannel {
 
     val isGroupChat: Boolean
 
-    fun send(message: Value?): Boolean
+    fun send(message: Value?): Value
 
-    fun sendAllRoom(message: Value?): Boolean
+    fun sendAllRoom(message: Value?): Value
 
-    fun markAsRead(): Boolean
+    fun markAsRead(): Value
 }
 
 interface ChatSender {

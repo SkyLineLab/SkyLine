@@ -33,7 +33,8 @@ object Api {
             CoroutineScope(Dispatchers.IO).launch {
                 for (runtime in RuntimeManager.runtimes) {
                     val ctx = ContextUtil.getJSContext(RuntimeManager.projectIds[runtime.key] ?: "")
-                    ApiApplyUtil.apply(ctx.getBindings("js"), true, runtime.key)
+                    val global = ctx.getBindings("js")
+                    ApiApplyUtil.apply(global, true, runtime.key)
                     RuntimeManager.runtimes[runtime.key] = ctx
                     when (RuntimeManager.projectLanguages[runtime.key]) {
                         ScriptLanguage.JAVASCRIPT -> {
