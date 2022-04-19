@@ -19,6 +19,7 @@ object CoreHelper {
     var contextGetter: (() -> Context)? = null
     val allowPackageNames: List<String> = listOf("com.kakao")
     const val directoryName: String = "skyline"
+    const val baseNodePath: String = "/data/user/0/com.skyline.msgbot/files/languages/nodejs"
     val sdcardPath: String = Environment.getExternalStorageDirectory().absolutePath
     val gson = GsonBuilder().setPrettyPrinting().create()
     init {

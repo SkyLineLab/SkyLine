@@ -133,12 +133,12 @@ object ProjectInitUtil {
         val gnm = File("/data/user/0/com.skyline.msgbot/files/global.js")
         if (!gnm.exists()) {
             FileStream.write("/data/user/0/com.skyline.msgbot/files/global.js", """
-                    globalThis.process = require('/data/user/0/com.skyline.msgbot/files/node_modules/process');
-                    globalThis.Buffer = require('/data/user/0/com.skyline.msgbot/files/node_modules/buffer').Buffer;
+                    globalThis.process = require('/data/user/0/com.skyline.msgbot/files/languages/nodejs/process');
+                    globalThis.Buffer = require('/data/user/0/com.skyline.msgbot/files/languages/nodejs/buffer').Buffer;
                 """.trimIndent())
         }
 
-        val nmPath = File("/data/user/0/com.skyline.msgbot/files/node_modules")
+        val nmPath = File("/data/user/0/com.skyline.msgbot/files/languages/nodejs")
         if (!nmPath.exists()) {
             Logger.d("Noting :(")
             NodeModuleUtil.installNodeModule()

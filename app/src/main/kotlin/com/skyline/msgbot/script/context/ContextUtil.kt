@@ -6,17 +6,20 @@
 
 package com.skyline.msgbot.script.context
 
+import android.annotation.SuppressLint
 import com.naijun.graaldalvik.AndroidClassLoaderFactory
 import com.skyline.msgbot.core.CoreHelper
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.HostAccess
 import org.graalvm.polyglot.PolyglotAccess
+import com.skyline.msgbot.core.CoreHelper.baseNodePath
 
 /**
  * GraalVM Context getter
  * @author naijun
  */
 object ContextUtil {
+    @SuppressLint("SdCardPath")
     fun getJSContext(projectName: String): Context {
         return Context.newBuilder("js")
             .allowHostAccess(HostAccess.ALL)
@@ -30,7 +33,7 @@ object ContextUtil {
             // .option("js.commonjs-core-modules-replacements", "buffer:/data/user/0/com.skyline.msgbot/files/node_modules/buffer,crypto:/data/user/0/com.skyline.msgbot/files/node_modules/crypto")
             .option(
                 "js.commonjs-core-modules-replacements",
-                "buffer:/data/user/0/com.skyline.msgbot/files/node_modules/buffer,crypto:/data/user/0/com.skyline.msgbot/files/node_modules/crypto,stream:/data/user/0/com.skyline.msgbot/files/node_modules/stream,events:/data/user/0/com.skyline.msgbot/files/node_modules/events,util:/data/user/0/com.skyline.msgbot/files/node_modules/util,process:/data/user/0/com.skyline.msgbot/files/node_modules/process,assert:/data/user/0/com.skyline.msgbot/files/node_modules/assert"
+                "buffer:$baseNodePath/buffer,string_decoder:$baseNodePath/string_decoder,crypto:$baseNodePath/crypto,stream:$baseNodePath/stream,events:$baseNodePath/events,util:$baseNodePath/util,process:$baseNodePath/process,assert:$baseNodePath/assert,timers:$baseNodePath/timers"
             )
             .option("js.foreign-object-prototype", "true")
             .option("js.syntax-extensions", "true")
