@@ -81,7 +81,7 @@ dependencies {
     implementation(files("libs/wasm.jar"))
     implementation(files("libs/truffle-sl-launcher.jar"))
     implementation(files("libs/truffle-sl.jar"))
-    implementation("org.antlr:antlr4-runtime:4.10")
+    implementation("org.antlr:antlr4-runtime:4.10.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
