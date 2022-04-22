@@ -38,7 +38,7 @@ object ContextUtil {
             .option("js.foreign-object-prototype", "true")
             .option("js.syntax-extensions", "true")
             .option("js.nashorn-compat", "true")
-            .option("js.ecmascript-version", "2022")
+            .option("js.ecmascript-version", "staging")
             .option("js.intl-402", "true")
             .allowCreateThread(true)
             .allowCreateProcess(true)
