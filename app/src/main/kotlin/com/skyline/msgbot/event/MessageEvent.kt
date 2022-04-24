@@ -15,6 +15,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.service.notification.StatusBarNotification
+import com.oracle.truffle.js.runtime.Errors
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.script.api.util.ProfileImage
 import com.skyline.msgbot.session.ChannelSession
@@ -116,6 +117,15 @@ class BotSender(
     override val profileHash: Int
         get() = profileImage.getProfileHash()
 
+    override val userHash: String
+        get() {
+            return if (AppUtil.getPackageVersion(packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+                (bundle.get("android.messagingUser") as Person).key.toString()
+            } else {
+                throw Errors.createError("User Hash is Add to SDK_LEVEL 30 or kakaotalk version over than 9.7.0")
+            }
+        }
+
     override fun toString(): String {
         return "BotSender[ name = $name hash = $profileHash ]" // base64는 아주 길기에 생략
     }
@@ -147,4 +157,6 @@ interface ChatSender {
     val profileBase64: String
 
     val profileHash: Int
+
+    val userHash: String
 }
