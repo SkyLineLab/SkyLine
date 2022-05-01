@@ -76,6 +76,7 @@ dependencies {
     implementation("commons-io:commons-io:2.11.0")
     implementation("org.rauschig:jarchivelib:1.2.0")
     // implementation("com.ibm.icu:icu4j:70.1")
+    implementation("com.google.android.gms:play-services-wearable:17.1.0")
     implementation(files("libs/graal-dalvik.main.jar"))
     implementation(files("libs/wasm-launcher.jar"))
     implementation(files("libs/wasm.jar"))
