@@ -34,6 +34,7 @@ class BotClient {
                 if (!eventMap.containsKey(event)) return false
                 CoroutineScope(Dispatchers.IO).launch {
                     val func: Value? = eventMap[event]
+                    print("Hello, World!")
                     func?.executeVoid(*arguments)
                 }
                 return true

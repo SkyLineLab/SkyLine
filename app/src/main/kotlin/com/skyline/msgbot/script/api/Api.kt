@@ -35,6 +35,7 @@ object Api {
                     val ctx = ContextUtil.getJSContext(RuntimeManager.projectIds[runtime.key] ?: "")
                     val global = ctx.getBindings("js")
                     ApiApplyUtil.apply(global, true, runtime.key)
+                    ApiApplyUtil.installNodejs(context = ctx)
                     RuntimeManager.runtimes[runtime.key] = ctx
                     when (RuntimeManager.projectLanguages[runtime.key]) {
                         ScriptLanguage.JAVASCRIPT -> {

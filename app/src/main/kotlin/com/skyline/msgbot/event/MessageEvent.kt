@@ -65,10 +65,13 @@ class BotChannel(
             Logger.e("Send Error: ${e.message} stackTrace = ${e.stackTraceToString()}")
         }
         RemoteInput.addResultsToIntent(actualInputs.toArray(arrayOfNulls(actualInputs.size)), sendIntent, msg)
+        Logger.d(msg)
         return try {
             session.actionIntent.send(context, 0, sendIntent)
+            Logger.d("send!")
             JSPromise.wrapPromise(result = true, isSuccess = true)
         } catch (e: PendingIntent.CanceledException) {
+            e.printStackTrace()
             JSPromise.wrapPromise(result = false, isSuccess = false)
         }
     }
@@ -131,13 +134,32 @@ class BotSender(
     }
 }
 
-data class MessageEvent(
+// data class MessageEvent (
+//     val message: String,
+//     val sender: ChatSender,
+//     val room: ChatChannel,
+//     val packageName: String,
+//     val chat: Bundle?
+// )
+
+class MessageEvent(
     val message: String,
     val sender: ChatSender,
     val room: ChatChannel,
     val packageName: String,
     val chat: Bundle?
-)
+) : Event {
+    override val isTrusted: Boolean
+        get() = true
+    override val type: String
+        get() = Events.ON_MESSAGE
+    override val timeStamp: Long
+        get() = System.currentTimeMillis()
+    override val defaultPrevented: Boolean
+        get() = false
+    override val scope: String
+        get() = "global"
+}
 
 interface ChatChannel {
     val name: String

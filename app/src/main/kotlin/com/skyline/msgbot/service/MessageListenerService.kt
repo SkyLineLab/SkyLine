@@ -81,6 +81,7 @@ class MessageListenerService : NotificationListenerService() {
                                 Logger.w("Data is Null")
                                 return
                             }
+                            Logger.d("action Size = ${sbn.notification.actions.size}")
                             val message = data.get("android.text").toString()
                             val profileImage = ProfileImage(applicationContext, sbn, data)
                             val channel = BotChannel(data, applicationContext, sbn.notification.actions[i], sbn)

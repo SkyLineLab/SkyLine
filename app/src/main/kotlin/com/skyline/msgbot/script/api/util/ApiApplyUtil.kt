@@ -6,12 +6,14 @@
 
 package com.skyline.msgbot.script.api.util
 
+import android.annotation.SuppressLint
 import com.skyline.gordjs.GordJS
 import com.skyline.msgbot.project.BotProject
 import com.skyline.msgbot.script.api.Api
 import com.skyline.msgbot.script.api.Bridge
 import com.skyline.msgbot.script.api.Event
 import com.skyline.msgbot.script.api.FileStream
+import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.Value
 
 object ApiApplyUtil {
@@ -26,5 +28,11 @@ object ApiApplyUtil {
         }
 
         GordJS.applyContext(value) // init nodejs
+    }
+
+    @SuppressLint("SdCardPath")
+    fun installNodejs(context: Context) {
+        val source = FileStream.read("/data/user/0/com.skyline.msgbot/files/global.js")
+        context.eval("js", source)
     }
 }

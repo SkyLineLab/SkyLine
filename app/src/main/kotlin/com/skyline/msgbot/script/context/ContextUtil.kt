@@ -29,11 +29,11 @@ object ContextUtil {
             .allowIO(true)
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", "${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName")
-            .option("js.commonjs-global-properties", "/data/user/0/com.skyline.msgbot/files/global.js")
+            // .option("js.commonjs-global-properties", "/data/user/0/com.skyline.msgbot/files/global.js")
             // .option("js.commonjs-core-modules-replacements", "buffer:/data/user/0/com.skyline.msgbot/files/node_modules/buffer,crypto:/data/user/0/com.skyline.msgbot/files/node_modules/crypto")
             .option(
                 "js.commonjs-core-modules-replacements",
-                "buffer:$baseNodePath/buffer,string_decoder:$baseNodePath/string_decoder,crypto:$baseNodePath/crypto,stream:$baseNodePath/stream,events:$baseNodePath/events,util:$baseNodePath/util,process:$baseNodePath/process,assert:$baseNodePath/assert,timers:$baseNodePath/timers"
+                "buffer:$baseNodePath/buffer,string_decoder:$baseNodePath/string_decoder,crypto:$baseNodePath/crypto,stream:$baseNodePath/stream,events:$baseNodePath/events,util:$baseNodePath/util,process:$baseNodePath/process,assert:$baseNodePath/assert,timers:$baseNodePath/timers,kapi/util/device:$baseNodePath/kapi/util/device"
             )
             .option("js.foreign-object-prototype", "true")
             .option("js.syntax-extensions", "true")

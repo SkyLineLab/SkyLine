@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.Source
 import java.io.File
+import java.util.Stack
 
 internal object RuntimeManager {
     val runtimes: HashMap<Int, Context> = hashMapOf()
@@ -28,12 +29,14 @@ internal object RuntimeManager {
     val projectNames: HashMap<String, Int> = hashMapOf()
     val projectLanguages: HashMap<Int, ScriptLanguage> = hashMapOf()
 
+    private val runtimeCount: Stack<Any> = Stack()
+
     /**
      * 리턴 타입은 Boolean인데 코루틴 내부라 false를 반환할수 없어 무조건 true만 반환
      * 다만 만들기에 실패하면 로거에 뜸
      */
     fun addRuntime(projectName: String, language: ScriptLanguage): Boolean {
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
             ProjectInitUtil.createProject(projectName, language)
             ProjectInitUtil.installNodePackage()
             ProjectInitUtil.makeModuleDir(projectName)
@@ -41,10 +44,13 @@ internal object RuntimeManager {
                 Logger.e("Create Project Error")
             } else {
                 Logger.d("add")
-                val id = runtimes.count() + 1
+                val id = runtimeCount.size + 1
+                Logger.d("projectName = $projectName id = $id")
                 val context = ContextUtil.getJSContext(projectName)
+                runtimeCount.push(0)
                 val global = context.getBindings("js")
                 ApiApplyUtil.apply(global, true, id)
+                ApiApplyUtil.installNodejs(context = context)
                 runtimes[id] = context
                 powerMap[id] = true
                 clients[id] = BotClient()
@@ -53,7 +59,7 @@ internal object RuntimeManager {
                 when (language) {
                     ScriptLanguage.JAVASCRIPT -> {
                         projectLanguages[id] = language
-                        runtimes[id]!!.eval(
+                        context.eval(
                             Source.newBuilder(
                                 "js",
                                 File("${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName/script.js")
