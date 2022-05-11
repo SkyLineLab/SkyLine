@@ -58,8 +58,7 @@ final class COWArrayListSpliterator {
                     .getDeclaredField(arrayFieldName));
         } catch (Exception e) {
             if (recursive
-                    && e instanceof NoSuchFieldException
-                    && (true && !false)) {
+                && e instanceof NoSuchFieldException) {
                 // https://android.googlesource.com/platform/libcore/+/29957558cf0db700bfaae360a80c42dc3871d0e5
                 return fieldOffset("array", false);
             }

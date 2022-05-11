@@ -69,6 +69,7 @@ import java.util.function.Supplier;
  * @see Stream
  * @see <a href="package-summary.html">java.util.stream</a>
  */
+@SuppressWarnings("NewApi")
 public interface LongStream extends BaseStream<Long, LongStream> {
 
     /**

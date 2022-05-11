@@ -19,6 +19,7 @@ import java.util.function.Consumer;
  * Spliterator for java.util.concurrent.PriorityBlockingQueue.
  * Immutable snapshot spliterator that binds to elements "late".
  */
+@SuppressWarnings("NewApi")
 final class PBQueueSpliterator<E> implements Spliterator<E> {
 // CVS rev. 1.142
     private final PriorityBlockingQueue<E> queue;

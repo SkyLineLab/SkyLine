@@ -54,6 +54,7 @@ import java.util.function.LongConsumer;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 final class ForEachOps {
 
     private ForEachOps() { }

@@ -57,6 +57,7 @@ import java.util.function.LongConsumer;
  * @param <T> the type of elements.
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 interface Node<T> {
 
     /**

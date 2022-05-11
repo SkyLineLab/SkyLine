@@ -30,6 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 // Spliterator for java.util.concurrent.CopyOnWriteArraySet
+@SuppressWarnings("NewApi")
 final class COWArraySetSpliterator {
 // CVS rev. 1.74
     private COWArraySetSpliterator() {

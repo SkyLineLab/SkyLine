@@ -25,6 +25,7 @@ import java.util.function.LongBinaryOperator;
  * @author Doug Lea
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 class ArrayPrefixHelpers {
 // CVS rev. 1.13
     private ArrayPrefixHelpers() {} // non-instantiable

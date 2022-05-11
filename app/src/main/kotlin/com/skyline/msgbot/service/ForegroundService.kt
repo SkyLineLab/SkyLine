@@ -36,10 +36,12 @@ import com.skyline.msgbot.MainActivity
 import com.skyline.msgbot.R
 
 object ForegroundService {
+
     private var wakeLock: PowerManager.WakeLock? = null
 
     fun startForeground(context: Context) {
         val intent = Intent(context, MainActivity::class.java)
+
         if (Build.VERSION.SDK_INT >= 26) context.startForegroundService(intent)
         else context.startService(intent)
 
@@ -59,6 +61,7 @@ object ForegroundService {
             .setWhen(0)
             .setOnlyAlertOnce(true)
             .setOngoing(true)
+
         val notiMgmt = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         notiMgmt.notify(1, noti.build())
 
@@ -73,4 +76,5 @@ object ForegroundService {
     fun release() {
         wakeLock?.release()
     }
+
 }

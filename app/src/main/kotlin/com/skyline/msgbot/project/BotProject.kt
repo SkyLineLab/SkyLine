@@ -29,7 +29,10 @@ import com.skyline.msgbot.script.client.BotClient
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.proxy.ProxyArray
 
-class BotProject(private val runtimeID: Int) {
+class BotProject(
+    private val runtimeID: Int
+) {
+
     fun getClient(): BotClient? {
         return RuntimeManager.clients[runtimeID]
     }
@@ -64,4 +67,5 @@ class BotProject(private val runtimeID: Int) {
     override fun toString(): String {
         return "[object BotProject]"
     }
+
 }

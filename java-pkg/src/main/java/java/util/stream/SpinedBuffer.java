@@ -53,6 +53,7 @@ import java.util.function.LongConsumer;
  * @param <E> the type of elements in this list
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 class SpinedBuffer<E>
         extends AbstractSpinedBuffer
         implements Consumer<E> {

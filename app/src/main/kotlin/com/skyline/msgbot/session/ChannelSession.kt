@@ -27,6 +27,7 @@ package com.skyline.msgbot.session
 import com.skyline.msgbot.event.MessageEvent
 
 object ChannelSession {
+
     val sessions: HashMap<String, MessageEvent> = HashMap() // roomName, MessageEvent
 
     fun addSession(eventData: MessageEvent) {
@@ -44,4 +45,5 @@ object ChannelSession {
     fun hasSession(room: String): Boolean {
         return sessions[room] != null
     }
+
 }

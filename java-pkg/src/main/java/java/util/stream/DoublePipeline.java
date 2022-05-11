@@ -51,6 +51,7 @@ import java.util.function.Supplier;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 abstract class DoublePipeline<E_IN>
         extends AbstractPipeline<E_IN, Double, DoubleStream>
         implements DoubleStream {

@@ -35,6 +35,7 @@ import org.apache.commons.io.IOUtils
 import java.io.File
 
 object ProjectInitUtil {
+
     /**
      * 코루틴 내부에서 사용하길 바랍니다.
      * @see com.skyline.msgbot.runtime.RuntimeManager
@@ -42,14 +43,14 @@ object ProjectInitUtil {
     fun createProject(projectName: String, language: ScriptLanguage): Boolean {
         if (isExistsProject(projectName)) return false
         return try {
-            val gnm = File("/data/user/0/com.skyline.msgbot/files/global.js")
+            val gnm = File("${CoreHelper.filesDir}/global.js")
             if (!gnm.exists()) {
                 val inputStream = CoreHelper.contextGetter!!.invoke().assets.open("global.js")
                 val source = IOUtils.toString(inputStream)
-                FileStream.write("/data/user/0/com.skyline.msgbot/files/global.js", source)
+                FileStream.write("${CoreHelper.filesDir}/global.js", source)
             }
 
-            val nmPath = File("/data/user/0/com.skyline.msgbot/files/node_modules")
+            val nmPath = File("${CoreHelper.filesDir}/node_modules")
             if (!nmPath.exists()) {
                 Logger.d("Noting :(")
                 NodeModuleUtil.installNodeModule()
@@ -134,7 +135,7 @@ object ProjectInitUtil {
 
     fun isExistsProject(projectName: String): Boolean {
         return try {
-            val path: File = File("${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName/script.js")
+            val path = File("${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName/script.js")
             path.exists()
         } catch (e: Exception) {
             e.printStackTrace()
@@ -153,15 +154,15 @@ object ProjectInitUtil {
     }
 
     fun installNodePackage() {
-        val gnm = File("/data/user/0/com.skyline.msgbot/files/global.js")
+        val gnm = File("${CoreHelper.filesDir}/global.js")
         if (!gnm.exists()) {
-            FileStream.write("/data/user/0/com.skyline.msgbot/files/global.js", """
+            FileStream.write("${CoreHelper.filesDir}/global.js", """
                     globalThis.process = require('/data/user/0/com.skyline.msgbot/files/languages/nodejs/process');
                     globalThis.Buffer = require('/data/user/0/com.skyline.msgbot/files/languages/nodejs/buffer').Buffer;
                 """.trimIndent())
         }
 
-        val nmPath = File("/data/user/0/com.skyline.msgbot/files/languages/nodejs")
+        val nmPath = File(CoreHelper.baseNodePath)
         Logger.d(nmPath.exists())
         if (!nmPath.exists()) {
             Logger.d("Noting :(")
@@ -172,4 +173,5 @@ object ProjectInitUtil {
             }
         }
     }
+
 }

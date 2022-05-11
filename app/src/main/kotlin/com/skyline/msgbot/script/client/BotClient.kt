@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 import org.graalvm.polyglot.Value
 
 class BotClient {
+
     private val eventMap: HashMap<String, Value> = hashMapOf()
 
     fun on(event: String, function: Value): BotClient {
@@ -45,7 +46,7 @@ class BotClient {
 
     @Synchronized
     fun emit(event: String, vararg arguments: Any): Boolean { //vararg arguments: Any
-        kotlin.synchronized(BotClient::class.java) {
+        synchronized(BotClient::class.java) {
             try {
                 if (!eventMap.containsKey(event)) return false
                 CoroutineScope(Dispatchers.IO).launch {
@@ -62,7 +63,7 @@ class BotClient {
 
     @Synchronized
     fun dispatchEvent(event: Event): Boolean {
-        kotlin.synchronized(BotClient::class.java) {
+        synchronized(BotClient::class.java) {
             try {
                 if (!eventMap.containsKey(event.eventName)) return false
                 CoroutineScope(Dispatchers.IO).launch {
@@ -80,4 +81,5 @@ class BotClient {
     override fun toString(): String {
         return "[object BotClient]"
     }
+
 }

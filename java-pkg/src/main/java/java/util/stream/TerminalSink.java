@@ -35,4 +35,5 @@ import java.util.function.Supplier;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 interface TerminalSink<T, R> extends Sink<T>, Supplier<R> { }

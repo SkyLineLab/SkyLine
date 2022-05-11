@@ -39,6 +39,7 @@ import java.util.function.Supplier;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 public final class StreamSupport {
 
     // Suppresses default constructor, ensuring non-instantiability.

@@ -34,6 +34,7 @@ import java.util.function.IntFunction;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 final class SliceOps {
 
     // No instances

@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
  * @author naijun
  */
 object Bot {
+
     fun callMessage(event: MessageEvent) {
         ChannelSession.addSession(eventData = event)
         CoroutineScope(Dispatchers.IO).launch {
@@ -79,4 +80,5 @@ object Bot {
             }
         }
     }
+
 }

@@ -30,6 +30,7 @@ package java.util.stream;
  * no copying cost associated with growing the data structure.
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 abstract class AbstractSpinedBuffer {
     /**
      * Minimum power-of-two for the first chunk.

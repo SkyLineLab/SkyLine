@@ -37,6 +37,7 @@ import com.skyline.msgbot.util.AppUtil
 import java.util.*
 
 class MessageListenerService : NotificationListenerService() {
+
     override fun onCreate() {
         super.onCreate()
         Logger.d("Notification Listener Create")
@@ -126,4 +127,5 @@ class MessageListenerService : NotificationListenerService() {
             Logger.e("Notification Error: ${e.message} stackTrace = ${e.stackTraceToString()}")
         }
     }
+
 }

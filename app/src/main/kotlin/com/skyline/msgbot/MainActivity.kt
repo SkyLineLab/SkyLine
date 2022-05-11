@@ -44,6 +44,7 @@ import com.skyline.msgbot.ui.theme.SkyLineTheme
 import com.skyline.msgbot.util.PermissionUtil
 
 class MainActivity : ComponentActivity() {
+
     override fun onStart() {
         super.onStart()
         CoreHelper.contextGetter = {
@@ -78,6 +79,7 @@ class MainActivity : ComponentActivity() {
         super.onDestroy()
         ForegroundService.release()
     }
+
 }
 
 @Composable

@@ -25,6 +25,10 @@
 
 package java.util;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.util.function.Consumer;
 
 /**
@@ -647,6 +651,7 @@ public abstract class AbstractList<E> extends AbstractCollection<E> implements L
      * If the List is an instance of AbstractList then concurrent modification
      * checking is performed using the AbstractList's modCount field.
      */
+    @SuppressWarnings("NewApi")
     static final class RandomAccessSpliterator<E> implements Spliterator<E> {
 
         private final List<E> list;

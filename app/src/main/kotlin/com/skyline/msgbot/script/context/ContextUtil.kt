@@ -24,7 +24,6 @@
 
 package com.skyline.msgbot.script.context
 
-import android.annotation.SuppressLint
 import com.naijun.graaldalvik.AndroidClassLoaderFactory
 import com.skyline.msgbot.core.CoreHelper
 import org.graalvm.polyglot.Context
@@ -37,7 +36,7 @@ import com.skyline.msgbot.core.CoreHelper.baseNodePath
  * @author naijun
  */
 object ContextUtil {
-    @SuppressLint("SdCardPath")
+
     fun getJSContext(projectName: String): Context {
         return Context.newBuilder("js")
             .allowHostAccess(HostAccess.ALL)
@@ -47,8 +46,6 @@ object ContextUtil {
             .allowIO(true)
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", "${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName")
-            // .option("js.commonjs-global-properties", "/data/user/0/com.skyline.msgbot/files/global.js")
-            // .option("js.commonjs-core-modules-replacements", "buffer:/data/user/0/com.skyline.msgbot/files/node_modules/buffer,crypto:/data/user/0/com.skyline.msgbot/files/node_modules/crypto")
             .option(
                 "js.commonjs-core-modules-replacements",
                 "buffer:$baseNodePath/buffer,string_decoder:$baseNodePath/string_decoder,crypto:$baseNodePath/crypto,stream:$baseNodePath/stream,events:$baseNodePath/events,util:$baseNodePath/util,process:$baseNodePath/process,assert:$baseNodePath/assert,timers:$baseNodePath/timers,kapi/util/device:$baseNodePath/kapi/util/device"
@@ -87,4 +84,5 @@ object ContextUtil {
     fun getPythonContext(): Context {
         throw UnsupportedOperationException("GraalPython not support yet")
     }
+
 }

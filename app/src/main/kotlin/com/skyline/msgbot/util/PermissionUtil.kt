@@ -44,6 +44,7 @@ import androidx.core.content.ContextCompat
  * 곧 리펙토링 예정
  */
 object PermissionUtil {
+
     fun getAccessNotification(context: Context): Boolean {
         return NotificationManagerCompat.getEnabledListenerPackages(context).contains(context.packageName)
     }
@@ -113,4 +114,5 @@ object PermissionUtil {
     fun requestAllPermision(context: Context, request: Boolean): Boolean {
         return requestStoragePermissions(context, request) && requestAccessNotification(context, request) && requestIgnoreBatteryOptimizations(context, request)
     }
+
 }

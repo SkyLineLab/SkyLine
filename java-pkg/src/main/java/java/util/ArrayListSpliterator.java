@@ -24,6 +24,8 @@
  */
 package java.util;
 
+import android.annotation.SuppressLint;
+
 import com.skyline.unsafe.UnsafeUtil;
 
 import java.util.function.Consumer;
@@ -31,6 +33,7 @@ import java.util.function.Consumer;
 /**
  * Index-based split-by-two, lazily initialized Spliterator for ArrayLists.
  */
+@SuppressLint("DiscouragedPrivateApi")
 @SuppressWarnings("NewApi")
 final class ArrayListSpliterator<E> implements Spliterator<E> {
 // CVS rev. 1.69
@@ -178,8 +181,7 @@ final class ArrayListSpliterator<E> implements Spliterator<E> {
                     .getDeclaredField("modCount"));
             SIZE_OFF = U.objectFieldOffset(ArrayList.class
                     .getDeclaredField("size"));
-            String arrayFieldName = false ? "array"
-                    : "elementData";
+            String arrayFieldName = "elementData";
             DATA_OFF = U.objectFieldOffset(ArrayList.class
                     .getDeclaredField(arrayFieldName));
         } catch (Exception e) {

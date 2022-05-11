@@ -12,6 +12,7 @@ import java.util.function.Supplier;
  * @param <T> the type of elements to be collected
  * @param <R> the type of the result
  */
+@SuppressWarnings("NewApi")
 public class CollectorImpl<T, A, R> implements Collector<T, A, R> {
     private final Supplier<A> supplier;
     private final BiConsumer<A, T> accumulator;

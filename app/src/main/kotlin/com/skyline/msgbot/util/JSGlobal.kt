@@ -28,10 +28,12 @@ import com.skyline.msgbot.script.context.ContextUtil
 import org.graalvm.polyglot.Value
 
 object JSGlobal {
+
     val global = createGlobal()
 
     private fun createGlobal(): Value {
         val context = ContextUtil.getJSContext()
         return context.getBindings("js")
     }
+
 }

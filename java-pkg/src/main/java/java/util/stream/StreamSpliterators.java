@@ -47,6 +47,7 @@ import java.util.function.Supplier;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 class StreamSpliterators {
 
     /**
@@ -59,6 +60,7 @@ class StreamSpliterators {
      * <p>A wrapping spliterator produced from a sequential stream
      * cannot be split if there are stateful operations present.
      */
+    @SuppressWarnings("NewApi")
     private abstract static class AbstractWrappingSpliterator<P_IN, P_OUT,
                                                               T_BUFFER extends AbstractSpinedBuffer>
             implements Spliterator<P_OUT> {

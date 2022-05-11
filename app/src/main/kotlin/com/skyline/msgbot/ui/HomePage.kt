@@ -44,15 +44,16 @@ import com.skyline.msgbot.ui.theme.Purple40
 
 @Composable
 fun HomePage(context: Context) {
+
     Box {
-        androidx.compose.material3.Surface(
+        Surface(
             color = Purple40,
             modifier = Modifier.fillMaxSize()
         ) {
 
         }
 
-        androidx.compose.material3.Surface(
+        Surface(
             color = Color.White,
             modifier = Modifier
                 .height(650.dp)
@@ -92,4 +93,5 @@ fun HomePage(context: Context) {
             }
         }
     }
+
 }

@@ -30,6 +30,7 @@ class Event(
     val eventName: String,
     val data: Value
 ) {
+
     init {
         data.putMember("isTrusted", false)
         data.putMember("type", eventName)
@@ -37,4 +38,5 @@ class Event(
         if (!data.hasMember("defaultPrevented")) data.putMember("defaultPrevented", true)
         if (!data.hasMember("scope")) data.putMember("scope", "scope")
     }
+
 }

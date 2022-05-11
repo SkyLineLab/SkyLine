@@ -2,6 +2,7 @@ package java.util;
 
 import java.util.function.Consumer;
 
+@SuppressWarnings("NewApi")
 final class RandomAccessSpliterator<E> implements Spliterator<E> {
 
     private final List<E> list;

@@ -40,9 +40,10 @@ import java.io.ByteArrayOutputStream
 
 class ProfileImage(
     var context: Context,
-    var statusBarNotification: StatusBarNotification,
-    var bundle: Bundle,
+    private var statusBarNotification: StatusBarNotification,
+    bundle: Bundle,
 ) {
+
     var hashCode: String = ""
     var profileImageDB: Bitmap? = null
 
@@ -84,4 +85,5 @@ class ProfileImage(
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, BAOS)
         return Base64.encodeToString(BAOS.toByteArray(), 0).trim()
     }
+
 }

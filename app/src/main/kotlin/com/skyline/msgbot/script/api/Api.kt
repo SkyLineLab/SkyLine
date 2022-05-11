@@ -42,6 +42,7 @@ import java.io.File
  * legacy Api
  */
 object Api {
+
     fun getContext(): Context? {
         return CoreHelper.contextGetter?.invoke()
     }
@@ -84,4 +85,5 @@ object Api {
     override fun toString(): String {
         return "[object Api]"
     }
+
 }

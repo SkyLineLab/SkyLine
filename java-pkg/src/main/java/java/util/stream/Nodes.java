@@ -48,6 +48,7 @@ import java.util.function.LongFunction;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 final class Nodes {
 
     private Nodes() {

@@ -203,6 +203,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 enum StreamOpFlag {
 
     /*

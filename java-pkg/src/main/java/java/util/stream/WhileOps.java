@@ -45,6 +45,7 @@ import java.util.function.Predicate;
  *
  * @since 9
  */
+@SuppressWarnings("NewApi")
 final class WhileOps {
 
     static final int TAKE_FLAGS = StreamOpFlag.NOT_SIZED | StreamOpFlag.IS_SHORT_CIRCUIT;

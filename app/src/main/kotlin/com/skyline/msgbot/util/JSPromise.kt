@@ -31,6 +31,7 @@ import org.graalvm.polyglot.proxy.ProxyExecutable
  * GraalJS Promise Util
  */
 object JSPromise {
+
     fun wrapPromise(result: Any, isSuccess: Boolean): Value {
         val promiseConstructor = JSGlobal.global.getMember("Promise")
         return promiseConstructor.newInstance(ProxyExecutable { arguments: Array<Value> ->
@@ -42,4 +43,5 @@ object JSPromise {
             null
         })
     }
+
 }

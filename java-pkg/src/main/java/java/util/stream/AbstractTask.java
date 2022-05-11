@@ -84,7 +84,7 @@ import java.util.concurrent.ForkJoinWorkerThread;
  * @param <K> Type of parent, child and sibling tasks
  * @since 1.8
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({"serial", "NewApi"})
 abstract class AbstractTask<P_IN, P_OUT, R,
                             K extends AbstractTask<P_IN, P_OUT, R, K>>
         extends CountedCompleter<R> {

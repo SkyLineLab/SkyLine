@@ -40,6 +40,7 @@ import java.io.File
 import java.util.Stack
 
 internal object RuntimeManager {
+
     val runtimes: HashMap<Int, Context> = hashMapOf()
     val clients: HashMap<Int, BotClient> = hashMapOf()
     val powerMap: HashMap<Int, Boolean> = hashMapOf()
@@ -118,4 +119,5 @@ internal object RuntimeManager {
             true
         }
     }
+
 }

@@ -47,6 +47,7 @@ class BotChannel(
     private val session: Notification.Action,
     private val statusBarNotification: StatusBarNotification
 ) : ChatChannel {
+
     override val name: String
         get() {
             return if (AppUtil.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
@@ -115,6 +116,7 @@ class BotChannel(
     override fun toString(): String {
         return "BotChannel[ name = $name isGroupChat = $isGroupChat ]"
     }
+
 }
 
 class BotSender(
@@ -122,6 +124,7 @@ class BotSender(
     private val profileImage: ProfileImage,
     private val packageName: String
 ) : ChatSender {
+
     override val name: String
         get() {
             return if (AppUtil.getPackageVersion(packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
@@ -149,6 +152,7 @@ class BotSender(
     override fun toString(): String {
         return "BotSender[ name = $name hash = $profileHash ]" // base64는 아주 길기에 생략
     }
+
 }
 
 class MessageEvent(
@@ -158,19 +162,26 @@ class MessageEvent(
     val packageName: String,
     val chat: Bundle?
 ) : Event {
+
     override val isTrusted: Boolean
         get() = true
+
     override val type: String
         get() = Events.ON_MESSAGE
+
     override val timeStamp: Long
         get() = System.currentTimeMillis()
+
     override val defaultPrevented: Boolean
         get() = false
+
     override val scope: String
         get() = "global"
+
 }
 
 interface ChatChannel {
+
     val name: String
 
     val isGroupChat: Boolean
@@ -180,9 +191,11 @@ interface ChatChannel {
     fun sendAllRoom(message: Value?): Value
 
     fun markAsRead(): Value
+
 }
 
 interface ChatSender {
+
     val name: String
 
     val profileBase64: String
@@ -190,4 +203,5 @@ interface ChatSender {
     val profileHash: Int
 
     val userHash: String
+
 }

@@ -29,6 +29,7 @@ import com.orhanobut.logger.Logger
 import com.skyline.msgbot.core.CoreHelper
 
 object AppUtil {
+
     fun getPackageVersion(packageName: String): Double {
         val context = CoreHelper.contextGetter?.invoke()
         return if (context == null) {
@@ -44,4 +45,5 @@ object AppUtil {
     fun isNougatAbove(): Boolean {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
     }
+
 }

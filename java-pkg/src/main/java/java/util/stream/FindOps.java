@@ -42,6 +42,7 @@ import java.util.function.Supplier;
  *
  * @since 1.8
  */
+@SuppressWarnings("NewApi")
 final class FindOps {
 
     private FindOps() { }

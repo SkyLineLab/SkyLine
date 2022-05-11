@@ -33,6 +33,7 @@ import org.graalvm.polyglot.Value
  * @author naijun
  */
 object Bridge {
+
     fun getGlobalByName(name: String): Value {
         return RuntimeManager.runtimes[RuntimeManager.projectNames[name]]?.getBindings("js")
             ?: throw Errors.createLinkError("Not Found Project Name: $name")
@@ -54,4 +55,5 @@ object Bridge {
     override fun toString(): String {
         return "[object Bridge]"
     }
+
 }

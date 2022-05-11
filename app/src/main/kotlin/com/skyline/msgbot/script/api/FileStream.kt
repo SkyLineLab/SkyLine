@@ -31,6 +31,7 @@ import java.io.*
  * 일단은 레거시 호환성을 위해 스크립트에도 넣음
  */
 object FileStream {
+
     fun read(name: String): String? {
         return try {
             val file: String = if (name.startsWith("/")) name
@@ -109,4 +110,5 @@ object FileStream {
     override fun toString(): String {
         return "[object FS]"
     }
+
 }

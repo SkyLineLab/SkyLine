@@ -165,6 +165,7 @@ import java.util.function.UnaryOperator;
  * @see DoubleStream
  * @see <a href="package-summary.html">java.util.stream</a>
  */
+@SuppressWarnings("NewApi")
 public interface Stream<T> extends BaseStream<T, Stream<T>> {
 
     /**
