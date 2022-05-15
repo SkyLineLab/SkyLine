@@ -29,7 +29,6 @@ import android.os.Environment
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.skyline.msgbot.script.api.Api
 
 /**
  * CoreHelper
@@ -39,12 +38,12 @@ object CoreHelper {
     var contextGetter: (() -> Context)? = null
     val allowPackageNames: List<String> = listOf("com.kakao")
     const val directoryName: String = "skyline"
-    val filesDir: String = Api.getContext()!!.filesDir.absolutePath
+    var filesDir: String = "${Environment.getDataDirectory().absolutePath}/user/0/com.skyline.msgbot/files"
     val baseNodePath: String = "${filesDir}/languages/nodejs"
     val sdcardPath: String = Environment.getExternalStorageDirectory().absolutePath
     val gson = GsonBuilder().setPrettyPrinting().create()
+
     init {
-        Api.getContext()!!.filesDir
         Logger.addLogAdapter(AndroidLogAdapter())
     }
 

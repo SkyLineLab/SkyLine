@@ -32,6 +32,7 @@ import com.skyline.msgbot.core.CoreHelper
 import com.skyline.msgbot.script.ScriptLanguage
 import com.skyline.msgbot.script.api.FileStream
 import org.apache.commons.io.IOUtils
+import org.json.JSONObject
 import java.io.File
 
 object ProjectInitUtil {
@@ -94,7 +95,7 @@ object ProjectInitUtil {
 
             FileStream.write(
                 "${dirPath.absolutePath}/bot.json",
-                CoreHelper.gson.fromJson(botJson, String::class.java)
+                JSONObject(botJson.asString).toString(2)
             )
 
             val projectListPath = "${appPath.absolutePath}/project.json"
@@ -105,7 +106,9 @@ object ProjectInitUtil {
                 jsonObject.addProperty("name", projectName)
                 jsonObject.addProperty("path", dirPath.absolutePath)
                 jsonArray.add(jsonObject)
-                FileStream.write(projectListPath, CoreHelper.gson.fromJson(jsonArray, String::class.java))
+                val result = CoreHelper.gson.fromJson(jsonArray, String::class.java)
+                Logger.d(result)
+                FileStream.write(projectListPath, result)
             } else {
                 val jsonArray = CoreHelper.gson.fromJson(FileStream.read(projectListPath), JsonArray::class.java)
                 val jsonObject = JsonObject()
@@ -164,6 +167,8 @@ object ProjectInitUtil {
 
         val nmPath = File(CoreHelper.baseNodePath)
         Logger.d(nmPath.exists())
+        Logger.d("con = ${!nmPath.exists()}")
+        Logger.d(nmPath.absolutePath)
         if (!nmPath.exists()) {
             Logger.d("Noting :(")
             try {

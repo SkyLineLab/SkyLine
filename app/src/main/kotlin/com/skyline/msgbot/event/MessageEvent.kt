@@ -39,6 +39,7 @@ import com.skyline.msgbot.script.api.util.ProfileImage
 import com.skyline.msgbot.session.ChannelSession
 import com.skyline.msgbot.util.AppUtil
 import com.skyline.msgbot.util.JSPromise
+import com.skyline.msgbot.util.ToStringUtil
 import org.graalvm.polyglot.Value
 
 class BotChannel(
@@ -114,7 +115,7 @@ class BotChannel(
     }
 
     override fun toString(): String {
-        return "BotChannel[ name = $name isGroupChat = $isGroupChat ]"
+        return ToStringUtil.toString(this)
     }
 
 }
@@ -177,6 +178,10 @@ class MessageEvent(
 
     override val scope: String
         get() = "global"
+
+    override fun toString(): String {
+        return ToStringUtil.toString(this)
+    }
 
 }
 

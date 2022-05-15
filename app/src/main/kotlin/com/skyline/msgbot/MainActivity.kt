@@ -68,7 +68,13 @@ class MainActivity : ComponentActivity() {
             }
         }
         ForegroundService.startForeground(this)
-        if(PermissionUtil.requestAllPermision(this, false)) {
+        if (PermissionUtil.requestAllPermision(this, false)) {
+            // for ((key, value) in RuntimeManager.runtimes) {
+            //     if (RuntimeManager.hasRuntime(i.value)) {
+            //         RuntimeManager.addRuntime(i.value, ScriptLanguage.JAVASCRIPT)
+            //     }
+            // }
+
             if (!RuntimeManager.hasRuntime("test")) {
                 RuntimeManager.addRuntime("test", ScriptLanguage.JAVASCRIPT)
             }
