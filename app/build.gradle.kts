@@ -99,7 +99,7 @@ dependencies {
     // implementation("org.jetbrains.kotlin:kotlin-scripting-jvm:1.6.10")
     // implementation("org.jetbrains.kotlin:kotlin-script-runtime:1.6.10")
 
-    implementation("org.jsoup:jsoup:1.14.3")
+    implementation("org.jsoup:jsoup:1.15.1")
 
     implementation("com.github.topjohnwu.libsu:core:4.0.3")
     implementation("com.github.topjohnwu.libsu:service:4.0.3")
