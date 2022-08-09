@@ -34,11 +34,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.ModuleElement;
 
 
-/**
- * A scanning visitor of program elements with default behavior
- * appropriate for source versions {@link SourceVersion#RELEASE_9
- * RELEASE_9} through {@link SourceVersion#RELEASE_14 RELEASE_14}.
- *
+/*
  * The <code>visit<i>Xyz</i></code> methods in this
  * class scan their component elements by calling {@code scan} on
  * their {@linkplain Element#getEnclosedElements enclosed elements},

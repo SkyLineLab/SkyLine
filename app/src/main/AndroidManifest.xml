@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28"/>
@@ -25,7 +27,7 @@
         android:theme="@style/Theme.SkyLine"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".view.SetupActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SkyLine">
@@ -35,14 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".service.MessageListenerService"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService" />
-            </intent-filter>
-        </service>
+        <activity android:name=".view.MainActivity" android:configChanges="screenSize|orientation"/>
     </application>
 
 </manifest>

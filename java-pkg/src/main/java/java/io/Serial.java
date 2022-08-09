@@ -34,7 +34,7 @@ import java.lang.annotation.*;
  * <cite>Java Object Serialization Specification</cite></a>. This
  * annotation type is intended to allow compile-time checking of
  * serialization-related declarations, analogous to the checking
- * enabled by the {@link java.lang.Override} annotation type to
+ * enabled by the {@link Override} annotation type to
  * validate method overriding. {@code Serializable} classes are encouraged to
  * use {@code @Serial} annotations to help a compiler catch
  * mis-declared serialization-related fields and methods,
