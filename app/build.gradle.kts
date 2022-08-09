@@ -73,7 +73,7 @@ dependencies {
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("org.jsoup:jsoup:1.15.1")
+    implementation("org.jsoup:jsoup:1.15.2")
     implementation("dev.tiangong:orhanobut-logger:2.2.3")
     implementation("com.caoccao.javet:javet-android:1.1.5")
     implementation("org.mozilla:rhino:1.7.14")
