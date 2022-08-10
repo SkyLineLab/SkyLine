@@ -71,7 +71,7 @@ fun SetupUI() {
                         )
                         Spacer(modifier = Modifier.padding(10.dp))
                         Text(
-                            text = "앱 이용약관을 동의 해주셔야 앱을 사용할 수 있습니다.",
+                            text = "앱 이용약관에 동의 해주셔야 앱을 사용할 수 있습니다.",
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 textAlign = TextAlign.Center,
                                 color = textColor
@@ -87,7 +87,7 @@ fun SetupUI() {
                             verticalArrangement = Arrangement.Bottom
                         ) {
                             Snackbar {
-                                Text(text = "앱 이용약관을 동의 해주셔야 앱을 사용할 수 있습니다.")
+                                Text(text = "앱 이용약관에 동의 해주셔야 앱을 사용할 수 있습니다.")
                             }
                         }
                     }

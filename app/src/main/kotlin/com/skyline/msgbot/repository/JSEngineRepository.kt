@@ -65,7 +65,7 @@ object JSEngineRepository {
     /**
      * @deprecated
      */
-    @Deprecated(message = "RhinoJS is more faster than GraalJS, But it's not Support ES6 Perfectly")
+    @Deprecated(message = "RhinoJS is more faster than GraalJS, But it does not Support ES6 Perfectly")
     fun getRhinoJSEngine(): org.mozilla.javascript.Context {
         val context = org.mozilla.javascript.Context.enter()
         context.languageVersion = org.mozilla.javascript.Context.VERSION_ES6
