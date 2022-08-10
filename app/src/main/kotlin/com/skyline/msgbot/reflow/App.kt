@@ -7,7 +7,7 @@ import com.skyline.msgbot.model.OptionDataModel
 object App {
 
     fun roadDataById(id: String): OptionDataModel {
-        return if (id === "isTermCheck") {
+        return if (id === "isLicenseAccept") {
             OptionDataModel(false)
         } else {
             OptionDataModel(false)
