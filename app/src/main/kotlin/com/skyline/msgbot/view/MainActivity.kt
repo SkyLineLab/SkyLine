@@ -28,6 +28,7 @@ class MainActivity : ComponentActivity() {
         } // set android context
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!App.roadDataById("isLicenseAccept").value) {

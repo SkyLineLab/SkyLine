@@ -21,7 +21,7 @@ class BotClient {
         val callback = eventMap[event]
 
         if (callback is org.mozilla.javascript.Function) {
-            TODO("Rhino is not support yet")
+            TODO("Rhino is not supported yet")
         }
 
         if (callback is V8ValueFunction) {
