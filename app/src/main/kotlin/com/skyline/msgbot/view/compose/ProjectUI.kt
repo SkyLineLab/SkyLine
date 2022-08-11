@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.Font
@@ -21,16 +22,17 @@ fun ProjectUI() {
     SkyLineTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = White) {
         }
-        Column(){
+        Row(){
             Button(modifier = Modifier
                 .offset(x=10.dp, y=100.dp)
+                .wrapContentSize(align = Alignment.Center)
                 .fillMaxWidth(0.95f)
                 .fillMaxHeight(0.07f),
                 colors = ButtonDefaults.buttonColors(contentColor = White),
                 onClick = {
                     //TODO
                 }) {
-                Text("Hello")
+                Text("Project 1", fontSize = 20.sp)
             }
         }
         Button(modifier = Modifier
@@ -40,7 +42,7 @@ fun ProjectUI() {
             onClick = {
                 //TODO
             }) {
-            Text("+", fontSize = 50.sp, textAlign = TextAlign.Center)
+            Text("+", fontSize = 50.sp, modifier = Modifier.align(Alignment.Top))
         }
     }
 }
