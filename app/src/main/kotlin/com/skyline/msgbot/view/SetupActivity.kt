@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.orhanobut.logger.Logger
+import com.skyline.msgbot.core.CoreHelper
 import com.skyline.msgbot.repository.JSEngineRepository
 import com.skyline.msgbot.view.compose.SetupUI
 import io.adnopt.context.AdnoptContext
@@ -11,6 +12,15 @@ import io.adnopt.context.AdnoptContext
 class SetupActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        CoreHelper.contextGetter = {
+            this
+        } // set android context
+
+        Logger.d("test")
+
+        JSEngineRepository.getGraalJSEngine().eval("js", "console.log('test ' + this)")
+
         setContent {
             SetupUI()
         }

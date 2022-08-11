@@ -2,6 +2,7 @@ package com.skyline.msgbot.core
 
 import android.content.Context
 import android.os.Environment
+import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.BuildConfig
@@ -14,13 +15,11 @@ object CoreHelper {
     var filesDir: String = "${Environment.getDataDirectory().absolutePath}/user/0/com.skyline.msgbot/files"
     val baseNodePath: String = "${filesDir}/languages/nodejs"
     val sdcardPath: String = Environment.getExternalStorageDirectory().absolutePath
+    
+    val GSON = Gson()
 
     init {
-        Logger.addLogAdapter(object : AndroidLogAdapter() {
-            override fun isLoggable(priority: Int, tag: String?): Boolean {
-                return BuildConfig.DEBUG
-            }
-        })
+        Logger.addLogAdapter(AndroidLogAdapter())
     }
 
 }

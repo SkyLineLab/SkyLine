@@ -40,13 +40,13 @@ class BotChannelImpl(
 
     override fun send(message: Any?) {
         val result = when (message) {
-            is Value -> {
+            is Value -> { // graalvm_js
                 message.toString()
             }
-            is V8Value -> {
+            is V8Value -> { // v8
                 message.toString()
             }
-            else -> {
+            else -> { // rhino
                 message.toString()
             }
         }

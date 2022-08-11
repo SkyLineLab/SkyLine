@@ -58,12 +58,11 @@ android {
 dependencies {
 
     implementation("androidx.core:core-ktx:1.8.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.0")
-    implementation("androidx.activity:activity-compose:1.5.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
+    implementation("androidx.activity:activity-compose:1.5.1")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha14")
-    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("androidx.compose.material3:material3:1.0.0-alpha15")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
@@ -77,6 +76,7 @@ dependencies {
     implementation("dev.tiangong:orhanobut-logger:2.2.3")
     implementation("com.caoccao.javet:javet-android:1.1.5")
     implementation("org.mozilla:rhino:1.7.14")
+    implementation("com.google.code.gson:gson:2.9.1")
 
     /** Graal */
     implementation(files("libs/wasm-launcher.jar"))
