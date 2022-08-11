@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!App.roadDataById("isLicenseAccept").value) {
-            this.startActivity(Intent(this, SetupActivity::class.java))
+            this.startActivity(Intent(this, ProjectActivity::class.java))
         }
         // TODO
         setContent {
