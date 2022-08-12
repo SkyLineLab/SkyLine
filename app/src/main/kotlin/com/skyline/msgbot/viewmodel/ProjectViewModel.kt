@@ -8,7 +8,7 @@ class ProjectViewModel {
     private var model: ProjectModel? = null
     fun ViewModel(activity: Activity?) {
         this.activity = activity
-        model = ProjectModel()
+        model = ProjectModel
         initView()
     }
 
