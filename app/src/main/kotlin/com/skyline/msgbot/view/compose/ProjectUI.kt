@@ -18,17 +18,7 @@ fun ProjectUI() {
         Surface(modifier = Modifier.fillMaxSize(), color = White) {
         }
         Row(){
-            Button(modifier = Modifier
-                .offset(x=10.dp, y=100.dp)
-                .wrapContentSize(align = Alignment.Center)
-                .fillMaxWidth(0.95f)
-                .fillMaxHeight(0.07f),
-                colors = ButtonDefaults.buttonColors(contentColor = White),
-                onClick = {
-                    //TODO
-                }) {
-                Text("Project 1", fontSize = 20.sp)
-            }
+
         }
         Button(modifier = Modifier
             .offset(x=300.dp, y=700.dp)
