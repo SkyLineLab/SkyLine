@@ -27,24 +27,42 @@ object ToStringUtil {
                 }
                 stringBuilder.append(field.name).append("=")
                 if (value.javaClass.isArray) {
-                    if (value.javaClass == BooleanArray::class.java) {
-                        stringBuilder.append((value as BooleanArray).contentToString())
-                    } else if (value.javaClass == ByteArray::class.java) {
-                        stringBuilder.append((value as ByteArray).contentToString())
-                    } else if (value.javaClass == CharArray::class.java) {
-                        stringBuilder.append((value as CharArray).contentToString())
-                    } else if (value.javaClass == DoubleArray::class.java) {
-                        stringBuilder.append((value as DoubleArray).contentToString())
-                    } else if (value.javaClass == FloatArray::class.java) {
-                        stringBuilder.append((value as FloatArray).contentToString())
-                    } else if (value.javaClass == IntArray::class.java) {
-                        stringBuilder.append((value as IntArray).contentToString())
-                    } else if (value.javaClass == LongArray::class.java) {
-                        stringBuilder.append((value as LongArray).contentToString())
-                    } else if (value.javaClass == ShortArray::class.java) {
-                        stringBuilder.append((value as ShortArray).contentToString())
-                    } else {
-                        stringBuilder.append((value as Array<*>).contentToString())
+                    when (value.javaClass) {
+                        BooleanArray::class.java -> {
+                            stringBuilder.append((value as BooleanArray).contentToString())
+                        }
+
+                        ByteArray::class.java -> {
+                            stringBuilder.append((value as ByteArray).contentToString())
+                        }
+
+                        CharArray::class.java -> {
+                            stringBuilder.append((value as CharArray).contentToString())
+                        }
+
+                        DoubleArray::class.java -> {
+                            stringBuilder.append((value as DoubleArray).contentToString())
+                        }
+
+                        FloatArray::class.java -> {
+                            stringBuilder.append((value as FloatArray).contentToString())
+                        }
+
+                        IntArray::class.java -> {
+                            stringBuilder.append((value as IntArray).contentToString())
+                        }
+
+                        LongArray::class.java -> {
+                            stringBuilder.append((value as LongArray).contentToString())
+                        }
+
+                        ShortArray::class.java -> {
+                            stringBuilder.append((value as ShortArray).contentToString())
+                        }
+
+                        else -> {
+                            stringBuilder.append((value as Array<*>).contentToString())
+                        }
                     }
                 } else if (value.javaClass == Char::class.java) {
                     stringBuilder.append('\'').append(value).append('\'')
