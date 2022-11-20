@@ -13,12 +13,12 @@ import com.skyline.msgbot.reflow.App
 import com.skyline.msgbot.reflow.util.ToStringUtil
 import org.graalvm.polyglot.Value
 
-class BotChannelImpl(
+class MessageChannelImpl(
     private val bundle: Bundle,
     private val context: Context,
     private val session: Notification.Action,
     private val statusBarNotification: StatusBarNotification
-) : BotChannel {
+) : MessageChannel {
 
     override val name: String
         get() {

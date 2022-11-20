@@ -1,6 +1,6 @@
 package com.skyline.msgbot.reflow.event.message
 
-interface BotChannel {
+interface MessageChannel {
 
     val name: String
 
