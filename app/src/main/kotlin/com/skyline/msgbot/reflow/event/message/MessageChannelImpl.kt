@@ -9,15 +9,21 @@ import android.os.Bundle
 import android.service.notification.StatusBarNotification
 import com.caoccao.javet.values.V8Value
 import com.orhanobut.logger.Logger
+import com.skyline.msgbot.model.ActionModel
 import com.skyline.msgbot.reflow.App
+import com.skyline.msgbot.reflow.project.Project
+import com.skyline.msgbot.reflow.script.javascript.JSPromise
 import com.skyline.msgbot.reflow.util.ToStringUtil
 import org.graalvm.polyglot.Value
+import java.util.concurrent.CompletableFuture
 
 class MessageChannelImpl(
     private val bundle: Bundle,
     private val context: Context,
-    private val session: Notification.Action,
-    private val statusBarNotification: StatusBarNotification
+    private val replyActionModel: ActionModel,
+    private val readActionModel: ActionModel,
+    private val statusBarNotification: StatusBarNotification,
+    private val project: Project
 ) : MessageChannel {
 
     override val name: String
@@ -38,45 +44,57 @@ class MessageChannelImpl(
             }
         }
 
-    override fun send(message: Any?) {
-        val result = when (message) {
-            is Value -> { // graalvm_js
-                message.toString()
+    override val channelId: Long
+        get() = statusBarNotification.tag.toLong()
+
+    override fun send(message: Any?): Any {
+        val future: CompletableFuture<Any> = CompletableFuture.supplyAsync {
+            val result = when (message) {
+                is Value -> { // graalvm_js
+                    message.toString()
+                }
+                is V8Value -> { // v8
+                    message.toString()
+                }
+                else -> { // else
+                    message.toString()
+                }
             }
-            is V8Value -> { // v8
-                message.toString()
+
+            val sendIntent = Intent(Intent.ACTION_SEND)
+            val msg = Bundle()
+            val actualInputs = ArrayList<RemoteInput>()
+
+            try {
+                for (inputable in replyActionModel.action.remoteInputs) {
+                    msg.putCharSequence(inputable.resultKey, result)
+
+                    val builder = RemoteInput.Builder(inputable.resultKey)
+                    builder.setLabel(inputable.label)
+                    builder.setChoices(inputable.choices)
+                    builder.setAllowFreeFormInput(inputable.allowFreeFormInput)
+                    builder.addExtras(inputable.extras)
+                    actualInputs.add(builder.build())
+                }
+            } catch (e: Exception) {
+                Logger.e("Send Error: ${e.message} stackTrace = ${e.stackTraceToString()}")
             }
-            else -> { // rhino
-                message.toString()
-            }
+
+            RemoteInput.addResultsToIntent(
+                actualInputs.toTypedArray(),
+                sendIntent,
+                msg
+            )
+
+            replyActionModel.action.actionIntent.send(context, 0, sendIntent)
+
+            return@supplyAsync true
         }
 
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        val msg = Bundle()
-        val actualInputs = ArrayList<RemoteInput>()
-
-        try {
-            for (inputable in session.remoteInputs) {
-                msg.putCharSequence(inputable.resultKey, result)
-
-                val builder = RemoteInput.Builder(inputable.resultKey)
-                builder.setLabel(inputable.label)
-                builder.setChoices(inputable.choices)
-                builder.setAllowFreeFormInput(inputable.allowFreeFormInput)
-                builder.addExtras(inputable.extras)
-                actualInputs.add(builder.build())
-            }
-        } catch (e: Exception) {
-            Logger.e("Send Error: ${e.message} stackTrace = ${e.stackTraceToString()}")
-        }
-
-        RemoteInput.addResultsToIntent(
-            actualInputs.toTypedArray(),
-            sendIntent,
-            msg
+        return JSPromise.createPromiseObject(
+            project,
+            future
         )
-
-        session.actionIntent.send(context, 0, sendIntent)
     }
 
     override fun sendAllRoom(message: Any?): Any {
@@ -84,7 +102,16 @@ class MessageChannelImpl(
     }
 
     override fun markAsRead(): Any {
-        TODO("Not yet implemented")
+        val future: CompletableFuture<Any> = CompletableFuture.supplyAsync {
+            readActionModel.action.actionIntent.send(context, 1, Intent())
+
+            return@supplyAsync true
+        }
+
+        return JSPromise.createPromiseObject(
+            project,
+            future
+        )
     }
 
     override fun toString(): String {

@@ -1,3 +1,5 @@
+import android.annotation.SuppressLint
+
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -10,7 +12,8 @@ android {
     defaultConfig {
         applicationId = "com.skyline.msgbot"
         minSdk = 24
-        targetSdk = 33
+        @SuppressLint("ExpiredTargetSdkVersion")
+        targetSdk = 29
         versionCode = 1
         versionName = "1.0"
 
@@ -66,7 +69,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.6.1")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.material3:material3:1.1.0-alpha02")
+    implementation("androidx.compose.material3:material3:1.1.0-alpha03")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.4")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
@@ -79,7 +82,6 @@ dependencies {
     implementation("org.jsoup:jsoup:1.15.1")
     implementation("dev.tiangong:orhanobut-logger:2.2.3")
     implementation("com.caoccao.javet:javet-android:1.1.5")
-    implementation("org.mozilla:rhino:1.7.14")
     implementation("com.google.code.gson:gson:2.9.1")
 
     /** Graal */
@@ -97,7 +99,9 @@ dependencies {
 
     implementation(files("libs/graal-dalvik.jar"))
 
-    implementation("com.google.android.material:material:1.8.0-alpha02")
+    implementation("com.jakewharton.android.repackaged:dalvik-dx:11.0.0_r3")
+
+    implementation("com.google.android.material:material:1.8.0-beta01")
 
     /** desugaring */
 

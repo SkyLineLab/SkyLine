@@ -14,10 +14,12 @@ object ProjectCreator {
         if (ProjectExistsChecker.existsProject(projectName)) {
             throw IllegalArgumentException("Project $projectName already exists")
         } else {
+            createSkylineDir()
             appendProjectsJson(projectName, type)
             createDir(projectName)
             createJsonInProject(projectName, type)
-            initNodeEnvironment(projectName, type)
+            createScript(projectName)
+            initNodeEnvironment(projectName)
         }
     }
 
@@ -28,26 +30,23 @@ object ProjectCreator {
                 add("projects", JsonArray())
             }
         } else {
-            CoreHelper.GSON.fromJson(FileStream.read("projects.json"), JsonObject::class.java)
+            CoreHelper.GSON.fromJson(
+                FileStream.read("projects.json"),
+                JsonObject::class.java
+            )
         }
         val projects = json.getAsJsonArray("projects")
 
         when (type) {
             JSEngineType.GRAALVM_JS -> {
                 projectJson.addProperty("name", projectName)
-                projectJson.addProperty("type", "graaljs")
+                projectJson.addProperty("type", JSEngineType.GRAALVM_JS.name)
                 projects.add(projectJson)
             }
 
             JSEngineType.V8 -> {
                 projectJson.addProperty("name", projectName)
-                projectJson.addProperty("type", "v8")
-                projects.add(projectJson)
-            }
-
-            JSEngineType.RHINO -> {
-                projectJson.addProperty("name", projectName)
-                projectJson.addProperty("type", "rhino")
+                projectJson.addProperty("type", JSEngineType.V8.name)
                 projects.add(projectJson)
             }
         }
@@ -55,8 +54,15 @@ object ProjectCreator {
         FileStream.write("projects.json", CoreHelper.GSON.toJson(json))
     }
 
+    private fun createSkylineDir() {
+        val skylineDir = File("${CoreHelper.sdcardPath}/skyline")
+        if (!skylineDir.exists()) {
+            skylineDir.mkdirs()
+        }
+    }
+
     private fun createDir(projectName: String) {
-        File("${CoreHelper.sdcardPath}/skyline/Projects/$projectName").mkdir()
+        File("${CoreHelper.sdcardPath}/skyline/Projects/$projectName").mkdirs()
     }
 
     private fun createJsonInProject(projectName: String, type: JSEngineType) {
@@ -69,24 +75,25 @@ object ProjectCreator {
         when (type) {
             JSEngineType.GRAALVM_JS -> {
                 json.addProperty("name", projectName)
-                json.addProperty("type", "graaljs")
+                json.addProperty("type", JSEngineType.GRAALVM_JS.name)
             }
 
             JSEngineType.V8 -> {
                 json.addProperty("name", projectName)
-                json.addProperty("type", "v8")
-            }
-
-            JSEngineType.RHINO -> {
-                json.addProperty("name", projectName)
-                json.addProperty("type", "rhino")
+                json.addProperty("type", JSEngineType.V8.name)
             }
         }
 
-        FileStream.write("Projects/${projectName}/project.json", CoreHelper.GSON.toJson(json))
+        FileStream.write("Projects/$projectName/project.json", CoreHelper.GSON.toJson(json))
     }
 
-    private fun initNodeEnvironment(projectName: String, type: JSEngineType) {
+    private fun createScript(projectName: String) {
+        val context = CoreHelper.contextGetter!!.invoke()
+        val script = context.assets.open("jsInitScript.js").bufferedReader().use { it.readText() }
+        FileStream.write("Projects/$projectName/script.js", script)
+    }
+
+    private fun initNodeEnvironment(projectName: String) {
         File("Projects/${projectName}/node_modules").mkdir()
     }
 

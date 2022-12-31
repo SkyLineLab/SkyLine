@@ -15,10 +15,10 @@ object ToStringUtil {
         stringBuilder.append(clazz.simpleName).append("[")
         var i = 0
         for (field in clazz.declaredFields) {
-            if (field.modifiers and (Modifier.STATIC or Modifier.FINAL or Modifier.PRIVATE or Modifier.PROTECTED) != 0) {
+            if (field.modifiers and (Modifier.STATIC or Modifier.PRIVATE or Modifier.PROTECTED) != 0) {
                 continue
-            }
 
+            }
             field.isAccessible = true
             try {
                 val value = field[obj]

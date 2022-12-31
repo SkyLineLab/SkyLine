@@ -5,7 +5,6 @@ import android.os.Environment
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
-import com.skyline.msgbot.BuildConfig
 
 object CoreHelper {
 

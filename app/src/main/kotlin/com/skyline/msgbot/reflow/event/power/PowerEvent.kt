@@ -1,16 +1,37 @@
 package com.skyline.msgbot.reflow.event.power
 
 import com.skyline.msgbot.reflow.event.Event
+import com.skyline.msgbot.reflow.event.EventBase
+import com.skyline.msgbot.reflow.project.Project
+import com.skyline.msgbot.reflow.util.TrustUtil
+import org.graalvm.polyglot.Value
+import org.graalvm.polyglot.proxy.ProxyObject
 
-class PowerEvent : Event {
-    override val isTrusted: Boolean
-        get() = TODO("Not yet implemented")
+class PowerEvent(
+    private val project: Project,
+    private val botOn: Boolean,
+    val reason: String,
+    val target: String
+) : EventBase {
+
+    override val isTrusted: Boolean = TrustUtil.getIsTrust()
+
     override val type: String
-        get() = TODO("Not yet implemented")
-    override val timeStamp: Long
-        get() = TODO("Not yet implemented")
+        get() = if (botOn) {
+            Event.BOT_ON
+        } else Event.BOT_OFF
+
+    override val timeStamp: Long = System.currentTimeMillis()
+
     override val defaultPrevented: Boolean
-        get() = TODO("Not yet implemented")
+        get() = true
+
     override val scope: String
-        get() = TODO("Not yet implemented")
+        get() = "scope"
+
+    val detail = ProxyObject.fromMap(HashMap()).apply {
+        putMember("line", null)
+        putMember("name", Value.asValue(project.name))
+    }
+
 }

@@ -21,7 +21,6 @@ object App {
             9.0
         } else {
             val fullName = context.packageManager.getPackageInfo(packageName, 0).versionName
-            Logger.d("packageName = %s version = %s", packageName, fullName)
             fullName.substring(0, 3).toDouble()
         }
     }

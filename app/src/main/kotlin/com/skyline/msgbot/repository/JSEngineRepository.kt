@@ -5,6 +5,8 @@ import com.caoccao.javet.interop.V8Runtime
 import com.naijun.graaldalvik.AndroidClassLoaderFactory
 import com.skyline.msgbot.core.CoreHelper
 import com.skyline.msgbot.core.CoreHelper.baseNodePath
+import com.skyline.msgbot.reflow.script.javascript.JavaScriptConfig
+import io.adnopt.context.AdnoptContext
 import org.graalvm.polyglot.Context
 import org.graalvm.polyglot.HostAccess
 import org.graalvm.polyglot.PolyglotAccess
@@ -25,11 +27,9 @@ object JSEngineRepository {
             ))
             .allowExperimentalOptions(true)
             .allowIO(true)
-            .option("js.foreign-object-prototype", "true")
-            .option("js.syntax-extensions", "true")
-            .option("js.nashorn-compat", "true")
-            .option("js.ecmascript-version", "2022")
-            .option("js.intl-402", "true")
+            .options(
+                JavaScriptConfig.getDefaultContextOption()
+            )
             .allowCreateThread(true)
             .allowCreateProcess(true)
             .allowNativeAccess(true)
@@ -44,17 +44,9 @@ object JSEngineRepository {
             .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(CoreHelper.contextGetter!!.invoke()))
             .allowExperimentalOptions(true)
             .allowIO(true)
-            .option("js.commonjs-require", "true")
-            .option("js.commonjs-require-cwd", "${CoreHelper.sdcardPath}/${CoreHelper.directoryName}/Projects/$projectName")
-            .option(
-                "js.commonjs-core-modules-replacements",
-                "buffer:$baseNodePath/buffer,string_decoder:$baseNodePath/string_decoder,crypto:$baseNodePath/crypto,stream:$baseNodePath/stream,events:$baseNodePath/events,util:$baseNodePath/util,process:$baseNodePath/process,assert:$baseNodePath/assert,timers:$baseNodePath/timers,kapi/util/device:$baseNodePath/kapi/util/device"
+            .options(
+                JavaScriptConfig.getProjectContextOption(projectName)
             )
-            .option("js.foreign-object-prototype", "true")
-            .option("js.syntax-extensions", "true")
-            .option("js.nashorn-compat", "true")
-            .option("js.ecmascript-version", "staging")
-            .option("js.intl-402", "true")
             .allowCreateThread(true)
             .allowCreateProcess(true)
             .allowNativeAccess(true)
@@ -63,13 +55,12 @@ object JSEngineRepository {
     }
 
     /**
-     * @deprecated
+     * GraalJS + Adnopt (nodejs support)
      */
-    @Deprecated(message = "RhinoJS is more faster than GraalJS, But it does not Support ES6 Perfectly")
-    fun getRhinoJSEngine(): org.mozilla.javascript.Context {
-        val context = org.mozilla.javascript.Context.enter()
-        context.languageVersion = org.mozilla.javascript.Context.VERSION_ES6
-        return context
+    fun getAdnoptJSEngine(projectName: String): AdnoptContext {
+        return getGraalJSEngine(projectName).let {
+            AdnoptContext.create(it)
+        }
     }
 
     /**

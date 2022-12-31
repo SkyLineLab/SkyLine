@@ -6,6 +6,8 @@ interface MessageChannel {
 
     val isGroupChat: Boolean
 
+    val channelId: Long // chat_id
+
     fun send(message: Any?): Any
 
     fun sendAllRoom(message: Any?): Any
