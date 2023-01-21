@@ -7,9 +7,10 @@ import androidx.activity.compose.setContent
 import androidx.core.content.ContextCompat
 import com.skyline.msgbot.core.CoreHelper
 import com.skyline.msgbot.reflow.App
+import com.skyline.msgbot.reflow.project.ProjectManager
 import com.skyline.msgbot.service.ForegroundService
 import com.skyline.msgbot.ui.theme.SkyLineTheme
-
+import org.graalvm.polyglot.Context
 
 class MainActivity : ComponentActivity() {
     override fun onStart() {
@@ -18,7 +19,6 @@ class MainActivity : ComponentActivity() {
             this
         } // set android context
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,5 +48,8 @@ class MainActivity : ComponentActivity() {
             ForegroundService::class.java
         )
         stopService(serviceIntent)
+        ProjectManager.list.forEach { t, u ->
+            u.getEngineContext<Context>().close()
+        }
     }
 }

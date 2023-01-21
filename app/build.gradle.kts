@@ -69,10 +69,10 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.6.1")
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_version"]}")
-    implementation("androidx.compose.material3:material3:1.1.0-alpha03")
+    implementation("androidx.compose.material3:material3:1.1.0-alpha04")
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.4")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.0")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${rootProject.extra["compose_version"]}")
     debugImplementation("androidx.compose.ui:ui-tooling:${rootProject.extra["compose_version"]}")
     debugImplementation("androidx.compose.ui:ui-test-manifest:${rootProject.extra["compose_version"]}")
@@ -83,6 +83,7 @@ dependencies {
     implementation("dev.tiangong:orhanobut-logger:2.2.3")
     implementation("com.caoccao.javet:javet-android:1.1.5")
     implementation("com.google.code.gson:gson:2.9.1")
+    implementation("com.github.smart-fun:XmlToJson:1.5.2")
 
     /** Graal */
     implementation(files("libs/wasm-launcher.jar"))
@@ -99,9 +100,13 @@ dependencies {
 
     implementation(files("libs/graal-dalvik.jar"))
 
+    implementation(files("libs/java-json.jar"))
+
     implementation("com.jakewharton.android.repackaged:dalvik-dx:11.0.0_r3")
 
-    implementation("com.google.android.material:material:1.8.0-beta01")
+    implementation("com.google.android.material:material:1.8.0-rc01")
+
+    implementation("com.google.protobuf:protobuf-java-util:3.21.12")
 
     /** desugaring */
 

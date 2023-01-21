@@ -2,6 +2,8 @@ package com.skyline.msgbot.core
 
 import android.content.Context
 import android.os.Environment
+import android.os.PowerManager
+import android.os.PowerManager.WakeLock
 import com.google.gson.Gson
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
@@ -19,6 +21,15 @@ object CoreHelper {
 
     init {
         Logger.addLogAdapter(AndroidLogAdapter())
+    }
+
+    fun getPowerManager(): PowerManager {
+        val context = contextGetter?.invoke()
+        if (context == null) {
+            throw RuntimeException("context is null")
+        } else {
+            return context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        }
     }
 
 }

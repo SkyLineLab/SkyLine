@@ -3,6 +3,7 @@ package com.skyline.msgbot.reflow.script.api
 import com.caoccao.javet.interop.V8Runtime
 import com.skyline.msgbot.reflow.project.Project
 import com.skyline.msgbot.reflow.project.ProjectManager
+import com.skyline.msgbot.reflow.project.loader.ProjectLoader
 import com.skyline.msgbot.reflow.script.JSEngineType
 import com.skyline.msgbot.reflow.script.client.BotClient
 import org.graalvm.polyglot.proxy.ProxyArray
@@ -69,7 +70,7 @@ class BotProject(
      * @return boolean
      */
     fun compile() {
-        TODO("Not Implement Yet")
+
     }
 
 }

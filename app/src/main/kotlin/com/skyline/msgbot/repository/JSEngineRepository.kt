@@ -22,9 +22,9 @@ object JSEngineRepository {
         return Context.newBuilder("js")
             .allowHostAccess(HostAccess.ALL)
             .allowPolyglotAccess(PolyglotAccess.ALL)
-            .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(
-                CoreHelper.contextGetter!!.invoke()
-            ))
+//            .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(
+//                CoreHelper.contextGetter!!.invoke()
+//            ))
             .allowExperimentalOptions(true)
             .allowIO(true)
             .options(
@@ -41,7 +41,7 @@ object JSEngineRepository {
         return Context.newBuilder("js")
             .allowHostAccess(HostAccess.ALL)
             .allowPolyglotAccess(PolyglotAccess.ALL)
-            .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(CoreHelper.contextGetter!!.invoke()))
+//            .hostClassLoader(AndroidClassLoaderFactory.createClassLoader(CoreHelper.contextGetter!!.invoke()))
             .allowExperimentalOptions(true)
             .allowIO(true)
             .options(

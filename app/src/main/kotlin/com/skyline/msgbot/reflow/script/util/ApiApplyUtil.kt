@@ -2,7 +2,7 @@ package com.skyline.msgbot.reflow.script.util
 
 import com.skyline.msgbot.reflow.project.Project
 import com.skyline.msgbot.reflow.script.JSEngineType
-import com.skyline.msgbot.reflow.script.api.Api
+import com.skyline.msgbot.reflow.script.api.ScriptApp
 import com.skyline.msgbot.reflow.script.api.BotProject
 import com.skyline.msgbot.reflow.script.api.FileStream
 import org.graalvm.polyglot.Context
@@ -18,7 +18,7 @@ object ApiApplyUtil {
 
                 global.putMember("FileStream", FileStream)
                 global.putMember("BotProject", botProject)
-                global.putMember("Api", Api)
+                global.putMember("App", ScriptApp)
             }
 
             JSEngineType.V8 -> {
