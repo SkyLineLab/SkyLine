@@ -21,11 +21,15 @@ class ProfileImage(
 ) {
 
     var hashCode: String = ""
-    var profileImageDB: Bitmap? = null
+    private var profileImageDB: Bitmap? = null
 
     init {
         profileImageDB = if ((App.getPackageVersion(sbn.packageName) >= 9.7) && Build.VERSION.SDK_INT >= 29) {
-            icon2Bitmap(context, ((bundle.getParcelableArray("android.messages")!![0] as Bundle).getParcelable<Person>("sender_person")?.icon))
+            icon2Bitmap(
+                context,
+                (bundle.getParcelableArray("android.messages")!![0] as Bundle)
+                    .getParcelable<Person>("sender_person")!!.icon
+            )
         } else {
             getLargeIcon()
         }
@@ -36,7 +40,7 @@ class ProfileImage(
         return hashCode.hashCode()
     }
 
-    fun getLargeIcon(): Bitmap? {
+    private fun getLargeIcon(): Bitmap? {
         return icon2Bitmap(context, sbn.notification.getLargeIcon())
     }
 

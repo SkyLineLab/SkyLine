@@ -60,6 +60,8 @@ class MessageListenerService : NotificationListenerService() {
 
         if (sbn.notification.extras == null) throw RuntimeException("bundle not found")
 
+        Logger.d(sbn.notification.extras)
+
         Bot.callMessageEvent(
             sbn,
             sbn.notification.extras,

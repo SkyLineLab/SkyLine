@@ -5,12 +5,11 @@ import android.service.notification.StatusBarNotification
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.model.ActionModel
 import com.skyline.msgbot.reflow.event.Event
-import com.skyline.msgbot.reflow.event.message.MessageEvent
 import com.skyline.msgbot.reflow.event.message.MessageEventUtil
 import com.skyline.msgbot.reflow.event.power.PowerEvent
 import com.skyline.msgbot.reflow.event.project.ProjectEvent
 import com.skyline.msgbot.reflow.project.ProjectManager
-import com.skyline.msgbot.reflow.project.loader.ProjectLoader
+import com.skyline.msgbot.reflow.session.ChannelSession
 
 object Bot {
 
@@ -24,6 +23,8 @@ object Bot {
                 readActionModel,
                 project
             )
+
+            ChannelSession.addSession(event.room)
 
             Logger.d("emit!")
 

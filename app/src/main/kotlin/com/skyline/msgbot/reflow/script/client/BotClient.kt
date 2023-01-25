@@ -5,6 +5,7 @@ import com.caoccao.javet.values.reference.V8ValueFunction
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.reflow.project.Project
 import com.skyline.msgbot.reflow.script.JSEngineType
+addimport com.skyline.msgbot.reflow.session.ChannelList
 import com.skyline.msgbot.reflow.util.ToStringUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +18,10 @@ class BotClient(
 
     private val eventMap: HashMap<String, Any> = hashMapOf()
 
+    val channelList = ChannelList()
+
     fun on(eventName: String, callback: Any): BotClient {
-        Logger.d("is Value: ${ callback is Value }")
         eventMap[eventName] = callback
-        Logger.d("on!")
         return this
     }
 
