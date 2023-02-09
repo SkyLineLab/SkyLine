@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.skyline.msgbot"
-        minSdk = 24
+        minSdk = 26
         @SuppressLint("ExpiredTargetSdkVersion")
         targetSdk = 29
         versionCode = 1
@@ -58,11 +58,14 @@ android {
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "org/graalvm/graphio/doc-files/diamond.png"
         }
     }
 }
 
 dependencies {
+
+    implementation(project(":java-pkg"))
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.5.1")
@@ -70,6 +73,24 @@ dependencies {
     implementation("androidx.compose.ui:ui:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.ui:ui-tooling-preview:${rootProject.extra["compose_version"]}")
     implementation("androidx.compose.material3:material3:1.1.0-alpha04")
+    implementation(files("libs\\graal-truffle-compiler-libgraal.jar"))
+    implementation(files("libs\\graal-processor.jar"))
+    implementation(files("libs\\graal-management.jar"))
+//    implementation(files("libs\\graal-graphio.jar"))
+//    implementation(files("libs\\graal-libgraal-processor.jar"))
+    implementation(files("libs\\graal-nativebridge-processor.jar"))
+    implementation(files("libs\\locator.jar"))
+//    implementation(files("libs\\compiler-22.3.1.jar"))
+//    implementation(files("libs\\compiler-management-22.3.1.jar"))
+    implementation(files("libs\\truffle-dsl-processor.jar"))
+    implementation(files("libs\\truffle-nfi.jar"))
+    implementation(files("libs\\truffle-nfi-libffi.jar"))
+    implementation(files("libs\\graal-profdiff.jar"))
+    implementation(files("libs\\graal.jar"))
+    implementation(files("libs\\graal-truffle-jfr-impl.jar"))
+    implementation(files("libs\\polyglot-tck.jar"))
+    implementation(files("libs\\truffle-js-snapshot-tool.jar"))
+//    implementation(files("libs\\truffle-js-factory-processor.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -82,8 +103,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.15.1")
     implementation("dev.tiangong:orhanobut-logger:2.2.3")
     implementation("com.caoccao.javet:javet-android:1.1.5")
-    implementation("com.google.code.gson:gson:2.9.1")
-    implementation("com.github.smart-fun:XmlToJson:1.5.2")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     /** Graal */
     implementation(files("libs/wasm-launcher.jar"))
@@ -107,6 +127,8 @@ dependencies {
     implementation("com.google.android.material:material:1.8.0-rc01")
 
     implementation("com.google.protobuf:protobuf-java-util:3.21.12")
+
+    implementation("org.greenrobot:greendao:3.3.0")
 
     /** desugaring */
 

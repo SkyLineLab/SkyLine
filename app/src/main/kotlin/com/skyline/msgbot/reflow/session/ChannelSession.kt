@@ -4,7 +4,7 @@ import com.skyline.msgbot.reflow.event.message.MessageChannel
 
 object ChannelSession {
 
-    private val sessions: HashMap<Long, MessageChannel> = HashMap() // roomName, MessageEvent
+    val sessions: HashMap<Long, MessageChannel> = HashMap() // roomName, MessageEvent
 
     fun addSession(eventData: MessageChannel) {
         sessions[eventData.channelId] = eventData

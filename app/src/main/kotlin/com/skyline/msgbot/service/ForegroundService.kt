@@ -14,40 +14,51 @@ import com.skyline.msgbot.view.MainActivity
 
 class ForegroundService : Service() {
 
-    private val TAG = ForegroundService::class.java.name
-    val CHANNEL_ID = "ForegroundServiceChannel"
-    private val DELAYED_TIME: Long = 1000
+    private val channelId = "ForegroundServiceChannel"
 
     var counter = 0
 
-    override fun onCreate() {
-        super.onCreate()
+    private fun getForegroundNotification(intent: PendingIntent): Notification {
+        return if (Build.VERSION.SDK_INT >= 30) {
+            val builder = Notification.Builder(this, channelId)
+                .setContentTitle("Foreground Service")
+                .setContentText("sssss")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setPriority(Notification.PRIORITY_LOW)
+                .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND)
+                .setVibrate(null) // Passing null here silently fails
+                .setContentIntent(intent)
+                .setFlag(Notification.FLAG_FOREGROUND_SERVICE, true)
+
+            if (Build.VERSION.SDK_INT >= 31) {
+                builder.setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)
+            }
+
+            return builder.build()
+        } else {
+            NotificationCompat.Builder(this, channelId)
+                .setContentTitle("Foreground Service")
+                .setContentText("sssss")
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setPriority(Notification.PRIORITY_LOW)
+                .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND)
+                .setVibrate(null) // Passing null here silently fails
+                .setContentIntent(intent)
+                .build()
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         createNotificationChannel()
         val notificationIntent = Intent(this, MainActivity::class.java)
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)
-        val notification: NotificationCompat.Builder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Foreground Service")
-            .setContentText("sssss")
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setPriority(Notification.PRIORITY_LOW)
-            .setDefaults(Notification.DEFAULT_LIGHTS or Notification.DEFAULT_SOUND)
-            .setVibrate(null) // Passing null here silently fails
-            .setContentIntent(pendingIntent)
+        val notification = getForegroundNotification(pendingIntent)
 
-
-        notification.setContentText("test")
-        startForeground(1, notification.build())
+        startForeground(1, notification)
 
         val notiMgmt = this.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        notiMgmt.notify(1, notification.build())
+        notiMgmt.notify(1, notification)
         return START_NOT_STICKY
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -57,7 +68,7 @@ class ForegroundService : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                CHANNEL_ID,
+                channelId,
                 "Foreground Service Channel",
                 NotificationManager.IMPORTANCE_LOW
             )

@@ -67,6 +67,8 @@ object ProjectLoader {
                                 )
                             ).mimeType("application/javascript+module").build()
                         )
+
+//                        scriptContext.eval("js", "console.log(this)")
                     }
 
                     JSEngineType.V8 -> {

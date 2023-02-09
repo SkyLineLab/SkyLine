@@ -11,6 +11,7 @@ import com.skyline.msgbot.reflow.project.ProjectManager
 import com.skyline.msgbot.service.ForegroundService
 import com.skyline.msgbot.ui.theme.SkyLineTheme
 import org.graalvm.polyglot.Context
+import jdk.vm.ci.services.Services;
 
 class MainActivity : ComponentActivity() {
     override fun onStart() {
@@ -30,7 +31,8 @@ class MainActivity : ComponentActivity() {
             ForegroundService::class.java
         )
         serviceIntent.putExtra("inputExtra", "Foreground Service Example in Android")
-        ContextCompat.startForegroundService(this, serviceIntent)
+//        ContextCompat.startForegroundService(this, serviceIntent)
+        startService(serviceIntent)
         if (!App.roadDataById("isLicenseAccept").value) {
             this.startActivity(Intent(this, ProjectActivity::class.java))
         }
@@ -48,7 +50,7 @@ class MainActivity : ComponentActivity() {
             ForegroundService::class.java
         )
         stopService(serviceIntent)
-        ProjectManager.list.forEach { t, u ->
+        ProjectManager.list.forEach { (t, u) ->
             u.getEngineContext<Context>().close()
         }
     }

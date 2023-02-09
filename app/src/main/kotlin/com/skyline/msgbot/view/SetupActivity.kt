@@ -19,25 +19,12 @@ class SetupActivity : ComponentActivity() {
 
         Logger.d("test")
 
-        JSEngineRepository.getGraalJSEngine().eval("js", """
-function logged(value, { kind, name }) {
-  if (kind === "method") {
-    return function (...args) {
-      console.log('starting ' + name + ' with arguments ' + args.join(", "));
-      const ret = value.call(this, ...args);
-      console.log(`ending ` + name);
-      return ret;
-    };
-  }
-}
-
-class C {
-  @logged
-  m(arg) {}
-}
-
-new C().m(1);
+        val context = JSEngineRepository.getGraalJSEngine()
+        val value = context.eval("js", """
+            function test() { console.log(this) }
         """.trimIndent())
+
+        context.getBindings("js").getMember("test").executeVoid()
 
         setContent {
             SetupUI()

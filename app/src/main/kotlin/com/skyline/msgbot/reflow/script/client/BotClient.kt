@@ -5,7 +5,7 @@ import com.caoccao.javet.values.reference.V8ValueFunction
 import com.orhanobut.logger.Logger
 import com.skyline.msgbot.reflow.project.Project
 import com.skyline.msgbot.reflow.script.JSEngineType
-addimport com.skyline.msgbot.reflow.session.ChannelList
+import com.skyline.msgbot.reflow.session.ChannelList
 import com.skyline.msgbot.reflow.util.ToStringUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,9 +39,7 @@ class BotClient(
 
                 when (type) {
                     JSEngineType.GRAALVM_JS -> {
-                        Logger.d("is Value!")
-
-                        Value.asValue(callback).executeVoid(*arguments) // TODO
+                        Value.asValue(callback).execute(*arguments)
                     }
 
                     JSEngineType.V8 -> {

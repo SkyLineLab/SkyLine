@@ -13,6 +13,7 @@ import com.skyline.msgbot.model.ActionModel
 import com.skyline.msgbot.reflow.App
 import com.skyline.msgbot.reflow.project.Project
 import com.skyline.msgbot.reflow.script.javascript.JSPromise
+import com.skyline.msgbot.reflow.session.ChannelSession
 import com.skyline.msgbot.reflow.util.ToStringUtil
 import org.graalvm.polyglot.Value
 import java.util.concurrent.CompletableFuture
@@ -98,7 +99,16 @@ class MessageChannelImpl(
     }
 
     override fun sendAllRoom(message: Any?): Any {
-        TODO("Not yet implemented")
+        val future: CompletableFuture<Any> = CompletableFuture.supplyAsync {
+            ChannelSession.sessions.forEach {
+                it.value.send(message)
+            }
+        }
+
+        return JSPromise.createPromiseObject(
+            project,
+            future
+        )
     }
 
     override fun markAsRead(): Any {

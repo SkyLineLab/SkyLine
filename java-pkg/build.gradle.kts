@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "java.lang"
+    namespace = "jdk"
     compileSdk = 32
 
     defaultConfig {
@@ -33,8 +33,11 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.4.1")
     implementation("com.google.android.material:material:1.5.0")
-    implementation(files("libs/UnsafeSuperset.jar"))
+    implementation(files("libs/skyline-unsafe.jar"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+    implementation("org.agrona:agrona:1.17.1")
+
 }
