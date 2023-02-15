@@ -14,6 +14,7 @@ import com.skyline.msgbot.reflow.App
 import com.skyline.msgbot.reflow.project.Project
 import com.skyline.msgbot.reflow.script.javascript.JSPromise
 import com.skyline.msgbot.reflow.session.ChannelSession
+import com.skyline.msgbot.reflow.util.KakaoTalkUtil
 import com.skyline.msgbot.reflow.util.ToStringUtil
 import org.graalvm.polyglot.Value
 import java.util.concurrent.CompletableFuture
@@ -29,7 +30,7 @@ class MessageChannelImpl(
 
     override val name: String
         get() {
-            return if (App.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+            return if (KakaoTalkUtil.isNewStruct(statusBarNotification.packageName)) {
                 bundle.getString("android.subText") ?: (bundle.getString("android.title") ?: "")
             } else {
                 bundle.getString("android.summaryText") ?: (bundle.getString("android.title") ?: "")
@@ -38,7 +39,7 @@ class MessageChannelImpl(
 
     override val isGroupChat: Boolean
         get() {
-            return if (App.getPackageVersion(statusBarNotification.packageName) >= 9.7 && Build.VERSION.SDK_INT >= 29) {
+            return if (KakaoTalkUtil.isNewStruct(statusBarNotification.packageName)) {
                 bundle.getBoolean("android.isGroupConversation")
             } else {
                 name == bundle.getString("android.summaryText")

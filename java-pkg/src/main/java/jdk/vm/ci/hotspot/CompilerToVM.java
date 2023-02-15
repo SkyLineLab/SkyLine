@@ -26,6 +26,7 @@ package jdk.vm.ci.hotspot;
 import static jdk.vm.ci.common.InitTimer.timer;
 import static jdk.vm.ci.hotspot.HotSpotJVMCIRuntime.runtime;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Executable;
 import java.lang.reflect.Field;
 
@@ -54,8 +55,8 @@ final class CompilerToVM {
      * Initializes the native part of the JVMCI runtime.
      */
 //    private static native void registerNatives();
-    private static void registerNatives() {
-
+    private static long[] registerNatives() {
+        return new long[] { 0L, 0L };
     }
 
     /**
@@ -108,9 +109,24 @@ final class CompilerToVM {
         }
     }
 
-    native int arrayBaseOffset(char typeChar);
+    public int arrayBaseOffset(char typeChar) {
+        System.out.println(typeChar);
+        if (typeChar == 'V' || typeChar == 'A') {
+            return ARRAY_OBJECT_BASE_OFFSET;
+        }
+        return UnsafeAccess.UNSAFE.arrayBaseOffset(
+                Array.newInstance(JavaKind.fromPrimitiveOrVoidTypeChar(typeChar).toJavaClass(), 0).getClass()
+        );
+    };
 
-    native int arrayIndexScale(char typeChar);
+    public int arrayIndexScale(char typeChar) {
+        if (typeChar == 'V' || typeChar == 'A') {
+            return ARRAY_OBJECT_INDEX_SCALE;
+        }
+        return UnsafeAccess.UNSAFE.arrayIndexScale(
+                Array.newInstance(JavaKind.fromPrimitiveOrVoidTypeChar(typeChar).toJavaClass(), 0).getClass()
+        );
+    };
 
     /**
      * Gets the {@link CompilerToVM} instance associated with the singleton

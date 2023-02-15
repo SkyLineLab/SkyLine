@@ -38,16 +38,14 @@ class MessageListenerService : NotificationListenerService() {
 
         sbn.notification.actions.forEach {
             if (
-                it.title.toString().lowercase(Locale.getDefault()).contains("Reply") ||
-                it.title.toString().lowercase(Locale.getDefault()).contains("답장")
+                it.title.toString().lowercase(Locale.getDefault()).contains("reply|답장".toRegex())
             ) {
                 replyActionModel = ActionModel(
                     ActionType.REPLY,
                     it
                 )
             } else if (
-                it.title.toString().lowercase(Locale.getDefault()).contains("Mark as Read") ||
-                it.title.toString().lowercase(Locale.getDefault()).contains("읽음")
+                it.title.toString().lowercase(Locale.getDefault()).contains("read|읽음".toRegex())
             ) {
                 readActionModel = ActionModel(
                     ActionType.READ,

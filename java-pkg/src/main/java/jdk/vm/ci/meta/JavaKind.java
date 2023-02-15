@@ -239,6 +239,8 @@ public enum JavaKind {
                 return Long;
             case 'V':
                 return Void;
+            case 'A':
+                return Object;
         }
         throw new IllegalArgumentException("unknown primitive or void type character: " + ch);
     }
